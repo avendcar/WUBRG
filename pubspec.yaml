@@ -26,6 +26,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/mtg-background.png
+    - images/sloth.png
   fonts:
   - family: Belwe 
     fonts:

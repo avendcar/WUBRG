@@ -48,14 +48,12 @@ class ProfilePage extends StatelessWidget {
           backgroundColor: Colors.deepPurple,
           child: ListView(
             children: [
-              Center(
-                child: const DrawerHeader(
-                  padding: EdgeInsets.all(52),
-                  decoration: BoxDecoration(color: Color(0xFF3F124D)),
-                  child: Text(
-                    "Here's the drawer header!",
-                    style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
-                  ),
+              const DrawerHeader(
+                padding: EdgeInsets.all(52),
+                decoration: BoxDecoration(color: Color(0xFF3F124D)),
+                child: Text(
+                  "Here's the drawer header!",
+                  style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
                 ),
               ),
               ListTile(
@@ -75,16 +73,23 @@ class ProfilePage extends StatelessWidget {
             ],
           ),
         ),
-        body: Center(
+        body: Container(
+          padding: EdgeInsets.only(left: 120, top: 100),
+         
           child: ClipPath(
             clipper: Hexagon(),
             child: Container(
-              //Contains profile picture location
-              color: Colors.grey,
-              width: 300,
-              height: 300,
-              child: Image.asset('images/mtg-background.png', fit: BoxFit.fill),
-            ),
+                //Contains profile picture location
+                color: Colors.grey,
+                width: 300,
+                height: 300,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: Image.asset('images/mtg-background.png',
+                            fit: BoxFit.fill))
+                  ],
+                )),
           ),
         ),
       ),
