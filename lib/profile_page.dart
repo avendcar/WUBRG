@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_3/main.dart';
 
 void main() {
   runApp(ProfilePage());
