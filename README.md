@@ -1,3 +1,4 @@
 # flutter_application_3
 
-A new Flutter project.
+Dart files are in the lib folder.
+Images and fonts are in their own folder.
