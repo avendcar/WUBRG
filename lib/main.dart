@@ -5,6 +5,14 @@ void main() {
   runApp(HomePage());
 }
 
+String? _dropdownValue;
+
+void dropdownCallBack(String? selectedValue) {
+  if (selectedValue is String) {
+    _dropdownValue = selectedValue;
+  }
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -15,39 +23,84 @@ class HomePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          leading: Builder(
-            builder: (context) {
-              return IconButton(
-                color: Colors.white,
-                iconSize: 40,
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const HomePage()),
-                  );
-                },
-                icon: const Icon(Icons.account_balance),
-              );
-            }
-          ),
+          leading: Builder(builder: (context) {
+            return IconButton(
+              color: Colors.white,
+              iconSize: 40,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+              icon: const Icon(Icons.home),
+            );
+          }),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(10))),
           actions: [
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Here\'s some text',
-                style: TextStyle(
-                    fontFamily: 'Belwe', color: Colors.white, fontSize: 18),
-              ),
+            SearchBar(
+              constraints: BoxConstraints(maxWidth: 450, minHeight: 30),
+              leading: Icon(Icons.search),
+              hintText: "Search...",
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'Click for profile page ->',
-                style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
+            Container(
+              width: 130,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                shape: BoxShape.rectangle,
+                border: Border.all(width: 3, color: Colors.white),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 125,
+                child: new DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    hint: Text(
+                      "Search filters",
+                      selectionColor: Colors.white,
+                      textAlign: TextAlign.justify,
+                    ),
+                    alignment: Alignment.centerLeft,
+                    items: const [
+                      DropdownMenuItem(
+                        value: "All",
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 50),
+                          child: Text(
+                            "All",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: "Events",
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 40),
+                          child: Text(
+                            "Events",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: "Players",
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 40),
+                          child: Text(
+                            "Players",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                    value: _dropdownValue,
+                    onChanged: dropdownCallBack,
+                  ),
+                ),
               ),
             ),
             Builder(builder: (context) {

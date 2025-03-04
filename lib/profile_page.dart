@@ -27,7 +27,7 @@ class ProfilePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
-              icon: const Icon(Icons.account_balance),
+              icon: const Icon(Icons.home),
             );
           }),
           backgroundColor: Colors.black,

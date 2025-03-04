@@ -34,6 +34,14 @@ hexagon
 2.12
 file:///home/carlos/.pub-cache/hosted/pub.dev/hexagon-0.2.0/
 file:///home/carlos/.pub-cache/hosted/pub.dev/hexagon-0.2.0/lib/
+http
+3.4
+file:///home/carlos/.pub-cache/hosted/pub.dev/http-1.3.0/
+file:///home/carlos/.pub-cache/hosted/pub.dev/http-1.3.0/lib/
+http_parser
+3.4
+file:///home/carlos/.pub-cache/hosted/pub.dev/http_parser-4.1.2/
+file:///home/carlos/.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib/
 leak_tracker
 3.2
 file:///home/carlos/.pub-cache/hosted/pub.dev/leak_tracker-10.0.7/
@@ -102,6 +110,10 @@ test_api
 3.4
 file:///home/carlos/.pub-cache/hosted/pub.dev/test_api-0.7.3/
 file:///home/carlos/.pub-cache/hosted/pub.dev/test_api-0.7.3/lib/
+typed_data
+3.5
+file:///home/carlos/.pub-cache/hosted/pub.dev/typed_data-1.4.0/
+file:///home/carlos/.pub-cache/hosted/pub.dev/typed_data-1.4.0/lib/
 vector_math
 2.14
 file:///home/carlos/.pub-cache/hosted/pub.dev/vector_math-2.1.4/
@@ -110,6 +122,10 @@ vm_service
 3.3
 file:///home/carlos/.pub-cache/hosted/pub.dev/vm_service-14.3.0/
 file:///home/carlos/.pub-cache/hosted/pub.dev/vm_service-14.3.0/lib/
+web
+3.4
+file:///home/carlos/.pub-cache/hosted/pub.dev/web-1.1.1/
+file:///home/carlos/.pub-cache/hosted/pub.dev/web-1.1.1/lib/
 sky_engine
 3.2
 file:///home/carlos/Flutter/flutter/bin/cache/pkg/sky_engine/
