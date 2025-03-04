@@ -27,6 +27,7 @@ flutter:
   assets:
     - images/mtg-background.png
     - images/sloth.png
+    - images/wubrg_logo.png
   fonts:
   - family: Belwe 
     fonts:

@@ -16,6 +16,20 @@ class ProfilePage extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.red[300],
         appBar: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+              color: Colors.white,
+              iconSize: 40,
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                );
+              },
+              icon: const Icon(Icons.account_balance),
+            );
+          }),
           backgroundColor: Colors.black,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(10))),
@@ -30,6 +44,7 @@ class ProfilePage extends StatelessWidget {
             Builder(builder: (context) {
               return TextButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const HomePage()),
@@ -44,38 +59,8 @@ class ProfilePage extends StatelessWidget {
             style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
           ),
         ),
-        drawer: Drawer(
-          backgroundColor: Colors.deepPurple,
-          child: ListView(
-            children: [
-              const DrawerHeader(
-                padding: EdgeInsets.all(52),
-                decoration: BoxDecoration(color: Color(0xFF3F124D)),
-                child: Text(
-                  "Here's the drawer header!",
-                  style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  "Option 1",
-                  style: TextStyle(fontFamily: 'Belwe'),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  "Option 2",
-                  style: TextStyle(fontFamily: 'Belwe'),
-                ),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
         body: Container(
           padding: EdgeInsets.only(left: 120, top: 100),
-         
           child: ClipPath(
             clipper: Hexagon(),
             child: Container(

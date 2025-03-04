@@ -15,6 +15,23 @@ class HomePage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          leading: Builder(
+            builder: (context) {
+              return IconButton(
+                color: Colors.white,
+                iconSize: 40,
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomePage()),
+                  );
+                },
+                icon: const Icon(Icons.account_balance),
+              );
+            }
+          ),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(10))),
           actions: [
@@ -36,6 +53,7 @@ class HomePage extends StatelessWidget {
             Builder(builder: (context) {
               return TextButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -53,42 +71,8 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
           ),
         ),
-        drawer: Drawer(
-          backgroundColor: Colors.deepPurple,
-          child: ListView(
-            children: [
-              Center(
-                child: const DrawerHeader(
-                  padding: EdgeInsets.all(52),
-                  decoration: BoxDecoration(color: Color(0xFF3F124D)),
-                  child: Text(
-                    "Here's the drawer header!",
-                    style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  "Option 1",
-                  style: TextStyle(fontFamily: 'Belwe'),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Text(
-                  "Option 2",
-                  style: TextStyle(fontFamily: 'Belwe'),
-                ),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-        body: Image.asset('images/mtg-background.png'), 
-
-        
+        body: Image.asset('images/mtg-background.png'),
       ),
     );
   }
 }
-
