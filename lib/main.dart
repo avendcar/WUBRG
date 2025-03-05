@@ -170,15 +170,33 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.black,
         ),
         body: Container(
-            //Background Image
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("images/mtg-background.png"),
-                  fit: BoxFit.cover),
+          //Background Image
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("images/mtg-background.png"),
+                fit: BoxFit.cover),
+          ),
+          child: Center(
+            child: SizedBox(
+              child: Stack(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      height: 500,
+                      width: 1600,
+                      child: Positioned(
+                        child: Image(
+                          image: AssetImage("images/sloth.png"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            child: null
-            //Main Content
-            ),
+          ),
+          //Main Content
+        ),
       ),
     );
   }
