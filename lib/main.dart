@@ -16,12 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void dropdownCallBack(String? selectedValue) {
+  void dropdownChangeText(String? selectedValue) {
     if (selectedValue is String) {
-      setState(() {
-        _dropdownValue = selectedValue;
-        displayedDropdownText = selectedValue;
-      });
+      setState(
+        () {
+          _dropdownValue = selectedValue;
+          displayedDropdownText = selectedValue;
+        },
+      );
     }
   }
 
@@ -111,13 +113,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                     value: _dropdownValue,
-                    onChanged: dropdownCallBack,
+                    onChanged: dropdownChangeText,
                   ),
                 ),
               ),
             ),
             Builder(builder: (context) {
               return TextButton(
+                //Transitions to profile page
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.push(
@@ -137,7 +140,16 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
           ),
         ),
-        body: Image.asset('images/mtg-background.png'),
+        body: Container(
+          //Background Image
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("images/mtg-background.png"),
+                fit: BoxFit.cover),
+          ),
+          child: null
+          //Main Content
+        ),
       ),
     );
   }
