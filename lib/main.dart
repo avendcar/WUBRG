@@ -182,12 +182,49 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Center(
                     child: SizedBox(
-                      height: 500,
-                      width: 1600,
-                      child: Positioned(
-                        child: Image(
-                          image: AssetImage("images/sloth.png"),
-                        ),
+                      //Transparent Box
+                      height: 300,
+                      width: MediaQuery.of(context).size.width * .35,
+                      child: Opacity(
+                        opacity: .9,
+                        //Box contents
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 30),
+                                  child: Text(
+                                    "Welcome to WUBRG!",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      letterSpacing: 2,
+                                      color: Colors.white,
+                                      fontFamily: "Belwe",
+                                      fontSize: 24,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 50),
+                                  child: OutlinedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Sign Up/Sign In",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontFamily: "Belwe"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                       ),
                     ),
                   ),
@@ -195,7 +232,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          //Main Content
         ),
       ),
     );
