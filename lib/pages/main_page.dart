@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/profile_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -107,7 +108,10 @@ class MainPage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.person),
               onPressed: () {
-                // TODO: Navigate to profile page.
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
               },
               color: Colors.white,
             ),

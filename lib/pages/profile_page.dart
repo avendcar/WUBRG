@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
 // ignore: unused_import
 import 'home_page.dart';
 
@@ -20,8 +21,11 @@ class _ProfilePageState extends State<ProfilePage> {
           color: Colors.white,
           iconSize: 40,
           onPressed: () {
-            // Navigate back or to HomePage
-            Navigator.pop(context);
+            // Navigate back or to MainPage
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MainPage()),
+            );
           },
           icon: const Icon(Icons.home),
         ),
@@ -32,7 +36,10 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
             },
             child: Text(
               'Click for home ->',
@@ -41,7 +48,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
             },
             icon: Icon(Icons.person, color: Colors.white),
           ),
