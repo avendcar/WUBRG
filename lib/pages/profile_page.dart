@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 // ignore: unused_import
-import 'home_page.dart'; 
+import 'home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

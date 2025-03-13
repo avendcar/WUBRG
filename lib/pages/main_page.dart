@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +93,8 @@ class MainPage extends StatelessWidget {
                   hintStyle: TextStyle(color: Colors.white70),
                   filled: true,
                   fillColor: Colors.grey[800],
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide.none,
@@ -113,10 +114,11 @@ class MainPage extends StatelessWidget {
           ],
         ),
       ),
-      body: Center(
-        child: Text(
-          "Main Page Content",
-          style: TextStyle(fontSize: 24, color: Colors.black),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/mtg-background.png"),
+              fit: BoxFit.cover),
         ),
       ),
     );

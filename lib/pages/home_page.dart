@@ -5,7 +5,7 @@ import 'main_page.dart'; // Import your MainPage widget
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -19,14 +19,14 @@ class _HomePageState extends State<HomePage> {
   Future<void> createAccount(String username, String password) async {
     // Replace with your actual server URL/IP.
     final url = Uri.parse('http://192.168.1.131:3000/create-user');
-    
+
     try {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'username': username, 'password': password}),
       );
-      
+
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     _passwordController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,11 +146,15 @@ class _HomePageState extends State<HomePage> {
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
                                 onTap: () async {
-                                  String username = _usernameController.text.trim();
-                                  String password = _passwordController.text.trim();
+                                  String username =
+                                      _usernameController.text.trim();
+                                  String password =
+                                      _passwordController.text.trim();
                                   if (username.isEmpty || password.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Please enter a username and password')),
+                                      SnackBar(
+                                          content: Text(
+                                              'Please enter a username and password')),
                                     );
                                     return;
                                   }
@@ -168,23 +172,28 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(height: 20),
                             // "Enter" button for sign in.
                             ElevatedButton(
-                            onPressed: () {
-                          print("Enter button pressed");
-    String username = _usernameController.text.trim();
-    String password = _passwordController.text.trim();
-    if (username.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a username and password')),
-      );
-      return;
-    }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainPage()),
-    );
-  },
-  child: Text("Enter"),
-),
+                              onPressed: () {
+                                print("Enter button pressed");
+                                String username =
+                                    _usernameController.text.trim();
+                                String password =
+                                    _passwordController.text.trim();
+                                if (username.isEmpty || password.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Please enter a username and password')),
+                                  );
+                                  return;
+                                }
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const MainPage()),
+                                );
+                              },
+                              child: Text("Enter"),
+                            ),
                           ],
                         ),
                       ),
