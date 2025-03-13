@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                   Center(
                     child: SizedBox(
                       //Transparent Box
-                      height: 300,
+                      height: 200,
                       width: MediaQuery.of(context).size.width * .35,
                       child: Opacity(
                         opacity: .9,
