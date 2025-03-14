@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/widgets/app_bar.dart';
+import 'package:flutter_application_3/widgets/app_drawer.dart';
 // ignore: unused_import
 import 'home_page.dart';
 
@@ -16,51 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red[300],
-      appBar: AppBar(
-        leading: IconButton(
-          color: Colors.white,
-          iconSize: 40,
-          onPressed: () {
-            // Navigate back or to MainPage
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MainPage()),
-            );
-          },
-          icon: const Icon(Icons.home),
-        ),
-        backgroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfilePage()),
-              );
-            },
-            child: Text(
-              'Click for home ->',
-              style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfilePage()),
-              );
-            },
-            icon: Icon(Icons.person, color: Colors.white),
-          ),
-        ],
-        title: Text(
-          'Profile Page',
-          style: TextStyle(fontFamily: 'Belwe', color: Colors.white),
-        ),
-      ),
+      endDrawer: AppDrawer(),
+      appBar: PersistentAppBar(),
       body: Container(
         padding: EdgeInsets.only(left: 120, top: 100),
         child: ClipPath(

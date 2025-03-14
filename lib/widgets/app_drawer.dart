@@ -1,30 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/home_page.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
+
+import '../pages/profile_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Colors.black),
-            child: Text(
-              'Menu',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+      child: SizedBox(
+        height: 440,
+        child: Drawer(
+          backgroundColor: Colors.black,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 40), // Top spacing
+                ListTile(
+                  title: Center(
+                    heightFactor: 1,
+                    child: const Text(
+                      "Home",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.white, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainPage()),
+                    );
+                  },
+                ),
+                SizedBox(height: 16),
+                // Box for the user's profile
+                ListTile(
+                    title: Center(
+                      heightFactor: 1,
+                      child: const Text(
+                        "Profile",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.yellow, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage()),
+                      );
+                    }),
+                SizedBox(height: 16),
+                // Box for the user's decks
+                ListTile(
+                  title: Center(
+                    heightFactor: 1,
+                    child: const Text(
+                      "Decks",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.blue, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                SizedBox(height: 16),
+                // Box for calendar
+                ListTile(
+                  title: Center(
+                    heightFactor: 1,
+                    child: const Text(
+                      "Calendar",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.deepPurple, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                SizedBox(height: 16),
+                // Box for favorites
+                ListTile(
+                  title: Center(
+                    heightFactor: 1,
+                    child: const Text(
+                      "Favorites",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.red, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                SizedBox(height: 16),
+                // Box for signing out
+                ListTile(
+                  title: Center(
+                    heightFactor: 1,
+                    child: const Text(
+                      "Sign out",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.green, width: 2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          // Additional drawer items can be added here.
-        ],
+        ),
       ),
     );
   }

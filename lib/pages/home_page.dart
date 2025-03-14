@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'main_page.dart'; // Import your MainPage widget
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
