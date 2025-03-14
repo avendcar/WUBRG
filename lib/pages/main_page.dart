@@ -5,7 +5,7 @@ import 'package:flutter_application_3/widgets/app_drawer.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -18,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red[300],
+
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(
