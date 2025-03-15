@@ -31,12 +31,19 @@ class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
                     MaterialPageRoute(builder: (context) => const MainPage()),
                   );
                 },
-                child: Text(
-                  "WUBRG",
-                  style: TextStyle(
-                    fontFamily: "Belwe",
-                    fontSize: 24,
-                    color: Colors.white,
+                child: Tooltip(
+                  //Universal home page button
+                  message: "Click to go to Home",
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Text(
+                      "WUBRG",
+                      style: TextStyle(
+                        fontFamily: "Belwe",
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               );
