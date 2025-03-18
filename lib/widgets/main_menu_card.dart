@@ -56,39 +56,5 @@ class MainMenuCard extends StatelessWidget {
         ),
       ),
     );
-    /*  return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text(title,
-                style: TextStyle(fontFamily: "Belwe", fontSize: 32),
-                textAlign: TextAlign.start),
-            subtitle: SizedBox(
-              width: 25,
-              height: 200,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: OutlinedButton.icon(
-                  style: ButtonStyle(
-                  
-                    side: WidgetStatePropertyAll(
-                      BorderSide(color: Colors.transparent,),
-                    ),
-                  ),
-                  icon: Image.asset("images/kuriboh.png"), //Placeholder for leading icon before each subtitle
-                  label: Text(
-                    subtitle,
-                    style: TextStyle(fontFamily: "Belwe", color: Colors.black),
-                  ),
-                  iconAlignment: IconAlignment.start,
-                  onPressed: () {},
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ); */
   }
 }
