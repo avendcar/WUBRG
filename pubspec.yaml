@@ -30,6 +30,7 @@ flutter:
     - images/mtg-background.png
     - images/sloth.png
     - images/wubrg_logo.png
+    - images/kuriboh.png
   fonts:
   - family: Belwe 
     fonts:
