@@ -60,14 +60,35 @@ class MainPage extends StatelessWidget {
               height: 20,
               width: MediaQuery.of(context).size.width,
             ),
-
             Expanded(
-              child: Opacity(
-                opacity: 0.5,
-                child: Container(
-                    color: Colors.green,
-                    height: 300,
-                    width: MediaQuery.of(context).size.width * 0.8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                height: 300,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: Padding(
+                  padding: const EdgeInsets.all(
+                      20.0), //Padding between large container and all the cards
+                  child: Row(
+                    children: [
+                      MainMenuCard(
+                          title: "Example Card 1",
+                          subtitle: "This is the subtitle for Example Card 1"),
+                      SizedBox(width: 10),
+                      MainMenuCard(
+                          title: "Example Card 2",
+                          subtitle: "This is the subtitle for Example Card 2"),
+                      SizedBox(width: 10),
+                      MainMenuCard(
+                          title: "Example Card 3",
+                          subtitle: "This is the subtitle for Example Card 3"),
+                    ],
+                  ),
+                ),
               ),
             ),
             SizedBox(
