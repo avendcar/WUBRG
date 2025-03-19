@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:flutter_application_3/widgets/edit_profile_button.dart';
 import 'package:flutter_application_3/widgets/profile_page_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,8 +20,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: EditProfileButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
+      
       body: Container(
         
         padding: EdgeInsets.only(
