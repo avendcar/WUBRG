@@ -24,9 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
-      
       body: Container(
-        
         padding: EdgeInsets.only(
             top: deviceHeight(context) * 0.095,
             bottom: deviceHeight(context) * 0.095,

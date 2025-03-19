@@ -10,22 +10,15 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-String username = "";
-String bio = "";
+String _username = "";
+String _bio = "";
+//TODO: Link up username and bio to database
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final _formKey = GlobalKey();
+  final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
 
-  void _submit() {
-    //TODO: Submit new info to database for updating
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Submitted! You may exit this page.'),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +72,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               body: Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: Form(
-                  key: _formKey,
+                  key: _formGlobalKey,
                   child: Column(
                     children: [
                       //TODO: Allow image submissions for profile picture
@@ -87,13 +80,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         child: SizedBox(
                           width: 400,
                           child: TextFormField(
+                            maxLength: 20,
+                            controller: _usernameController,
+                            //Code block for testing username input
+                            /* onChanged: (value) {
+                              setState(() {
+                                _username = value;
+                              });
+                            }, */
                             decoration: InputDecoration(
-                                labelText: "Username",
-                                labelStyle: TextStyle(fontFamily: "Belwe"),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(),
-                                )),
+                              labelText: "Username",
+                              labelStyle: TextStyle(fontFamily: "Belwe"),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(),
+                              ),
+                            ),
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
@@ -102,9 +104,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               }
                               return null;
                             },
+                            onSaved: (value) {
+                              _username = value!;
+                            },
                           ),
                         ),
                       ),
+                      Text('Your Username: $_username'),
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -112,6 +118,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             //Bio field measurements
                             width: 500,
                             child: TextFormField(
+                              maxLength: 500,
+                              controller: _bioController,
+                              //Code block for testing bio input
+                              /*  onChanged: (value) {
+                                setState(() {
+                                  _bio = value;
+                                });
+                              }, */
                               maxLines: null, //Increases height as user types
                               decoration: InputDecoration(
                                 labelText: "Bio",
@@ -123,20 +137,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               validator: (value) {
-                                if (value == null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Please enter bio text'),
-                                    ),
-                                  );
-                                  return;
-                                }
                                 return null;
+                              },
+                              onSaved: (value) {
+                                _bio = value!;
                               },
                             ),
                           ),
                         ),
                       ),
+                      Text('Your Bio: $_bio'),
                       TextButton(
                         style: ButtonStyle(
                           shape: WidgetStatePropertyAll(
@@ -145,7 +155,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 side: BorderSide()),
                           ),
                         ),
-                        onPressed: _submit,
+                        onPressed: () {
+                          if (_formGlobalKey.currentState!.validate()) {
+                            _formGlobalKey.currentState!.save();
+                            setState(() {
+                              //Refreshes page after submission
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text('Submitted! You may exit this page.'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        },
                         child: Text(
                           "Submit",
                           style: TextStyle(
