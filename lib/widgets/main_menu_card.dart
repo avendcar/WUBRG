@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MainMenuCard extends StatelessWidget {
-  const MainMenuCard({super.key, required this.title, required this.subtitle});
+  const MainMenuCard(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.buttons});
   final String title;
   final String subtitle;
+  final int buttons;
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +16,7 @@ class MainMenuCard extends StatelessWidget {
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Card(
+          color: Colors.grey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -20,33 +26,59 @@ class MainMenuCard extends StatelessWidget {
                     textAlign: TextAlign.start),
                 subtitle: SizedBox(
                   width: 25,
-                  height: 200,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: OutlinedButton.icon(
-                      style: ButtonStyle(
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                  height: MediaQuery.of(context).size.height *0.3,
+                  //Size of box containing all buttons
+                  child: SingleChildScrollView(
+                    //Allows for scrolling within each card if there exist more than 3 buttons
+                    child: Column(
+                      children: [
+                        for (int x = 1; x < buttons + 1; x++)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: SizedBox(
+                                height: 100,
+                                child: IntrinsicHeight(
+                                  child: OutlinedButton.icon(
+                                    style: ButtonStyle(
+                                      shape: WidgetStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      side: WidgetStatePropertyAll(
+                                        BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                    icon: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child:
+                                            Image.asset("images/kuriboh.png"),
+                                      ),
+                                    ), //Placeholder for leading icon before each subtitle
+                                    label: Text(
+                                      "$subtitle (Button #$x)",
+                                      maxLines: 5,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontFamily: "Belwe",
+                                          color: Colors.black),
+                                    ),
+                                    iconAlignment: IconAlignment.start,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                                //Size of each button within the scrollable box
+                              ),
+                            ),
                           ),
-                        ),
-                        side: WidgetStatePropertyAll(
-                          BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                      ),
-                      icon: Image.asset(
-                          "images/kuriboh.png"), //Placeholder for leading icon before each subtitle
-                      label: Text(
-                        subtitle,
-                        maxLines: 10,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            TextStyle(fontFamily: "Belwe", color: Colors.black),
-                      ),
-                      iconAlignment: IconAlignment.start,
-                      onPressed: () {},
+                      ],
                     ),
                   ),
                 ),

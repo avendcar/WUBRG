@@ -20,12 +20,12 @@ class MainPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //TODO: populate containers with smaller boxes and data
+            //TODO: populate containers with data
             SizedBox(height: 50),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  color: const Color.fromARGB(255, 13, 56, 92),
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -39,18 +39,21 @@ class MainPage extends StatelessWidget {
                     children: [
                       MainMenuCard(
                           title: "Upcoming",
+                          buttons: 1,
                           subtitle:
-                              "This is the subtitle for the Upcoming menu card"),
+                              "This is a description in the Upcoming menu card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Popular",
+                          buttons: 2,
                           subtitle:
-                              "This is the subtitle for the Popular menu card"),
+                              "This is a description in the Popular menu card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "For You",
+                          buttons: 3,
                           subtitle:
-                              "This is the subtitle for the For You card"),
+                              "This is a description in For You card",),
                     ],
                   ),
                 ),
@@ -63,7 +66,7 @@ class MainPage extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  color: const Color.fromARGB(255, 13, 56, 92),
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -76,16 +79,19 @@ class MainPage extends StatelessWidget {
                   child: Row(
                     children: [
                       MainMenuCard(
-                          title: "Example Card 1",
-                          subtitle: "This is the subtitle for Example Card 1"),
+                          title: "Messages",
+                          buttons: 4,
+                          subtitle: "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Example Card 2",
-                          subtitle: "This is the subtitle for Example Card 2"),
+                          buttons: 5,
+                          subtitle: "This is a description in Example Card 2"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Example Card 3",
-                          subtitle: "This is the subtitle for Example Card 3"),
+                          buttons: 6,
+                          subtitle: "This is a description in Example Card 3"),
                     ],
                   ),
                 ),

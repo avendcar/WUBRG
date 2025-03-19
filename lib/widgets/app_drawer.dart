@@ -28,7 +28,7 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Home",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -51,7 +51,7 @@ class AppDrawer extends StatelessWidget {
                         heightFactor: 1,
                         child: const Text(
                           "Profile",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                         ),
                       ),
                       tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -73,7 +73,7 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Decks",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -89,7 +89,7 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Calendar",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -105,7 +105,7 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Favorites",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -121,7 +121,7 @@ class AppDrawer extends StatelessWidget {
                         heightFactor: 1,
                         child: const Text(
                           "Sign out",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
                         ),
                       ),
                       tileColor: const Color.fromRGBO(224, 224, 224, 1),

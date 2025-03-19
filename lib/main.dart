@@ -1,7 +1,17 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+  if (Platform.isWindows) {
+    WindowManager.instance.setMinimumSize(const Size(1920, 1080));
+    //Sets minimum resolution to 1080p
+    WindowManager.instance.setMaximumSize(const Size(2650, 1440));
+    //Sets maximum resolution to 1440p
+  }
   runApp(MyApp());
 }
 
