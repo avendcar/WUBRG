@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/profile_page_card.dart';
@@ -21,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(
+        
         padding: EdgeInsets.only(
             top: deviceHeight(context) * 0.095,
             bottom: deviceHeight(context) * 0.095,
@@ -50,21 +52,19 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Column(
                   children: [
-                    TextButton(//Button that navigates to the Edit Profile
-                      onPressed: () {},
-                      child: Text(
-                        "Edit Profile",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Belwe",
-                            fontSize: 24),
-                      ),
+                    Text(
+                      "Username",
+                      style: TextStyle(
+                          fontFamily: "Belwe",
+                          fontSize: 24,
+                          color: Colors.white),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.2,
                       width: MediaQuery.of(context).size.width * 0.2,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 20, bottom: 20),
                         child: ClipPath(
                           //Hexagonal shaped PFP
                           clipper: Hexagon(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/pages/home_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
 
@@ -28,7 +29,8 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Home",
-                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                        style:
+                            TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -51,7 +53,8 @@ class AppDrawer extends StatelessWidget {
                         heightFactor: 1,
                         child: const Text(
                           "Profile",
-                          style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                          style: TextStyle(
+                              color: Colors.black, fontFamily: "Belwe"),
                         ),
                       ),
                       tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -73,7 +76,8 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Decks",
-                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                        style:
+                            TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -89,7 +93,8 @@ class AppDrawer extends StatelessWidget {
                       heightFactor: 1,
                       child: const Text(
                         "Calendar",
-                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                        style:
+                            TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
                     ),
                     tileColor: const Color.fromRGBO(224, 224, 224, 1),
@@ -101,19 +106,26 @@ class AppDrawer extends StatelessWidget {
                   SizedBox(height: 16),
                   // Box for favorites
                   ListTile(
-                    title: Center(
-                      heightFactor: 1,
-                      child: const Text(
-                        "Favorites",
-                        style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                      title: Center(
+                        heightFactor: 1,
+                        child: const Text(
+                          "Edit Profile",
+                          style: TextStyle(
+                              color: Colors.black, fontFamily: "Belwe"),
+                        ),
                       ),
-                    ),
-                    tileColor: const Color.fromRGBO(224, 224, 224, 1),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.red, width: 2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                      tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.red, width: 2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EditProfilePage()),
+                        );
+                      }),
                   SizedBox(height: 16),
                   // Box for signing out
                   ListTile(
@@ -121,7 +133,8 @@ class AppDrawer extends StatelessWidget {
                         heightFactor: 1,
                         child: const Text(
                           "Sign out",
-                          style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+                          style: TextStyle(
+                              color: Colors.black, fontFamily: "Belwe"),
                         ),
                       ),
                       tileColor: const Color.fromRGBO(224, 224, 224, 1),

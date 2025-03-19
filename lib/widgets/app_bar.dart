@@ -57,7 +57,7 @@ class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: TextField(
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: "Search...",
+                hintText: "Search for users and events...",
                 hintStyle: TextStyle(color: Colors.white70),
                 filled: true,
                 fillColor: Colors.grey[800],
