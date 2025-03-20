@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:flutter_application_3/widgets/main_menu_calendar_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_card.dart';
+import 'package:flutter_application_3/widgets/main_menu_decks_card.dart';
+import 'package:flutter_application_3/widgets/main_menu_events_card.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -20,7 +23,6 @@ class MainPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //TODO: populate containers with data
             SizedBox(height: 50),
             Expanded(
               child: Container(
@@ -37,23 +39,22 @@ class MainPage extends StatelessWidget {
                       20.0), //Padding between large container and all the cards
                   child: Row(
                     children: [
-                      MainMenuCard(
-                          title: "Upcoming",
-                          buttons: 1,
-                          subtitle:
-                              "This is a description in the Upcoming menu card"),
+                      //Large button height: 250. Small button height: 100.
+                      MainMenuCalendarCard(
+                        title: "Calendar",
+                        subtitle:
+                            "Click here to navigate to the calendar page.",
+                      ),
                       SizedBox(width: 10),
-                      MainMenuCard(
-                          title: "Popular",
-                          buttons: 2,
-                          subtitle:
-                              "This is a description in the Popular menu card"),
+                      MainMenuDecksCard(
+                        title: "Decks",
+                        subtitle: "Click here to navigate to the decks page.",
+                      ),
                       SizedBox(width: 10),
-                      MainMenuCard(
-                          title: "For You",
-                          buttons: 3,
+                      MainMenuEventsCard(
+                          title: "All Events",
                           subtitle:
-                              "This is a description in For You card",),
+                              "Click here to go to the events page."),
                     ],
                   ),
                 ),
@@ -79,19 +80,21 @@ class MainPage extends StatelessWidget {
                   child: Row(
                     children: [
                       MainMenuCard(
-                          title: "Messages",
+                          title: "Message Recipient",
                           buttons: 4,
-                          subtitle: "This is a description in the Messages card"),
+                          subtitle:
+                              "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
-                          title: "Example Card 2",
+                          title: "Friends",
                           buttons: 5,
-                          subtitle: "This is a description in Example Card 2"),
+                          subtitle:
+                              "This is a description in the Friends card"),
                       SizedBox(width: 10),
                       MainMenuCard(
-                          title: "Example Card 3",
+                          title: "New Card Sets",
                           buttons: 6,
-                          subtitle: "This is a description in Example Card 3"),
+                          subtitle: "This is a description in New Card Sets"),
                     ],
                   ),
                 ),

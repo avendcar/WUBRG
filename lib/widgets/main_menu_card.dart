@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MainMenuCard extends StatelessWidget {
-  const MainMenuCard(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.buttons});
+  const MainMenuCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.buttons,
+  });
   final String title;
   final String subtitle;
   final int buttons;
@@ -26,10 +27,10 @@ class MainMenuCard extends StatelessWidget {
                     textAlign: TextAlign.start),
                 subtitle: SizedBox(
                   width: 25,
-                  height: MediaQuery.of(context).size.height *0.3,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   //Size of box containing all buttons
                   child: SingleChildScrollView(
-                    //Allows for scrolling within each card if there exist more than 3 buttons
+                    //Allows for scrolling within each card if there exist more than 2 buttons
                     child: Column(
                       children: [
                         for (int x = 1; x < buttons + 1; x++)
@@ -51,6 +52,7 @@ class MainMenuCard extends StatelessWidget {
                                       side: WidgetStatePropertyAll(
                                         BorderSide(
                                           color: Colors.transparent,
+                                          //Removes border from button object
                                         ),
                                       ),
                                     ),
@@ -58,23 +60,25 @@ class MainMenuCard extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child:
-                                            Image.asset("images/kuriboh.png"),
+                                        child: Image.asset(
+                                            "images/kuriboh.png"), //Image representing the event/user
                                       ),
-                                    ), //Placeholder for leading icon before each subtitle
+                                    ),
                                     label: Text(
                                       "$subtitle (Button #$x)",
-                                      maxLines: 5,
+                                      maxLines:
+                                          4, //Amount of lines before text is cut off and the end is replaced with ellipsis
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontFamily: "Belwe",
                                           color: Colors.black),
                                     ),
                                     iconAlignment: IconAlignment.start,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      //Generic cards do not lead anywhere by default
+                                    },
                                   ),
                                 ),
-                                //Size of each button within the scrollable box
                               ),
                             ),
                           ),
