@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       getUsername(), //Displays username set in edit_profile_page.dart
                       style: TextStyle(
                           fontFamily: "Belwe",
-                          fontSize: 24,
+                          fontSize: 30,
                           color: Colors.white),
                     ),
                     SizedBox(
@@ -85,7 +85,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     Expanded(
                       child: ProfilePageCard(
                         title: "Decks",
-                        textBox: Text("Here's some text"),
+                        textBox: Text(
+                          "This is filler text",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Belwe",
+                              fontSize: 18),
+                        ),
                         height: MediaQuery.of(context).size.width * 0.165,
                         width: MediaQuery.of(context).size.width * 0.2,
                         endIndent: 270,
@@ -97,11 +103,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 Column(
                   children: [
                     ProfilePageCard(
-                      title: "User Details",
+                      title: "User Info",
+                      
                       textBox: Text(
                         getBio(),
-                        style:
-                            TextStyle(color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "Belwe",
+                            fontSize: 24),
                       ),
                       height: MediaQuery.of(context).size.width * 0.175,
                       width: MediaQuery.of(context).size.width * 0.5,
@@ -115,9 +124,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ProfilePageCard(
                         title: "Activity",
                         textBox: Text(
-                          "Here's some text",
+                          "This is filler text",
                           style: TextStyle(
-                              color: Colors.white, fontFamily: "Belwe", fontSize: 18),
+                              color: Colors.white,
+                              fontFamily: "Belwe",
+                              fontSize: 18),
                         ),
                         height: MediaQuery.of(context).size.width * 0.18,
                         width: MediaQuery.of(context).size.width * 0.5,
