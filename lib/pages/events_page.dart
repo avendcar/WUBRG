@@ -8,7 +8,7 @@ class EventsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO: Create events page
-    //Displays many events with less detail, as opposed to the detailed events page which displays a single event with more detail.
+    //Displays many events with less detail, as opposed to the detailed event page which displays a single event with more detail.
     return Scaffold(
       appBar: PersistentAppBar(),
       endDrawer: AppDrawer(),

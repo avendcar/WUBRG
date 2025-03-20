@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:flutter_application_3/widgets/main_menu_calendar_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_card.dart';
+import 'package:flutter_application_3/widgets/main_menu_events_card.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -37,27 +39,20 @@ class MainPage extends StatelessWidget {
                   child: Row(
                     children: [
                       //Large button height: 250. Small button height: 100.
-                      MainMenuCard(
-                          title: "Calendar",
-                          //TODO: Have this button lead to the calendar page
-                          buttons: 1,
-                          buttonHeight: 250,
-                          subtitle:
-                              "This is a description in the Calendar menu card"),
-
+                      MainMenuCalendarCard(
+                        title: "Calendar",
+                        subtitle:
+                            "This is a description in the Calendar menu card",
+                      ),
                       SizedBox(width: 10),
                       MainMenuCard(
                         title: "For You",
                         buttons: 3,
-                        buttonHeight: 100,
                         subtitle: "This is a description in For You card",
                       ),
                       SizedBox(width: 10),
-                      MainMenuCard(
+                      MainMenuEventsCard(
                           title: "All Events",
-                          //TODO: Have this button lead to the events page
-                          buttons: 1,
-                          buttonHeight: 250,
                           subtitle:
                               "This is a description in the All Events menu card"),
                     ],
@@ -87,21 +82,18 @@ class MainPage extends StatelessWidget {
                       MainMenuCard(
                           title: "Message Recipient",
                           buttons: 4,
-                          buttonHeight: 100,
                           subtitle:
                               "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Friends",
                           buttons: 5,
-                          buttonHeight: 100,
                           subtitle:
                               "This is a description in the Friends card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "New Card Sets",
                           buttons: 6,
-                          buttonHeight: 100,
                           subtitle: "This is a description in New Card Sets"),
                     ],
                   ),

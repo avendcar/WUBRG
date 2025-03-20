@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import '../pages/events_page.dart';
 
 class MainMenuCard extends StatelessWidget {
-  const MainMenuCard(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.buttons,
-      required this.buttonHeight});
+  const MainMenuCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.buttons,
+  });
   final String title;
   final String subtitle;
   final int buttons;
-  final double buttonHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class MainMenuCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: SizedBox(
-                                height: buttonHeight,
+                                height: 100,
                                 child: IntrinsicHeight(
                                   child: OutlinedButton.icon(
                                     style: ButtonStyle(
@@ -78,17 +77,10 @@ class MainMenuCard extends StatelessWidget {
                                     ),
                                     iconAlignment: IconAlignment.start,
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const EventsPage(),
-                                        ),
-                                      );
+                                      //Generic cards do not lead anywhere by default
                                     },
                                   ),
                                 ),
-                                //Size of each button within the scrollable box
                               ),
                             ),
                           ),
