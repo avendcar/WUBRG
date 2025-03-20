@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../pages/events_page.dart';
-
 class MainMenuCard extends StatelessWidget {
   const MainMenuCard({
     super.key,

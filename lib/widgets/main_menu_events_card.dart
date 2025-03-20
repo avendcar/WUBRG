@@ -63,7 +63,7 @@ class MainMenuEventsCard extends StatelessWidget {
                                     ),
                                   ),
                                   label: Text(
-                                    "Click here to navigate to the events page.",
+                                    subtitle,
                                     style: TextStyle(
                                         fontFamily: "Belwe",
                                         color: Colors.black,

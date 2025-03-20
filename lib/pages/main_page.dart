@@ -3,6 +3,7 @@ import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/main_menu_calendar_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_card.dart';
+import 'package:flutter_application_3/widgets/main_menu_decks_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_events_card.dart';
 
 class MainPage extends StatelessWidget {
@@ -42,19 +43,18 @@ class MainPage extends StatelessWidget {
                       MainMenuCalendarCard(
                         title: "Calendar",
                         subtitle:
-                            "This is a description in the Calendar menu card",
+                            "Click here to navigate to the calendar page.",
                       ),
                       SizedBox(width: 10),
-                      MainMenuCard(
-                        title: "For You",
-                        buttons: 3,
-                        subtitle: "This is a description in For You card",
+                      MainMenuDecksCard(
+                        title: "Decks",
+                        subtitle: "Click here to navigate to the decks page.",
                       ),
                       SizedBox(width: 10),
                       MainMenuEventsCard(
                           title: "All Events",
                           subtitle:
-                              "This is a description in the All Events menu card"),
+                              "Click here to go to the events page."),
                     ],
                   ),
                 ),

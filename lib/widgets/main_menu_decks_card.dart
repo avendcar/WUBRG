@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/calendar_page.dart';
+import 'package:flutter_application_3/pages/decks_page.dart';
 
-class MainMenuCalendarCard extends StatelessWidget {
-  //Check main_page.dart to see how this widget is used
-  const MainMenuCalendarCard({
+class MainMenuDecksCard extends StatelessWidget {
+  const MainMenuDecksCard({
     super.key,
     required this.title,
     required this.subtitle,
   });
   final String title;
   final String subtitle;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -57,8 +57,11 @@ class MainMenuCalendarCard extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Icon(Icons
-                                          .calendar_month_outlined, size: 128, color: Colors.black,), //Image representing the event/user
+                                      child: SizedBox(
+                                        width: 125,
+                                        height: 125,
+                                        child: Image.asset("images/sloth.png"),
+                                      ), //Image representing the event/user
                                     ),
                                   ),
                                   label: Text(
@@ -73,8 +76,7 @@ class MainMenuCalendarCard extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CalendarPage(),
+                                        builder: (context) => const DecksPage(),
                                       ),
                                     );
                                   },
