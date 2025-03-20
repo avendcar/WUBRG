@@ -4,6 +4,7 @@ import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/edit_profile_button.dart';
+import 'edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/profile_page_card.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Column(
                   children: [
                     Text(
-                      "Username",
+                      getUsername(), //Displays username set in edit_profile_page.dart
                       style: TextStyle(
                           fontFamily: "Belwe",
                           fontSize: 24,
@@ -84,9 +85,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     Expanded(
                       child: ProfilePageCard(
                         title: "Decks",
+                        textBox: Text("Here's some text"),
                         height: MediaQuery.of(context).size.width * 0.165,
                         width: MediaQuery.of(context).size.width * 0.2,
-                        endIndent: 405,
+                        endIndent: 270,
                       ),
                     ),
                   ],
@@ -96,9 +98,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     ProfilePageCard(
                       title: "User Details",
+                      textBox: Text(
+                        getBio(),
+                        style:
+                            TextStyle(color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+                      ),
                       height: MediaQuery.of(context).size.width * 0.175,
                       width: MediaQuery.of(context).size.width * 0.5,
-                      endIndent: 1100,
+                      endIndent: 770,
                     ),
                     SizedBox(
                       height: 60,
@@ -107,9 +114,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     Expanded(
                       child: ProfilePageCard(
                         title: "Activity",
+                        textBox: Text(
+                          "Here's some text",
+                          style: TextStyle(
+                              color: Colors.white, fontFamily: "Belwe", fontSize: 18),
+                        ),
                         height: MediaQuery.of(context).size.width * 0.18,
                         width: MediaQuery.of(context).size.width * 0.5,
-                        endIndent: 1150,
+                        endIndent: 820,
                       ),
                     )
                   ],

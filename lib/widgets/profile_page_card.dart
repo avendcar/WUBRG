@@ -6,11 +6,13 @@ class ProfilePageCard extends StatelessWidget {
       required this.height,
       required this.width,
       required this.title,
-      required this.endIndent});
+      required this.endIndent,
+      required this.textBox});
   final double height;
   final double width;
   final String title;
   final double endIndent;
+  final Text textBox;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class ProfilePageCard extends StatelessWidget {
             to the right end of the divider
             */
           ),
+          textBox,
         ],
       ),
     );

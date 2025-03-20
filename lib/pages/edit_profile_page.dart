@@ -10,8 +10,15 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-String _username = "";
-String _bio = "";
+String _username = '';
+String _bio = '';
+String getUsername() {
+  return _username;
+}
+
+String getBio() {
+  return _bio;
+}
 //TODO: Link up username and bio to database
 
 class _EditProfilePageState extends State<EditProfilePage> {
@@ -81,7 +88,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           width: 400,
                           child: TextFormField(
                             maxLength: 20,
-                            controller: _usernameController,
+                            controller: _usernameController
+                              ..text =
+                                  _username, //Sets the initial value as the current username
                             //Code block for testing username input
                             /* onChanged: (value) {
                               setState(() {
@@ -89,7 +98,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               });
                             }, */
                             decoration: InputDecoration(
-                              labelText: "Username",
                               labelStyle: TextStyle(fontFamily: "Belwe"),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -118,8 +126,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             //Bio field measurements
                             width: 500,
                             child: TextFormField(
-                              maxLength: 500,
-                              controller: _bioController,
+                              maxLength: 800,
+                              controller: _bioController
+                                ..text =
+                                    _bio, //Sets the initial value as the current bio,
                               //Code block for testing bio input
                               /*  onChanged: (value) {
                                 setState(() {
@@ -128,7 +138,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               }, */
                               maxLines: null, //Increases height as user types
                               decoration: InputDecoration(
-                                labelText: "Bio",
                                 labelStyle: TextStyle(fontFamily: "Belwe"),
                                 contentPadding: EdgeInsets.all(8.0),
                                 border: OutlineInputBorder(
@@ -164,7 +173,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content:
-                                    Text('Submitted! You may exit this page.'),
+                                    Text('Information saved! You may exit this page.'),
                                 duration: Duration(seconds: 2),
                               ),
                             );
