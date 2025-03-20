@@ -44,10 +44,10 @@ class MainPage extends StatelessWidget {
                               "This is a description in the Upcoming menu card"),
                       SizedBox(width: 10),
                       MainMenuCard(
-                          title: "Popular",
+                          title: "All Events",
                           buttons: 2,
                           subtitle:
-                              "This is a description in the Popular menu card"),
+                              "This is a description in the All Events menu card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "For You",
@@ -79,19 +79,19 @@ class MainPage extends StatelessWidget {
                   child: Row(
                     children: [
                       MainMenuCard(
-                          title: "Messages",
+                          title: "Message Recipient",
                           buttons: 4,
                           subtitle: "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
-                          title: "Example Card 2",
+                          title: "Friends",
                           buttons: 5,
-                          subtitle: "This is a description in Example Card 2"),
+                          subtitle: "This is a description in the Friends card"),
                       SizedBox(width: 10),
                       MainMenuCard(
-                          title: "Example Card 3",
+                          title: "New Card Sets",
                           buttons: 6,
-                          subtitle: "This is a description in Example Card 3"),
+                          subtitle: "This is a description in New Card Sets"),
                     ],
                   ),
                 ),

@@ -64,7 +64,7 @@ class MainMenuCard extends StatelessWidget {
                                     ), //Placeholder for leading icon before each subtitle
                                     label: Text(
                                       "$subtitle (Button #$x)",
-                                      maxLines: 5,
+                                      maxLines: 3,//Amount of lines before text is cut off and the end is replaced with ellipsis
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontFamily: "Belwe",

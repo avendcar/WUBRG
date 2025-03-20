@@ -9,7 +9,6 @@ class EditProfilePage extends StatefulWidget {
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
-
 String _username = '';
 String _bio = '';
 String getUsername() {
@@ -88,15 +87,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           width: 400,
                           child: TextFormField(
                             maxLength: 20,
-                            controller: _usernameController
-                              ..text =
-                                  _username, //Sets the initial value as the current username
-                            //Code block for testing username input
-                            /* onChanged: (value) {
-                              setState(() {
-                                _username = value;
-                              });
-                            }, */
+                            controller: _usernameController..text = _username,
                             decoration: InputDecoration(
                               labelStyle: TextStyle(fontFamily: "Belwe"),
                               border: OutlineInputBorder(
@@ -118,8 +109,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      //Code block for testing username input
-                      /* Text('Your Username: $_username'), */
+
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -151,8 +141,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      //Code block for testing bio input
-                      /* Text('Your Bio: $_bio'), */
+
                       TextButton(
                         style: ButtonStyle(
                           shape: WidgetStatePropertyAll(
