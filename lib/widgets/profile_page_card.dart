@@ -46,7 +46,10 @@ class ProfilePageCard extends StatelessWidget {
             to the right end of the divider
             */
           ),
-          textBox,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: textBox,
+          ),
         ],
       ),
     );

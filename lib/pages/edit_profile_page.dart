@@ -118,7 +118,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      Text('Your Username: $_username'),
+                      //Code block for testing username input
+                      /* Text('Your Username: $_username'), */
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -126,16 +127,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             //Bio field measurements
                             width: 500,
                             child: TextFormField(
-                              maxLength: 800,
+                              maxLength: 500,
                               controller: _bioController
                                 ..text =
                                     _bio, //Sets the initial value as the current bio,
-                              //Code block for testing bio input
-                              /*  onChanged: (value) {
-                                setState(() {
-                                  _bio = value;
-                                });
-                              }, */
+
                               maxLines: null, //Increases height as user types
                               decoration: InputDecoration(
                                 labelStyle: TextStyle(fontFamily: "Belwe"),
@@ -155,7 +151,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      Text('Your Bio: $_bio'),
+                      //Code block for testing bio input
+                      /* Text('Your Bio: $_bio'), */
                       TextButton(
                         style: ButtonStyle(
                           shape: WidgetStatePropertyAll(
@@ -172,8 +169,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content:
-                                    Text('Information saved! You may exit this page.'),
+                                content: Text(
+                                    'Information saved! You may exit this page.'),
                                 duration: Duration(seconds: 2),
                               ),
                             );
