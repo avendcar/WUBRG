@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/calendar_page.dart';
+import 'package:flutter_application_3/pages/decks_page.dart';
 import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/pages/home_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
@@ -85,6 +87,14 @@ class AppDrawer extends StatelessWidget {
                       side: BorderSide(color: Colors.blue, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
+                     onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DecksPage(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 16),
                   // Box for calendar
@@ -102,30 +112,39 @@ class AppDrawer extends StatelessWidget {
                       side: BorderSide(color: Colors.deepPurple, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CalendarPage(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 16),
                   // Box for favorites
                   ListTile(
-                      title: Center(
-                        heightFactor: 1,
-                        child: const Text(
-                          "Edit Profile",
-                          style: TextStyle(
-                              color: Colors.black, fontFamily: "Belwe"),
-                        ),
+                    title: Center(
+                      heightFactor: 1,
+                      child: const Text(
+                        "Edit Profile",
+                        style:
+                            TextStyle(color: Colors.black, fontFamily: "Belwe"),
                       ),
-                      tileColor: const Color.fromRGBO(224, 224, 224, 1),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.red, width: 2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const EditProfilePage()),
-                        );
-                      }),
+                    ),
+                    tileColor: const Color.fromRGBO(224, 224, 224, 1),
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.red, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfilePage()),
+                      );
+                    },
+                  ),
                   SizedBox(height: 16),
                   // Box for signing out
                   ListTile(

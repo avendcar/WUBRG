@@ -105,6 +105,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             },
                             onSaved: (value) {
                               _username = value!;
+                              //Sets username to the value in the username text field when the submit button is pressed
                             },
                           ),
                         ),
@@ -136,6 +137,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               },
                               onSaved: (value) {
                                 _bio = value!;
+                                //Sets bio to the value in the bio text field when the submit button is pressed
                               },
                             ),
                           ),

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../pages/events_page.dart';
+
 class MainMenuCard extends StatelessWidget {
   const MainMenuCard(
       {super.key,
       required this.title,
       required this.subtitle,
-      required this.buttons});
+      required this.buttons,
+      required this.buttonHeight});
   final String title;
   final String subtitle;
   final int buttons;
+  final double buttonHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +30,10 @@ class MainMenuCard extends StatelessWidget {
                     textAlign: TextAlign.start),
                 subtitle: SizedBox(
                   width: 25,
-                  height: MediaQuery.of(context).size.height *0.3,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   //Size of box containing all buttons
                   child: SingleChildScrollView(
-                    //Allows for scrolling within each card if there exist more than 3 buttons
+                    //Allows for scrolling within each card if there exist more than 2 buttons
                     child: Column(
                       children: [
                         for (int x = 1; x < buttons + 1; x++)
@@ -38,7 +42,7 @@ class MainMenuCard extends StatelessWidget {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: SizedBox(
-                                height: 100,
+                                height: buttonHeight,
                                 child: IntrinsicHeight(
                                   child: OutlinedButton.icon(
                                     style: ButtonStyle(
@@ -51,6 +55,7 @@ class MainMenuCard extends StatelessWidget {
                                       side: WidgetStatePropertyAll(
                                         BorderSide(
                                           color: Colors.transparent,
+                                          //Removes border from button object
                                         ),
                                       ),
                                     ),
@@ -58,20 +63,29 @@ class MainMenuCard extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child:
-                                            Image.asset("images/kuriboh.png"),
+                                        child: Image.asset(
+                                            "images/kuriboh.png"), //Image representing the event/user
                                       ),
-                                    ), //Placeholder for leading icon before each subtitle
+                                    ),
                                     label: Text(
                                       "$subtitle (Button #$x)",
-                                      maxLines: 3,//Amount of lines before text is cut off and the end is replaced with ellipsis
+                                      maxLines:
+                                          4, //Amount of lines before text is cut off and the end is replaced with ellipsis
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontFamily: "Belwe",
                                           color: Colors.black),
                                     ),
                                     iconAlignment: IconAlignment.start,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EventsPage(),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                                 //Size of each button within the scrollable box

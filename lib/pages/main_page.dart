@@ -20,7 +20,6 @@ class MainPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //TODO: populate containers with data
             SizedBox(height: 50),
             Expanded(
               child: Container(
@@ -37,23 +36,30 @@ class MainPage extends StatelessWidget {
                       20.0), //Padding between large container and all the cards
                   child: Row(
                     children: [
+                      //Large button height: 250. Small button height: 100.
                       MainMenuCard(
-                          title: "Upcoming",
+                          title: "Calendar",
+                          //TODO: Have this button lead to the calendar page
                           buttons: 1,
+                          buttonHeight: 250,
                           subtitle:
-                              "This is a description in the Upcoming menu card"),
+                              "This is a description in the Calendar menu card"),
+
+                      SizedBox(width: 10),
+                      MainMenuCard(
+                        title: "For You",
+                        buttons: 3,
+                        buttonHeight: 100,
+                        subtitle: "This is a description in For You card",
+                      ),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "All Events",
-                          buttons: 2,
+                          //TODO: Have this button lead to the events page
+                          buttons: 1,
+                          buttonHeight: 250,
                           subtitle:
                               "This is a description in the All Events menu card"),
-                      SizedBox(width: 10),
-                      MainMenuCard(
-                          title: "For You",
-                          buttons: 3,
-                          subtitle:
-                              "This is a description in For You card",),
                     ],
                   ),
                 ),
@@ -81,16 +87,21 @@ class MainPage extends StatelessWidget {
                       MainMenuCard(
                           title: "Message Recipient",
                           buttons: 4,
-                          subtitle: "This is a description in the Messages card"),
+                          buttonHeight: 100,
+                          subtitle:
+                              "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Friends",
                           buttons: 5,
-                          subtitle: "This is a description in the Friends card"),
+                          buttonHeight: 100,
+                          subtitle:
+                              "This is a description in the Friends card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "New Card Sets",
                           buttons: 6,
+                          buttonHeight: 100,
                           subtitle: "This is a description in New Card Sets"),
                     ],
                   ),
