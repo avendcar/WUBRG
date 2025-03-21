@@ -12,9 +12,39 @@ class EventsPage extends StatelessWidget {
     return Scaffold(
       appBar: PersistentAppBar(),
       endDrawer: AppDrawer(),
-      body: Text(
-        'This is the events page. Replace this widget with whatever.',
-        style: TextStyle(color: Colors.white),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/mtg-background.png"),
+              fit: BoxFit.cover),
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 30, bottom: 30, left: 100, right: 100),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.red,
+                    height: MediaQuery.of(context).size.height,
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    color: Colors.blue,
+                    height: MediaQuery.of(context).size.height,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
