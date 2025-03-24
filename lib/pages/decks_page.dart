@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 
+import 'profile_page.dart';
+
 class DecksPage extends StatelessWidget {
   const DecksPage({super.key});
 
@@ -9,11 +11,44 @@ class DecksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO: Create decks page
     return Scaffold(
-      appBar: PersistentAppBar(),
       endDrawer: AppDrawer(),
-      body: Text(
-        'This is the decks page. Replace this widget with whatever.',
-        style: TextStyle(color: Colors.white),
+      appBar: PersistentAppBar(),
+      body: Container(
+        padding: EdgeInsets.only(
+            top: deviceHeight(context) * 0.095,
+            bottom: deviceHeight(context) * 0.095,
+            left: deviceWidth(context) * .095,
+            right: deviceWidth(context) * .095),
+        //Distance of profile box from the edges of the body
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.yellow, Colors.black],
+          ),
+        ),
+        child: Container(
+          //Grey box
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 43, 42, 42),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: Colors.yellowAccent, width: 10),
+          ),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: Row(
+              children: [
+                Column(
+                  children: [],
+                ),
+                SizedBox(width: 120),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

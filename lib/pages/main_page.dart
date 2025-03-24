@@ -27,7 +27,7 @@ class MainPage extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 13, 56, 92),
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -67,7 +67,7 @@ class MainPage extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 13, 56, 92),
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),

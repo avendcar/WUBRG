@@ -20,7 +20,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: EditProfileButton(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: EditProfileButton(),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
@@ -105,7 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     ProfilePageCard(
                       title: "User Info",
-                      
                       textBox: Text(
                         getBio(),
                         style: TextStyle(
