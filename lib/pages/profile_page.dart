@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/edit_profile_page.dart';
@@ -77,10 +78,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           clipper: Hexagon(),
                           child: Container(
                             color: Colors.grey,
-                            child: Image.asset(
-                              //Image for PFP
-                              'images/mtg-background.png',
-                              fit: BoxFit.fill,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 45),
+                              child: Image.file(File(pickedFile!.path!),
+                                  height: 200,
+                                  width: 200,
+                                  fit: BoxFit.fitWidth),
                             ),
                           ),
                         ),

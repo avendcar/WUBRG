@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
-import 'package:image_field/image_field.dart';
+
 import 'dart:async';
 import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -15,8 +17,7 @@ class EditProfilePage extends StatefulWidget {
 
 String _username = '';
 String _bio = '';
-dynamic remoteFiles;
-
+PlatformFile? pickedFile;
 String getUsername() {
   return _username;
 }
@@ -25,17 +26,27 @@ String getBio() {
   return _bio;
 }
 
-Future<dynamic> uploadToServer(File? file) async {
-  //implement your code using Rest API or other technology
+PlatformFile? getProfilePicture() {
+  return pickedFile;
 }
 
-//TODO: Link up username and bio to database
+//TODO: Link up username, bio, and profile picture to database
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    setState(
+      () {
+        pickedFile = result.files.first;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +132,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -154,34 +164,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                         ),
                       ),
-                      Center(
-                        child: ImageField(
-                          texts: const {
-                            'fieldFormText': 'Upload to server',
-                            'titleText': 'Upload to server'
-                          },
-                          files: remoteFiles != null
-                              ? remoteFiles!.map((image) {
-                                  return ImageAndCaptionModel(
-                                      file: image,
-                                      caption: image.alt.toString());
-                                }).toList()
-                              : [],
-                          remoteImage: true,
-                          onUpload: (pickedFile,
-                              controllerLinearProgressIndicator) async {
-                            dynamic fileUploaded = await uploadToServer(
-                              pickedFile,
-                            );
-                            return fileUploaded;
-                          },
-                          onSave: (List<ImageAndCaptionModel>?
-                              imageAndCaptionList) {
-                            remoteFiles = imageAndCaptionList;
-                          },
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          style: ButtonStyle(
+                            overlayColor: WidgetStateProperty.all(Colors.grey),
+                          ),
+                          onPressed: selectFile,
+                          child: Text("Change profile picture"),
                         ),
                       ),
-
                       TextButton(
                         style: ButtonStyle(
                           shape: WidgetStatePropertyAll(
@@ -211,6 +204,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontFamily: "Belwe", color: Colors.black),
                         ),
                       ),
+                      if (pickedFile != null)
+                        Expanded(
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            color: Colors.blue,
+                            child: Image.file(
+                              File(pickedFile!.path!),
+                              height: 200,
+                              width: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
