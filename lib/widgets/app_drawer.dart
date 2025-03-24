@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/calendar_page.dart';
 import 'package:flutter_application_3/pages/decks_page.dart';
-import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/pages/home_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';

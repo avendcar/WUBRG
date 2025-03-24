@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:image_field/image_field.dart';
+import 'dart:async';
+import 'dart:io';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -9,8 +12,11 @@ class EditProfilePage extends StatefulWidget {
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
+
 String _username = '';
 String _bio = '';
+dynamic remoteFiles;
+
 String getUsername() {
   return _username;
 }
@@ -18,6 +24,11 @@ String getUsername() {
 String getBio() {
   return _bio;
 }
+
+Future<dynamic> uploadToServer(File? file) async {
+  //implement your code using Rest API or other technology
+}
+
 //TODO: Link up username and bio to database
 
 class _EditProfilePageState extends State<EditProfilePage> {
@@ -141,6 +152,33 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               },
                             ),
                           ),
+                        ),
+                      ),
+                      Center(
+                        child: ImageField(
+                          texts: const {
+                            'fieldFormText': 'Upload to server',
+                            'titleText': 'Upload to server'
+                          },
+                          files: remoteFiles != null
+                              ? remoteFiles!.map((image) {
+                                  return ImageAndCaptionModel(
+                                      file: image,
+                                      caption: image.alt.toString());
+                                }).toList()
+                              : [],
+                          remoteImage: true,
+                          onUpload: (pickedFile,
+                              controllerLinearProgressIndicator) async {
+                            dynamic fileUploaded = await uploadToServer(
+                              pickedFile,
+                            );
+                            return fileUploaded;
+                          },
+                          onSave: (List<ImageAndCaptionModel>?
+                              imageAndCaptionList) {
+                            remoteFiles = imageAndCaptionList;
+                          },
                         ),
                       ),
 
