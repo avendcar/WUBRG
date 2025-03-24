@@ -1,9 +1,34 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
-
 import 'profile_page.dart';
+
+DateTime timeOfEvent = DateTime(2017, 9, 7, 17, 30);
+String title = "Example Event Title";
+String description = "Example Event Description";
+
+List<Event> eventsList = [];
+int eventIndex = 0;
+
+class Event {
+  Event(DateTime dateTime, String title, String description, int eventID);
+}
+
+void addEvent(DateTime dateTime, String title, String description) {
+  Event event = Event(dateTime, title, description, eventIndex);
+  eventsList.add(event);
+  eventIndex++;
+}
+
+void removeEvent(int eventID) {
+  eventsList.removeWhere((item) => eventIndex == eventID);
+}
+
+List<Event> getEventsList(){
+  return eventsList;
+}
 
 class EditEvents extends StatelessWidget {
   const EditEvents({super.key});
@@ -46,10 +71,10 @@ class EditEvents extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EventsPage()),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EventsPage()),
+                        );
                       },
                       child: Text("Click here to go back to the events page"),
                     ),

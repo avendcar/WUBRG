@@ -4,9 +4,10 @@ import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 
+List eventList = getEventsList();
+
 class EventsPage extends StatelessWidget {
   const EventsPage({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class EventsPage extends StatelessWidget {
             bottom: deviceHeight(context) * 0.095,
             left: deviceWidth(context) * .095,
             right: deviceWidth(context) * .095),
-        //Distance of profile box from the edges of the body
+        //Distance of events box from the edges of the body
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
@@ -49,7 +50,6 @@ class EventsPage extends StatelessWidget {
           ),
         ),
         child: Container(
-          //Grey box
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 43, 42, 42),
             borderRadius: BorderRadius.circular(20),
@@ -69,14 +69,13 @@ class EventsPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            color: Colors.blue,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: Colors.redAccent, width: 10),
+                            ),
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.red,
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -84,17 +83,29 @@ class EventsPage extends StatelessWidget {
                 VerticalDivider(),
                 Expanded(
                   flex: 4,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: ListView(
-                            children: [],
-                          )
-                        ),
-                      ),
-                    ],
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Column(
+                      children: [
+                        Expanded(
+
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
+                                  color: Colors.redAccent, width: 10),
+                            ),
+                            child: Column(
+                              children: [
+                                for(int x = 0; x < 7; x++)
+                                Text("$x", style: TextStyle(color: Colors.white),)
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

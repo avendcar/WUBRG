@@ -15,14 +15,7 @@ class ProfilePage extends StatefulWidget {
 
 double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
 double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
-/* File returnProfilePicture(){
-  if(pickedFile!=null) {
-    final File fileToReturn = File(pickedFile!.path);
-    return fileToReturn;
-  }else{
-    return 
-  }
-} */
+
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -90,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               radius: 175,
                               backgroundImage: pickedFile == null
                                   ? AssetImage(
-                                      "images/kuriboh.png") //Default profile icon if picked file is null
+                                      "images/mtg-background.png") //Default profile icon if picked file is null
                                   : FileImage(
                                       //Custom profile icon if picked file is not null
                                       File(pickedFile!.path!),
