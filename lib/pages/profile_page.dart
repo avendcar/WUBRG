@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
@@ -16,6 +15,14 @@ class ProfilePage extends StatefulWidget {
 
 double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
 double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
+/* File returnProfilePicture(){
+  if(pickedFile!=null) {
+    final File fileToReturn = File(pickedFile!.path);
+    return fileToReturn;
+  }else{
+    return 
+  }
+} */
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -73,17 +80,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 20, top: 20, bottom: 20),
-                        child: ClipPath(
-                          //Hexagonal shaped PFP
-                          clipper: Hexagon(),
-                          child: Container(
-                            color: Colors.grey,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 45),
-                              child: Image.file(File(pickedFile!.path!),
-                                  height: 200,
-                                  width: 200,
-                                  fit: BoxFit.fitWidth),
+
+                        //Hexagonal shaped PFP
+
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 45),
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 175,
+                              backgroundImage: pickedFile == null
+                                  ? AssetImage(
+                                      "images/kuriboh.png") //Default profile icon if picked file is null
+                                  : FileImage(
+                                      //Custom profile icon if picked file is not null
+                                      File(pickedFile!.path!),
+                                    ),
                             ),
                           ),
                         ),
@@ -151,8 +162,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-class Hexagon extends CustomClipper<Path> {
+//Obsolete class for creating a rectangle shape
+/* class Hexagon extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
@@ -170,3 +181,4 @@ class Hexagon extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
+ */

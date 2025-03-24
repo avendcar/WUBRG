@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
-
 import 'dart:async';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -18,16 +16,13 @@ class EditProfilePage extends StatefulWidget {
 String _username = '';
 String _bio = '';
 PlatformFile? pickedFile;
+File? profilePicture;
 String getUsername() {
   return _username;
 }
 
 String getBio() {
   return _bio;
-}
-
-PlatformFile? getProfilePicture() {
-  return pickedFile;
 }
 
 //TODO: Link up username, bio, and profile picture to database
@@ -63,7 +58,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Padding(
           padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.2,
-              bottom: MediaQuery.of(context).size.height * 0.25,
+              bottom: MediaQuery.of(context).size.height * 0.2,
               right: MediaQuery.of(context).size.width * 0.3,
               left: MediaQuery.of(context).size.width * 0.3),
           child: ClipRRect(
@@ -175,6 +170,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: Text("Change profile picture"),
                         ),
                       ),
+
+                      if (pickedFile != null)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipOval(
+                            child: Container(
+                              width: 175,
+                              height: 175,
+                              color: Colors.blue,
+                              child: Image.file(
+                                File(pickedFile!.path!),
+                                height: 200,
+                                width: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
                       TextButton(
                         style: ButtonStyle(
                           shape: WidgetStatePropertyAll(
@@ -204,20 +217,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontFamily: "Belwe", color: Colors.black),
                         ),
                       ),
-                      if (pickedFile != null)
-                        Expanded(
-                          child: Container(
-                            width: 200,
-                            height: 200,
-                            color: Colors.blue,
-                            child: Image.file(
-                              File(pickedFile!.path!),
-                              height: 200,
-                              width: 200,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 ),
