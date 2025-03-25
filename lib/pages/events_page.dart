@@ -3,12 +3,19 @@ import 'package:flutter_application_3/pages/edit_events.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:flutter_application_3/widgets/event_tile.dart';
 
 List eventList = getEventsList();
 
-class EventsPage extends StatelessWidget {
+class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
 
+  @override
+  State<EventsPage> createState() => _EventsPageState();
+}
+
+class _EventsPageState extends State<EventsPage> {
+  
   @override
   Widget build(BuildContext context) {
     //TODO: Create events page
@@ -88,7 +95,6 @@ class EventsPage extends StatelessWidget {
                     child: Column(
                       children: [
                         Expanded(
-
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
@@ -96,11 +102,19 @@ class EventsPage extends StatelessWidget {
                               border: Border.all(
                                   color: Colors.redAccent, width: 10),
                             ),
-                            child: Column(
-                              children: [
-                                for(int x = 0; x < 7; x++)
-                                Text("$x", style: TextStyle(color: Colors.white),)
-                              ],
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  for (int x = 0; x < 7; x++)
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: EventTile(),
+                                    ),
+                                  SizedBox(
+                                    height: 100,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         )
