@@ -35,7 +35,7 @@ class EditEvents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Create the 'create event' page
+    //TODO: Restrict access to only allow access to this page for admins
     return Scaffold(
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),

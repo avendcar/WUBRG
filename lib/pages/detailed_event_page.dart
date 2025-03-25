@@ -6,12 +6,11 @@ import 'profile_page.dart';
 
 class DetailedEventPage extends StatelessWidget {
   const DetailedEventPage({super.key});
-  //TODO: Create detailed event page and add navigation to this page.
-  //Displays a single event with more detail, as opposed to the events page which displays many events with less detail.
+  //TODO: Create detailed event page.
+  //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-     
+    return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
@@ -39,8 +38,10 @@ class DetailedEventPage extends StatelessWidget {
           height: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(28.0),
-            child: Text("This is the detailed events page.", style: TextStyle(color: Colors.white),),
-            
+            child: Text(
+              "This is the detailed events page.",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ),
       ),

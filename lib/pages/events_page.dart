@@ -15,7 +15,6 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  
   @override
   Widget build(BuildContext context) {
     //TODO: Create events page
@@ -81,6 +80,166 @@ class _EventsPageState extends State<EventsPage> {
                               border: Border.all(
                                   color: Colors.redAccent, width: 10),
                             ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Event Filters",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Belwe",
+                                      fontSize: 24),
+                                ),
+                                Divider(
+                                  indent: 10,
+                                  endIndent: 10,
+                                ),
+                                Text(
+                                  "Format",
+                                  style: TextStyle(
+                                      fontFamily: "Belwe",
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownMenu(
+                                      //Dropdown for adding a MTG format filter
+                                      hintText: "Select format...",
+                                      menuStyle: MenuStyle(
+                                        /*Feel free to expand this list with any of these formats:
+                                        https://magic.wizards.com/en/formats
+                                        */
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Colors.white),
+                                      ),
+                                      dropdownMenuEntries: [
+                                        DropdownMenuEntry(
+                                          value: Text("Any Format"),
+                                          label: "Any Format",
+                                        ),
+                                        DropdownMenuEntry(
+                                            value: Text("Commander"),
+                                            label: "Commander"),
+                                        DropdownMenuEntry(
+                                            value: Text("Standard"),
+                                            label: "Standard"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "Date",
+                                  style: TextStyle(
+                                      fontFamily: "Belwe",
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                Padding(
+                                  //Filter for how many days away the events are
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownMenu(
+                                      hintText: "Select date",
+                                      dropdownMenuEntries: [
+                                        DropdownMenuEntry(
+                                            value: Text("All dates"),
+                                            label: "All dates"),
+                                        DropdownMenuEntry(
+                                            value: Text("Within the week"),
+                                            label: "Within the week"),
+                                        DropdownMenuEntry(
+                                            value: Text("Within the month"),
+                                            label: "Within the month"),
+                                        DropdownMenuEntry(
+                                            value: Text("Within 3 months"),
+                                            label: "Within 3 months"),
+                                        DropdownMenuEntry(
+                                            value: Text("Within the year"),
+                                            label: "Within the year"),
+                                        DropdownMenuEntry(
+                                            value: Text("Beyond the year"),
+                                            label: "Beyond the year"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "Has open seats",
+                                  style: TextStyle(
+                                      fontFamily: "Belwe",
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                Padding(
+                                  //Filter for how many days away the events are
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownMenu(
+                                      dropdownMenuEntries: [
+                                        DropdownMenuEntry(
+                                            value: Text("Yes"), label: "Yes"),
+                                        DropdownMenuEntry(
+                                            value: Text("No"), label: "No"),
+                                        DropdownMenuEntry(
+                                            value: Text("All"), label: "All"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "Distance",
+                                  style: TextStyle(
+                                      fontFamily: "Belwe",
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                Padding(
+                                  //Filter for how many miles away the events are
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DropdownMenu(
+                                      dropdownMenuEntries: [
+                                        DropdownMenuEntry(
+                                            value: Text("Any Distance"),
+                                            label: "Any Distance"),
+                                        DropdownMenuEntry(
+                                            value: Text("<5 miles"),
+                                            label: "<5 miles"),
+                                        DropdownMenuEntry(
+                                            value: Text("<10 miles"),
+                                            label: "<10 miles"),
+                                        DropdownMenuEntry(
+                                            value: Text("<20 miles"),
+                                            label: "<20 miles"),
+                                        DropdownMenuEntry(
+                                            value: Text("<50 miles"),
+                                            label: "<50 miles"),
+                                        DropdownMenuEntry(
+                                            value: Text(">50 miles"),
+                                            label: ">50 miles"),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -112,12 +271,12 @@ class _EventsPageState extends State<EventsPage> {
                                     ),
                                   SizedBox(
                                     height: 100,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
