@@ -13,7 +13,8 @@ class EventTile extends StatefulWidget {
       required this.eventImage,
       required this.openSeats,
       required this.totalSeats,
-      required this.format});
+      required this.format,
+      required this.tables});
   final String title;
   final DateTime dateTime;
   final String description;
@@ -21,6 +22,7 @@ class EventTile extends StatefulWidget {
   final Image eventImage;
   final int openSeats;
   final int totalSeats;
+  final int tables;
   final String format;
 
   @override
@@ -51,6 +53,7 @@ class _EventTileState extends State<EventTile> {
                   eventImage: widget.eventImage,
                   totalSeats: widget.totalSeats,
                   openSeats: widget.totalSeats,
+                  tables: widget.tables,
                   format: widget.format,
                 ),
               ),

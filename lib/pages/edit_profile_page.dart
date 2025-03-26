@@ -100,7 +100,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   key: _formGlobalKey,
                   child: Column(
                     children: [
-                      //TODO: Allow image submissions for profile picture
+                      //TODO: Allow image submissions for profile picture on Linux(Works for windows)
                       Center(
                         child: SizedBox(
                           width: 400,

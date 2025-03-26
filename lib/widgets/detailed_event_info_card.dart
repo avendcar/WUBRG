@@ -15,7 +15,8 @@ class DetailedEventInfoCard extends StatelessWidget {
       required this.totalSeats,
       required this.location,
       required this.dateTime,
-      required this.format});
+      required this.format,
+      required this.tables});
   final double height;
   final double width;
   final String title;
@@ -25,6 +26,7 @@ class DetailedEventInfoCard extends StatelessWidget {
   final String format;
   final int openSeats;
   final int totalSeats;
+  final int tables;
   final Color color;
 
   @override
@@ -71,12 +73,14 @@ class DetailedEventInfoCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Text("Location : $location"),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text("Format : $format"),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text("Date : ${f.format(dateTime)}"),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Text("Open Seats : $openSeats/$totalSeats"),
+                      SizedBox(height: 10),
+                      Text("Number of Tables : $tables"),
                     ],
                   ),
                 ),

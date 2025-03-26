@@ -7,13 +7,15 @@ class TablesCard extends StatelessWidget {
       required this.width,
       required this.title,
       required this.endIndent,
-      required this.textBox,
-      required this.color});
+      required this.color,
+      required this.numOfTables,
+      required this.format});
   final double height;
   final double width;
   final String title;
   final double endIndent;
-  final Text textBox;
+  final String format;
+  final int numOfTables;
   final Color color;
 
   @override
@@ -52,7 +54,29 @@ class TablesCard extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.table_bar, color: Colors.white,),
+                child: Column(
+                  children: [
+                    for (int x = 0; x < numOfTables; x++)
+                      DefaultTextStyle.merge(
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.table_bar_rounded,
+                                color: Colors.white,
+                                size: 32,
+                              ),
+                            ),
+                            Text("Table #${x + 1} : "),
+                            Text("Player 1's name, "),
+                            Text("Player 2's name"),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

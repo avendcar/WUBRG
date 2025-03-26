@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -34,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         );
       } else {
         final responseData = json.decode(response.body);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: ${responseData['error']}')),
         );
@@ -153,8 +156,9 @@ class _HomePageState extends State<HomePage> {
                                   if (username.isEmpty || password.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                          content: Text(
-                                              'Please enter a username and password')),
+                                        content: Text(
+                                            'Please enter a username and password'),
+                                      ),
                                     );
                                     return;
                                   }
@@ -173,7 +177,6 @@ class _HomePageState extends State<HomePage> {
                             // "Enter" button for sign in.
                             ElevatedButton(
                               onPressed: () {
-                                print("Enter button pressed");
                                 String username =
                                     _usernameController.text.trim();
                                 String password =
@@ -181,8 +184,9 @@ class _HomePageState extends State<HomePage> {
                                 if (username.isEmpty || password.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text(
-                                            'Please enter a username and password')),
+                                      content: Text(
+                                          'Please enter a username and password'),
+                                    ),
                                   );
                                   return;
                                 }

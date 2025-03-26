@@ -8,16 +8,18 @@ import 'package:flutter_application_3/widgets/text_card.dart';
 import 'profile_page.dart';
 
 class DetailedEventPage extends StatelessWidget {
-  const DetailedEventPage(
-      {super.key,
-      required this.dateTime,
-      required this.title,
-      required this.location,
-      required this.description,
-      required this.eventImage,
-      required this.totalSeats,
-      required this.openSeats,
-      required this.format});
+  const DetailedEventPage({
+    super.key,
+    required this.dateTime,
+    required this.title,
+    required this.location,
+    required this.description,
+    required this.eventImage,
+    required this.totalSeats,
+    required this.openSeats,
+    required this.format,
+    required this.tables,
+  });
   final DateTime dateTime;
   final String title;
   final String location;
@@ -25,9 +27,10 @@ class DetailedEventPage extends StatelessWidget {
   final Image eventImage;
   final int openSeats;
   final int totalSeats;
+  final int tables;
   final String format;
 
-  //TODO: Create detailed event page.
+  //TODO: Allow for the user to assign themselves to a table
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {
@@ -109,12 +112,10 @@ class DetailedEventPage extends StatelessWidget {
                   TablesCard(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.5,
-                    title: "Available Tables",
+                    title: "All Tables",
                     endIndent: 720,
-                    textBox: Text(
-                      "filler text",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                    numOfTables: tables,
+                    format: format,
                     color: Colors.redAccent,
                   ),
                   SizedBox(height: 30),
@@ -128,7 +129,8 @@ class DetailedEventPage extends StatelessWidget {
                       format: format,
                       totalSeats: totalSeats,
                       location: location,
-                      dateTime: dateTime)
+                      dateTime: dateTime,
+                      tables: tables),
                 ],
               ),
             ],

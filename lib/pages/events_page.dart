@@ -3,54 +3,9 @@ import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/event_tile.dart';
+import "package:flutter_application_3/objects/events.dart";
 
-List<Event> eventsList = [event1, event2, event3, event4];
-//Hard coded events used for testing purposes. Will be deleted after API integration.
-Event event1 = (Event(
-    DateTime.utc(2025, 11, 11, 11, 11),
-    "Battle City",
-    "123 Street St., El Paso, TX 79835",
-    "Become the king of games!",
-    Image.asset("images/kuriboh.png"),
-    24,
-    "Commander"));
-Event event2 = (Event(
-    DateTime.utc(2025, 12, 12, 12, 12),
-    "Clash of the Cards",
-    "456 Avenue, El Paso, TX 79835",
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    Image.asset("images/sloth.png"),
-    32,
-    "Standard"));
-Event event3 = (Event(
-    DateTime.utc(2025, 3, 25, 13, 13),
-    "Event Title 3",
-    "Event Location 3",
-    "Event Description 3",
-    Image.asset("images/kuriboh.png"),
-    12,
-    "Commander"));
-Event event4 = (Event(
-    DateTime.utc(2025, 6, 14, 14, 14),
-    "Event Title 4",
-    "Event Location 4",
-    "Event Description 4",
-    Image.asset("images/sloth.png"),
-    12,
-    "Standard"));
-
-class Event {
-  //Constructor for event objects used for testing
-  Event(this.dateTime, this.title, this.location, this.description,
-      this.eventImage, this.totalSeats, this.format);
-  DateTime dateTime;
-  String title;
-  String location;
-  String description;
-  Image eventImage;
-  int totalSeats;
-  String format;
-}
+List<Event> eventsList = getEventsList();
 
 String eventFormatFilter = "Any format";
 String eventDateFilter = "All dates";
@@ -284,6 +239,7 @@ class _EventsPageState extends State<EventsPage> {
                                         eventImage: event.eventImage,
                                         totalSeats: event.totalSeats,
                                         openSeats: event.totalSeats,
+                                        tables: event.tables,
                                         format: event.format,
                                       ),
                                     SizedBox(height: 10)
