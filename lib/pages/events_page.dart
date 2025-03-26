@@ -199,45 +199,6 @@ class _EventsPageState extends State<EventsPage> {
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  "Distance",
-                                  style: TextStyle(
-                                      fontFamily: "Belwe",
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
-                                Padding(
-                                  //Filter for how many miles away the events are
-                                  padding: const EdgeInsets.only(bottom: 20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: DropdownMenu(
-                                      dropdownMenuEntries: [
-                                        DropdownMenuEntry(
-                                            value: Text("Any Distance"),
-                                            label: "Any Distance"),
-                                        DropdownMenuEntry(
-                                            value: Text("<5 miles"),
-                                            label: "<5 miles"),
-                                        DropdownMenuEntry(
-                                            value: Text("<10 miles"),
-                                            label: "<10 miles"),
-                                        DropdownMenuEntry(
-                                            value: Text("<20 miles"),
-                                            label: "<20 miles"),
-                                        DropdownMenuEntry(
-                                            value: Text("<50 miles"),
-                                            label: "<50 miles"),
-                                        DropdownMenuEntry(
-                                            value: Text(">50 miles"),
-                                            label: ">50 miles"),
-                                      ],
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),
