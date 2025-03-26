@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 
@@ -11,7 +12,25 @@ class DetailedEventPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 150, left: 150),
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EventsPage(),
+              ),
+            );
+          },
+          child: Text(
+            "Go back to events page",
+            style: TextStyle(
+                color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+          ),
+        ),
+      ),
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(

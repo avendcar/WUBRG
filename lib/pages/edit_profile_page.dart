@@ -27,6 +27,8 @@ String getBio() {
 
 //TODO: Link up username, bio, and profile picture to database
 
+//TODO: Restrict access to only allow access to this page for admins and the profile owner
+
 class _EditProfilePageState extends State<EditProfilePage> {
   final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
