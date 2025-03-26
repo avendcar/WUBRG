@@ -4,7 +4,7 @@ import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/edit_profile_button.dart';
-import 'package:flutter_application_3/widgets/profile_page_card.dart';
+import 'package:flutter_application_3/widgets/text_card.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,7 +15,6 @@ class ProfilePage extends StatefulWidget {
 
 double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
 double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
@@ -73,9 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 20, top: 20, bottom: 20),
-
-                        //Hexagonal shaped PFP
-
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 45),
                           child: Center(
@@ -94,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     Expanded(
-                      child: ProfilePageCard(
+                      child: TextCard(
                         title: "Decks",
                         textBox: Text(
                           "This is filler text",
@@ -106,6 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: MediaQuery.of(context).size.width * 0.165,
                         width: MediaQuery.of(context).size.width * 0.2,
                         endIndent: 270,
+                        color: const Color.fromARGB(255, 23, 100, 163),
                       ),
                     ),
                   ],
@@ -113,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(width: 120),
                 Column(
                   children: [
-                    ProfilePageCard(
+                    TextCard(
                       title: "User Info",
                       textBox: Text(
                         getBio(),
@@ -125,13 +122,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: MediaQuery.of(context).size.width * 0.175,
                       width: MediaQuery.of(context).size.width * 0.5,
                       endIndent: 770,
+                      color: const Color.fromARGB(255, 23, 100, 163),
                     ),
                     SizedBox(
                       height: 60,
                       //Space between the User Details and Activity profile cards
                     ),
                     Expanded(
-                      child: ProfilePageCard(
+                      child: TextCard(
                         title: "Friends",
                         textBox: Text(
                           "This is filler text",
@@ -143,6 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: MediaQuery.of(context).size.width * 0.18,
                         width: MediaQuery.of(context).size.width * 0.5,
                         endIndent: 820,
+                        color: const Color.fromARGB(255, 23, 100, 163),
                       ),
                     )
                   ],
@@ -155,23 +154,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-//Obsolete class for creating a rectangle shape
-/* class Hexagon extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    // Define the hexagon shape using relative positions.
-    path.moveTo(size.width * 0.25, 0);
-    path.lineTo(size.width * 0.75, 0);
-    path.lineTo(size.width, size.height * sqrt(3) / 4);
-    path.lineTo(size.width * 0.75, size.height * sqrt(3) / 2);
-    path.lineTo(size.width * 0.25, size.height * sqrt(3) / 2);
-    path.lineTo(0, size.height * sqrt(3) / 4);
-    path.close(); // Call the close method to complete the path.
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
- */

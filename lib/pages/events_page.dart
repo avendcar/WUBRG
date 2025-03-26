@@ -1,11 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/edit_events.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/event_tile.dart';
 
-List eventList = getEventsList();
+List<Event> eventsList = [event1, event2, event3, event4];
+//Hard coded events used for testing purposes. Will be deleted after API integration.
+Event event1 = (Event(
+    DateTime.utc(2025, 11, 11, 11, 11),
+    "Battle City",
+    "123 Street St., El Paso, TX 79835",
+    "Become the king of games!",
+    Image.asset("images/kuriboh.png"),
+    24,
+    "Commander"));
+Event event2 = (Event(
+    DateTime.utc(2025, 12, 12, 12, 12),
+    "Clash of the Cards",
+    "456 Avenue, El Paso, TX 79835",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    Image.asset("images/sloth.png"),
+    32,
+    "Standard"));
+Event event3 = (Event(
+    DateTime.utc(2025, 3, 25, 13, 13),
+    "Event Title 3",
+    "Event Location 3",
+    "Event Description 3",
+    Image.asset("images/kuriboh.png"),
+    12,
+    "Commander"));
+Event event4 = (Event(
+    DateTime.utc(2025, 6, 14, 14, 14),
+    "Event Title 4",
+    "Event Location 4",
+    "Event Description 4",
+    Image.asset("images/sloth.png"),
+    12,
+    "Standard"));
+
+class Event {
+  //Constructor for event objects used for testing
+  Event(this.dateTime, this.title, this.location, this.description,
+      this.eventImage, this.totalSeats, this.format);
+  DateTime dateTime;
+  String title;
+  String location;
+  String description;
+  Image eventImage;
+  int totalSeats;
+  String format;
+}
+
+String eventFormatFilter = "Any format";
+String eventDateFilter = "All dates";
+String eventOpenSeatsFilter = "All";
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -17,28 +66,8 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: Create events page
     //Displays many events with less detail, as opposed to the detailed event page which displays a single event with more detail.
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: TextButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const EditEvents(),
-              ),
-            );
-          },
-          child: Text(
-            " Edit Events",
-            style: TextStyle(
-                color: Colors.white, fontFamily: "Belwe", fontSize: 24),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(
@@ -68,6 +97,7 @@ class _EventsPageState extends State<EventsPage> {
             child: Row(
               children: [
                 Expanded(
+                  //Filters section
                   flex: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -109,7 +139,12 @@ class _EventsPageState extends State<EventsPage> {
                                     ),
                                     child: DropdownMenu(
                                       //Dropdown for adding a MTG format filter
-                                      hintText: "Select format...",
+                                      hintText: eventFormatFilter,
+                                      onSelected: (value) {
+                                        setState(() {
+                                          eventFormatFilter = value.toString();
+                                        });
+                                      },
                                       menuStyle: MenuStyle(
                                         /*Feel free to expand this list with any of these formats:
                                         https://magic.wizards.com/en/formats
@@ -148,7 +183,12 @@ class _EventsPageState extends State<EventsPage> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: DropdownMenu(
-                                      hintText: "Select date",
+                                      hintText: eventDateFilter,
+                                      onSelected: (value) {
+                                        setState(() {
+                                          eventDateFilter = value.toString();
+                                        });
+                                      },
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
                                             value: Text("All dates"),
@@ -180,7 +220,7 @@ class _EventsPageState extends State<EventsPage> {
                                       color: Colors.white),
                                 ),
                                 Padding(
-                                  //Filter for how many days away the events are
+                                  //Filter for if the event has open seats
                                   padding: const EdgeInsets.only(bottom: 20),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -188,6 +228,13 @@ class _EventsPageState extends State<EventsPage> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: DropdownMenu(
+                                      hintText: eventOpenSeatsFilter,
+                                      onSelected: (value) {
+                                        setState(() {
+                                          eventOpenSeatsFilter =
+                                              value.toString();
+                                        });
+                                      },
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
                                             value: Text("Yes"), label: "Yes"),
@@ -209,6 +256,7 @@ class _EventsPageState extends State<EventsPage> {
                 ),
                 VerticalDivider(),
                 Expanded(
+                  //Events table
                   flex: 4,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -223,17 +271,24 @@ class _EventsPageState extends State<EventsPage> {
                                   color: Colors.redAccent, width: 10),
                             ),
                             child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  for (int x = 0; x < 7; x++)
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: EventTile(),
-                                    ),
-                                  SizedBox(
-                                    height: 100,
-                                  ),
-                                ],
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  children: [
+                                    for (var event in eventsList)
+                                      EventTile(
+                                        title: event.title,
+                                        dateTime: event.dateTime,
+                                        description: event.description,
+                                        location: event.location,
+                                        eventImage: event.eventImage,
+                                        totalSeats: event.totalSeats,
+                                        openSeats: event.totalSeats,
+                                        format: event.format,
+                                      ),
+                                    SizedBox(height: 10)
+                                  ],
+                                ),
                               ),
                             ),
                           ),

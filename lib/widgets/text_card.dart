@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-class ProfilePageCard extends StatelessWidget {
-  const ProfilePageCard(
+class TextCard extends StatelessWidget {
+  const TextCard(
       {super.key,
       required this.height,
       required this.width,
       required this.title,
       required this.endIndent,
-      required this.textBox});
+      required this.textBox,
+      required this.color});
   final double height;
   final double width;
   final String title;
   final double endIndent;
   final Text textBox;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,7 @@ class ProfilePageCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 43, 42, 42),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-            color: const Color.fromARGB(255, 23, 100, 163), width: 10),
+        border: Border.all(color: color, width: 10),
       ),
       height: height,
       width: width,
@@ -46,9 +47,14 @@ class ProfilePageCard extends StatelessWidget {
             to the right end of the divider
             */
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: textBox,
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: textBox,
+              ),
+            ),
           ),
         ],
       ),

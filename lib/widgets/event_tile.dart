@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
+import 'package:intl/intl.dart';
 
-class EventTile extends StatelessWidget {
+class EventTile extends StatefulWidget {
   //Tiles that will be displayed in the main menu representing events. Will soon replace the existing generic buttons(tiles).
-  const EventTile({super.key});
+  const EventTile(
+      {super.key,
+      required this.title,
+      required this.dateTime,
+      required this.description,
+      required this.location,
+      required this.eventImage,
+      required this.openSeats,
+      required this.totalSeats,
+      required this.format});
+  final String title;
+  final DateTime dateTime;
+  final String description;
+  final String location;
+  final Image eventImage;
+  final int openSeats;
+  final int totalSeats;
+  final String format;
 
   @override
+  State<EventTile> createState() => _EventTileState();
+}
+
+class _EventTileState extends State<EventTile> {
+  @override
   Widget build(BuildContext context) {
+    final f = DateFormat("yyyy-MM-dd hh:mm a");
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 143,
@@ -19,7 +43,16 @@ class EventTile extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const DetailedEventPage(),
+                builder: (context) => DetailedEventPage(
+                  title: widget.title,
+                  description: widget.description,
+                  dateTime: widget.dateTime,
+                  location: widget.location,
+                  eventImage: widget.eventImage,
+                  totalSeats: widget.totalSeats,
+                  openSeats: widget.totalSeats,
+                  format: widget.format,
+                ),
               ),
             );
           },
@@ -30,7 +63,7 @@ class EventTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: ClipOval(
-                    child: Image.asset("images/kuriboh.png"),
+                    child: widget.eventImage,
                   ),
                 ),
               ),
@@ -39,7 +72,7 @@ class EventTile extends StatelessWidget {
                 child: SizedBox(
                   width: 250,
                   child: Text(
-                    "Title : Event titles are this long.",
+                    widget.title,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 24, color: Colors.white),
                   ),
@@ -50,7 +83,7 @@ class EventTile extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: Text(
-                    "Location : Here is the event location text, which should be about this long.",
+                    widget.location,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 20, color: Colors.white),
                   ),
@@ -61,7 +94,7 @@ class EventTile extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: Text(
-                    "Date : The date is this big",
+                    "Date : ${f.format(widget.dateTime)}",
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 20, color: Colors.white),
                   ),

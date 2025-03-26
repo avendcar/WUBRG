@@ -2,11 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
-
+import 'package:flutter_application_3/widgets/detailed_event_info_card.dart';
+import 'package:flutter_application_3/widgets/tables_card.dart';
+import 'package:flutter_application_3/widgets/text_card.dart';
 import 'profile_page.dart';
 
 class DetailedEventPage extends StatelessWidget {
-  const DetailedEventPage({super.key});
+  const DetailedEventPage(
+      {super.key,
+      required this.dateTime,
+      required this.title,
+      required this.location,
+      required this.description,
+      required this.eventImage,
+      required this.totalSeats,
+      required this.openSeats,
+      required this.format});
+  final DateTime dateTime;
+  final String title;
+  final String location;
+  final String description;
+  final Image eventImage;
+  final int openSeats;
+  final int totalSeats;
+  final String format;
+
   //TODO: Create detailed event page.
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
@@ -55,12 +75,63 @@ class DetailedEventPage extends StatelessWidget {
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: Text(
-              "This is the detailed events page.",
-              style: TextStyle(color: Colors.white),
-            ),
+          child: Row(
+            children: [
+              SizedBox(width: 20),
+              Column(
+                children: [
+                  SizedBox(height: 20),
+                  CircleAvatar(
+                    //.image converts the event Image into the required ImageProvider
+                    backgroundImage: eventImage.image,
+                    radius: 150,
+                  ),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: TextCard(
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.height * .4,
+                        title: title,
+                        endIndent: 150,
+                        textBox: Text(
+                          description,
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        color: Colors.redAccent),
+                  ),
+                ],
+              ),
+              SizedBox(width: 30),
+              Column(
+                children: [
+                  SizedBox(height: 20),
+                  TablesCard(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    title: "Available Tables",
+                    endIndent: 720,
+                    textBox: Text(
+                      "filler text",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    color: Colors.redAccent,
+                  ),
+                  SizedBox(height: 30),
+                  DetailedEventInfoCard(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      title: "Event Details",
+                      endIndent: 10,
+                      color: Colors.redAccent,
+                      openSeats: openSeats,
+                      format: format,
+                      totalSeats: totalSeats,
+                      location: location,
+                      dateTime: dateTime)
+                ],
+              ),
+            ],
           ),
         ),
       ),
