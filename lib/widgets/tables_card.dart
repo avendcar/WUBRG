@@ -9,12 +9,14 @@ class TablesCard extends StatelessWidget {
       required this.endIndent,
       required this.color,
       required this.numOfTables,
-      required this.format});
+      required this.format, 
+      });
   final double height;
   final double width;
   final String title;
   final double endIndent;
   final String format;
+  
   final int numOfTables;
   final Color color;
 
@@ -70,8 +72,7 @@ class TablesCard extends StatelessWidget {
                               ),
                             ),
                             Text("Table #${x + 1} : "),
-                            Text("Player 1's name, "),
-                            Text("Player 2's name"),
+                            
                           ],
                         ),
                       ),

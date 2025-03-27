@@ -4,17 +4,18 @@ import 'package:intl/intl.dart';
 
 class EventTile extends StatefulWidget {
   //Tiles that will be displayed in the main menu representing events. Will soon replace the existing generic buttons(tiles).
-  const EventTile(
-      {super.key,
-      required this.title,
-      required this.dateTime,
-      required this.description,
-      required this.location,
-      required this.eventImage,
-      required this.openSeats,
-      required this.totalSeats,
-      required this.format,
-      required this.tables});
+  const EventTile({
+    super.key,
+    required this.title,
+    required this.dateTime,
+    required this.description,
+    required this.location,
+    required this.eventImage,
+    required this.openSeats,
+    required this.totalSeats,
+    required this.format,
+    required this.tables,
+  });
   final String title;
   final DateTime dateTime;
   final String description;
@@ -82,7 +83,7 @@ class _EventTileState extends State<EventTile> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 15),
                 child: SizedBox(
                   width: 300,
                   child: Text(
