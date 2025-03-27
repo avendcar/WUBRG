@@ -22,7 +22,7 @@ class FriendsPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.cyan, Colors.black],
+            colors: [Colors.blue, Colors.black],
           ),
         ),
         child: Container(
@@ -30,7 +30,7 @@ class FriendsPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 43, 42, 42),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.cyanAccent, width: 10),
+            border: Border.all(color: Colors.blueAccent, width: 10),
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width,
