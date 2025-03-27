@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/decks_page.dart';
 
-class MainMenuDecksCard extends StatelessWidget {
-  const MainMenuDecksCard({
+import 'package:flutter_application_3/pages/find_players_page.dart';
+
+class MainMenuFindPlayersCard extends StatelessWidget {
+  const MainMenuFindPlayersCard({
     super.key,
     required this.title,
     required this.subtitle,
@@ -21,9 +22,26 @@ class MainMenuDecksCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text(title,
-                    style: TextStyle(fontFamily: "Belwe", fontSize: 32),
-                    textAlign: TextAlign.start),
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FindPlayersPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Belwe",
+                          fontSize: 32),
+                    ),
+                  ),
+                ),
                 subtitle: SizedBox(
                   width: 25,
                   height: MediaQuery.of(context).size.height * 0.3,
@@ -76,7 +94,8 @@ class MainMenuDecksCard extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const DecksPage(),
+                                        builder: (context) =>
+                                            const FindPlayersPage(),
                                       ),
                                     );
                                   },

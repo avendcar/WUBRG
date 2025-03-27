@@ -22,9 +22,26 @@ class MainMenuEventsCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text(title,
-                    style: TextStyle(fontFamily: "Belwe", fontSize: 32),
-                    textAlign: TextAlign.start),
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          fontFamily: "Belwe",
+                          fontSize: 32,
+                          color: Colors.black),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EventsPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 subtitle: SizedBox(
                   width: 25,
                   height: MediaQuery.of(context).size.height * 0.3,
@@ -58,8 +75,11 @@ class MainMenuEventsCard extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Icon(Icons
-                                          .emoji_events, size: 128, color: Colors.black,), //Image representing the event/user
+                                      child: Icon(
+                                        Icons.emoji_events,
+                                        size: 128,
+                                        color: Colors.black,
+                                      ), //Image representing the event/user
                                     ),
                                   ),
                                   label: Text(

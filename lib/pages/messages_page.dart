@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 
-import 'profile_page.dart';
-
-class CalendarPage extends StatelessWidget {
-  const CalendarPage({super.key});
+class MessagesPage extends StatelessWidget {
+  const MessagesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Create calendar page
     return Scaffold(
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
@@ -24,7 +22,7 @@ class CalendarPage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.deepPurple, Colors.black],
+            colors: [Colors.green, Colors.black],
           ),
         ),
         child: Container(
@@ -32,7 +30,7 @@ class CalendarPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 43, 42, 42),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.deepPurpleAccent, width: 10),
+            border: Border.all(color: Colors.greenAccent, width: 10),
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width,
@@ -43,7 +41,7 @@ class CalendarPage extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "This is the calendar page.",
+                      "This is the messages page",
                       style: TextStyle(color: Colors.white),
                     ),
                   ],

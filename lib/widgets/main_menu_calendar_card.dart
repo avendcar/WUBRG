@@ -21,9 +21,26 @@ class MainMenuCalendarCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text(title,
-                    style: TextStyle(fontFamily: "Belwe", fontSize: 32),
-                    textAlign: TextAlign.start),
+                title: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CalendarPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Belwe",
+                          fontSize: 32),
+                    ),
+                  ),
+                ),
                 subtitle: SizedBox(
                   width: 25,
                   height: MediaQuery.of(context).size.height * 0.3,
@@ -57,8 +74,11 @@ class MainMenuCalendarCard extends StatelessWidget {
                                     padding: const EdgeInsets.all(8.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Icon(Icons
-                                          .calendar_month_outlined, size: 128, color: Colors.black,), //Image representing the event/user
+                                      child: Icon(
+                                        Icons.calendar_month_outlined,
+                                        size: 128,
+                                        color: Colors.black,
+                                      ), //Image representing the event/user
                                     ),
                                   ),
                                   label: Text(
