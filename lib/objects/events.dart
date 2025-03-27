@@ -1,9 +1,19 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/tables.dart';
 
 //All event information will be placed in this file from back end
 class Event {
-  Event(this.dateTime, this.title, this.location, this.description,
-      this.eventImage, this.totalSeats, this.tables, this.format);
+  Event(
+      this.dateTime,
+      this.title,
+      this.location,
+      this.description,
+      this.eventImage,
+      this.totalSeats,
+      this.tables,
+      this.tableList,
+      this.format);
   DateTime dateTime;
   String title;
   String location;
@@ -11,7 +21,18 @@ class Event {
   Image eventImage;
   int totalSeats;
   int tables;
+  List<SingularTable> tableList;
   String format;
+}
+
+List<SingularTable> generateTableList(int numOfTables, int tableSize) {
+  List<SingularTable> tableListToBeReturned = [];
+  for (int x = 0; x < numOfTables; x++) {
+    tableListToBeReturned.add(
+      SingularTable(tableSize),
+    );
+  }
+  return tableListToBeReturned;
 }
 
 //Hard coded events used for testing purposes. Will be deleted after API integration.
@@ -25,6 +46,7 @@ Event event1 = (Event(
     Image.asset("images/kuriboh.png"),
     100,
     calculateTables(100, "Commander"),
+    generateTableList(calculateTables(100, "Commander"), 5),
     "Commander"));
 Event event2 = (Event(
     DateTime.utc(2025, 12, 12, 12, 12),
@@ -34,6 +56,7 @@ Event event2 = (Event(
     Image.asset("images/sloth.png"),
     32,
     calculateTables(32, "Standard"),
+    generateTableList(calculateTables(100, "Standard"), 2),
     "Standard"));
 Event event3 = (Event(
     DateTime.utc(2025, 3, 25, 13, 13),
@@ -43,6 +66,7 @@ Event event3 = (Event(
     Image.asset("images/kuriboh.png"),
     12,
     calculateTables(12, "Commander"),
+    generateTableList(calculateTables(100, "Commander"), 5),
     "Commander"));
 Event event4 = (Event(
     DateTime.utc(2025, 6, 14, 14, 14),
@@ -52,6 +76,7 @@ Event event4 = (Event(
     Image.asset("images/sloth.png"),
     12,
     calculateTables(12, "Standard"),
+    generateTableList(calculateTables(100, "Standard"), 2),
     "Standard"));
 
 //Outputs the event list created in this dart file to be used by outside dart files

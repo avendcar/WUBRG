@@ -44,13 +44,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   @override
-  void dispose() {
-    _usernameController.dispose();
-    _bioController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PersistentAppBar(),
@@ -85,7 +78,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                     onPressed: () {
-                      dispose();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

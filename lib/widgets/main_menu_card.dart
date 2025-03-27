@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MainMenuCard extends StatelessWidget {
+  //Generic template for main menu cards
+  
   const MainMenuCard({
     super.key,
     required this.title,
