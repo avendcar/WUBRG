@@ -48,6 +48,7 @@ class MainPage extends StatelessWidget {
                       SizedBox(width: 10),
                       MainMenuDecksCard(
                         title: "Decks",
+                        //Rename to find players
                         subtitle: "Click here to navigate to the decks page.",
                       ),
                       SizedBox(width: 10),
@@ -81,12 +82,14 @@ class MainPage extends StatelessWidget {
                     children: [
                       MainMenuCard(
                           title: "Message Recipient",
+                          //TODO: Make this a button
                           buttons: 4,
                           subtitle:
                               "This is a description in the Messages card"),
                       SizedBox(width: 10),
                       MainMenuCard(
                           title: "Friends",
+                          //TODO: Make this a button
                           buttons: 5,
                           subtitle:
                               "This is a description in the Friends card"),

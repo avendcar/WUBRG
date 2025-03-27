@@ -30,7 +30,7 @@ class DetailedEventPage extends StatelessWidget {
   final int tables;
   final String format;
 
-  //TODO: Allow for the user to assign themselves to a table
+  //TODO: Allow for the user to assign themselves to an event's table
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {

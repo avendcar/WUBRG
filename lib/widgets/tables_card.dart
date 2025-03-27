@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 
 class TablesCard extends StatelessWidget {
-  const TablesCard(
-      {super.key,
-      required this.height,
-      required this.width,
-      required this.title,
-      required this.endIndent,
-      required this.color,
-      required this.numOfTables,
-      required this.format, 
-      });
+  const TablesCard({
+    super.key,
+    required this.height,
+    required this.width,
+    required this.title,
+    required this.endIndent,
+    required this.color,
+    required this.numOfTables,
+    required this.format,
+  });
   final double height;
   final double width;
   final String title;
   final double endIndent;
   final String format;
-  
   final int numOfTables;
   final Color color;
+
+  int getPlayersPerTable(String format) {
+    switch (format) {
+      case "Commander":
+        return 5;
+
+      case "Standard":
+        return 2;
+
+      default:
+        return 2;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +84,8 @@ class TablesCard extends StatelessWidget {
                               ),
                             ),
                             Text("Table #${x + 1} : "),
-                            
+                            /* for (x = 0; x < 2; x++)
+                              Text("Player #${x + 1}"), */
                           ],
                         ),
                       ),
