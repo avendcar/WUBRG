@@ -118,6 +118,7 @@ class DetailedEventPage extends StatelessWidget {
                     title: "All Tables",
                     endIndent: 720,
                     numOfTables: tables,
+                    totalSeats: openSeats,
                     tableList: tableList,
                     format: format,
                     color: Colors.redAccent,

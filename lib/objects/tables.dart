@@ -34,9 +34,9 @@ void addTablesToTableList(int tableSize) {
 void addPlayerToTable(TableObject table, User userToBeAdded) {
   if (table.players.length < table.tableSize) {
     table.players.add(userToBeAdded);
-    print("Player added to table");
+  
   } else {
-    print("This table is full and a player could not be added");
+   
   }
 }
 

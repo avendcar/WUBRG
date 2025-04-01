@@ -8,7 +8,7 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
-  get: ^4.6.6 
+  get: ^4.7.2 
   app_links: ^6.1.4
   wakelock_plus: ^1.0.2
   standard_searchbar: ^2.0.0

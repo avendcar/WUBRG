@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DetailedEventInfoCard extends StatelessWidget {
+class DetailedEventInfoCard extends StatefulWidget {
   //Card that is displayed in the detailed events page that contains
   //the location, date, and the number of open seats for the given event.
   const DetailedEventInfoCard(
@@ -30,16 +30,21 @@ class DetailedEventInfoCard extends StatelessWidget {
   final Color color;
 
   @override
+  State<DetailedEventInfoCard> createState() => _DetailedEventInfoCardState();
+}
+
+class _DetailedEventInfoCardState extends State<DetailedEventInfoCard> {
+  @override
   Widget build(BuildContext context) {
     final f = DateFormat("yyyy-MM-dd hh:mm a");
     return Container(
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 43, 42, 42),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color, width: 10),
+        border: Border.all(color: widget.color, width: 10),
       ),
-      height: height,
-      width: width,
+      height: widget.height,
+      width: widget.width,
       child: Column(
         children: [
           Padding(
@@ -48,7 +53,7 @@ class DetailedEventInfoCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Center(
                 child: Text(
-                  title,
+                  widget.title,
                   style: TextStyle(
                       color: Colors.white, fontFamily: "Belwe", fontSize: 24),
                 ),
@@ -57,7 +62,7 @@ class DetailedEventInfoCard extends StatelessWidget {
           ),
           Divider(
             indent: 10,
-            endIndent: endIndent,
+            endIndent: widget.endIndent,
             /*
             Distance from the right edge of the card
             to the right end of the divider
@@ -72,15 +77,15 @@ class DetailedEventInfoCard extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 24),
                   child: Column(
                     children: [
-                      Text("Location : $location"),
+                      Text("Location : ${widget.location}"),
                       SizedBox(height: 10),
-                      Text("Format : $format"),
+                      Text("Format : ${widget.format}"),
                       SizedBox(height: 10),
-                      Text("Date : ${f.format(dateTime)}"),
+                      Text("Date : ${f.format(widget.dateTime)}"),
                       SizedBox(height: 10),
-                      Text("Open Seats : $openSeats/$totalSeats"),
+                      Text("Open Seats : ${widget.openSeats}/${widget.totalSeats}"),
                       SizedBox(height: 10),
-                      Text("Number of Tables : $tables"),
+                      Text("Number of Tables : ${widget.tables}"),
                     ],
                   ),
                 ),

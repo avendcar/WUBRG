@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/tables.dart';
-
 import '../objects/user.dart';
 
 class TablesCard extends StatefulWidget {
@@ -13,6 +12,7 @@ class TablesCard extends StatefulWidget {
     required this.color,
     required this.numOfTables,
     required this.format,
+    required this.totalSeats,
     required this.tableList,
   });
   final double height;
@@ -20,6 +20,7 @@ class TablesCard extends StatefulWidget {
   final String title;
   final double endIndent;
   final String format;
+  final int totalSeats;
   final int numOfTables;
   final List<TableObject> tableList;
   final Color color;
@@ -76,23 +77,35 @@ class _TablesCardState extends State<TablesCard> {
                   children: [
                     for (int tableCount = 0;
                         tableCount < widget.numOfTables;
-                        tableCount++)//Iterates through every table in the event
+                        tableCount++) //Iterates through every table in the event
                       DefaultTextStyle.merge(
                         style: TextStyle(color: Colors.white, fontSize: 18),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () {
-                                setState(() {
-                                  if (widget.tableList[tableCount].players
-                                      .contains(testUser1)) {
+                                //Determines if the active user exists in the table that was pressed
+                                //TODO: Clicking on the table icon currently assigns test user to all tables
+                                //currently cannot remove self from tables
+                                if (widget.tableList[tableCount].players
+                                    .contains(testUser1)) {
+                                  setState(() {
+                                    removePlayerFromTable(
+                                        widget.tableList[tableCount],
+                                        testUser1);
+                                  });
+                                } else if (!widget.tableList[tableCount].players
+                                        .contains(testUser1) &&
                                     widget.tableList[tableCount].players
-                                        .remove(testUser1);
-                                  } else {
-                                    widget.tableList[tableCount].players
-                                        .add(testUser1);
-                                  }
-                                });
+                                            .length <
+                                        widget
+                                            .tableList[tableCount].tableSize) {
+                                  setState(() {
+                                    addPlayerToTable(
+                                        widget.tableList[tableCount],
+                                        testUser1);
+                                  });
+                                }
                               },
                               icon: Icon(
                                 Icons.table_bar_rounded,
@@ -104,11 +117,10 @@ class _TablesCardState extends State<TablesCard> {
                             for (int userCount = 0;
                                 userCount <
                                     widget.tableList[userCount].players.length;
-                                userCount++)//Iterates through every player in the table
-                              Text(widget.tableList[userCount]
-                                  .players[userCount].username),
-                            //TODO: Clicking on the table icon currently assigns test user to all tables and clicking on the table icon again changes nothing
-                            //Outputs the username of every user at the given table
+                                userCount++)
+                              //Outputs the username of every user at the given table
+                              Text(
+                                  "${widget.tableList[userCount].players[userCount].username}, "),
                           ],
                         ),
                       ),
