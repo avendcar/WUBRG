@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Table;
+import 'package:flutter_application_3/objects/tables.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
 import 'package:intl/intl.dart';
 
@@ -15,6 +16,7 @@ class EventTile extends StatefulWidget {
     required this.totalSeats,
     required this.format,
     required this.tables,
+    required this.tableList,
   });
   final String title;
   final DateTime dateTime;
@@ -24,6 +26,7 @@ class EventTile extends StatefulWidget {
   final int openSeats;
   final int totalSeats;
   final int tables;
+  final List<TableObject> tableList;
   final String format;
 
   @override
@@ -55,6 +58,7 @@ class _EventTileState extends State<EventTile> {
                   totalSeats: widget.totalSeats,
                   openSeats: widget.totalSeats,
                   tables: widget.tables,
+                  tableList: widget.tableList,
                   format: widget.format,
                 ),
               ),

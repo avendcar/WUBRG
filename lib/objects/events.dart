@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart' hide Table;
 import 'package:flutter_application_3/objects/tables.dart';
 
@@ -21,15 +20,15 @@ class Event {
   Image eventImage;
   int totalSeats;
   int tables;
-  List<Table> tableList;
+  List<TableObject> tableList;
   String format;
 }
 
-List<Table> generateTableList(int numOfTables, int tableSize) {
-  List<Table> tableListToBeReturned = [];
+List<TableObject> generateTableList(int numOfTables, int tableSize) {
+  List<TableObject> tableListToBeReturned = [];
   for (int x = 0; x < numOfTables; x++) {
     tableListToBeReturned.add(
-      Table(tableSize),
+      TableObject(tableSize),
     );
   }
   return tableListToBeReturned;
@@ -45,8 +44,8 @@ Event event1 = (Event(
     "Become the king of games!",
     Image.asset("images/kuriboh.png"),
     100,
-    calculateTables(100, "Commander"),
-    generateTableList(calculateTables(100, "Commander"), 5),
+    20,
+    generateTableList(20, 5),
     "Commander"));
 Event event2 = (Event(
     DateTime.utc(2025, 12, 12, 12, 12),
@@ -55,8 +54,8 @@ Event event2 = (Event(
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     Image.asset("images/sloth.png"),
     32,
-    calculateTables(32, "Standard"),
-    generateTableList(calculateTables(100, "Standard"), 2),
+    5,
+    generateTableList(5, 2),
     "Standard"));
 Event event3 = (Event(
     DateTime.utc(2025, 3, 25, 13, 13),
@@ -65,8 +64,8 @@ Event event3 = (Event(
     "Event Description 3",
     Image.asset("images/kuriboh.png"),
     12,
-    calculateTables(12, "Commander"),
-    generateTableList(calculateTables(100, "Commander"), 5),
+    3,
+    generateTableList(5, 5),
     "Commander"));
 Event event4 = (Event(
     DateTime.utc(2025, 6, 14, 14, 14),
@@ -75,36 +74,11 @@ Event event4 = (Event(
     "Event Description 4",
     Image.asset("images/sloth.png"),
     12,
-    calculateTables(12, "Standard"),
-    generateTableList(calculateTables(100, "Standard"), 2),
+    6,
+    generateTableList(6, 2),
     "Standard"));
 
 //Outputs the event list created in this dart file to be used by outside dart files
 List<Event> getEventsList() {
   return eventsList;
-}
-
-//Calculates the amount of tables at an event based on the event's format and total seats
-int calculateTables(int totalSeats, String format) {
-  double tables;
-  //the If statements add an additional table if the totalSeats are not evenly
-  //divisible by the amount of players required by the event's format.
-  //This is done to accomodate for the players in the remainder.
-  switch (format) {
-    case "Commander":
-      tables = totalSeats / 5;
-      if (totalSeats % 5 != 0) {
-        tables++;
-      }
-      break;
-    case "Standard":
-      tables = totalSeats / 2;
-      if (totalSeats % 2 != 0) {
-        tables++;
-      }
-      break;
-    default:
-      tables = totalSeats.toDouble();
-  }
-  return tables.toInt();
 }

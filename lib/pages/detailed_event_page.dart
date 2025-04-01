@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/tables.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
@@ -19,6 +20,7 @@ class DetailedEventPage extends StatelessWidget {
     required this.openSeats,
     required this.format,
     required this.tables,
+    required this.tableList,
   });
   final DateTime dateTime;
   final String title;
@@ -28,6 +30,7 @@ class DetailedEventPage extends StatelessWidget {
   final int openSeats;
   final int totalSeats;
   final int tables;
+  final List<TableObject>tableList;
   final String format;
 
   //TODO: Allow for the user to assign themselves to an event's table
@@ -115,6 +118,7 @@ class DetailedEventPage extends StatelessWidget {
                     title: "All Tables",
                     endIndent: 720,
                     numOfTables: tables,
+                    tableList: tableList,
                     format: format,
                     color: Colors.redAccent,
                   ),
@@ -130,7 +134,7 @@ class DetailedEventPage extends StatelessWidget {
                       totalSeats: totalSeats,
                       location: location,
                       dateTime: dateTime,
-                      tables: tables),
+                      tables: tables,),
                 ],
               ),
             ],

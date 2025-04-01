@@ -240,7 +240,7 @@ class _EventsPageState extends State<EventsPage> {
                                         totalSeats: event.totalSeats,
                                         openSeats: event.totalSeats,
                                         tables: event.tables,
-                                        
+                                        tableList: event.tableList,
                                         format: event.format,
                                       ),
                                     SizedBox(height: 10)
