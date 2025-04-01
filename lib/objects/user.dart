@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/events.dart';
 
 class User {
   //TODO Optional: Implement empty deck list by default to each user
@@ -7,6 +8,7 @@ class User {
   int userId;
   String bio;
   Image profilePicture;
+  List<Event> joinedEvents = [];
 }
 
 

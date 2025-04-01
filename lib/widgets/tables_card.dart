@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/objects/tables.dart';
-import '../objects/user.dart';
+import 'package:flutter_application_3/objects/table_object.dart';
+import 'package:flutter_application_3/objects/user.dart';
 
 class TablesCard extends StatefulWidget {
   const TablesCard({
@@ -75,37 +75,46 @@ class _TablesCardState extends State<TablesCard> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    for (int tableCount = 0;
-                        tableCount < widget.numOfTables;
-                        tableCount++) //Iterates through every table in the event
+                    for (TableObject table in widget
+                        .tableList) //Iterates through every table in an event's table list
                       DefaultTextStyle.merge(
                         style: TextStyle(color: Colors.white, fontSize: 18),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () {
-                                //Determines if the active user exists in the table that was pressed
-                                //TODO: Clicking on the table icon currently assigns test user to all tables
-                                //currently cannot remove self from tables
-                                if (widget.tableList[tableCount].players
-                                    .contains(testUser1)) {
-                                  setState(() {
-                                    removePlayerFromTable(
-                                        widget.tableList[tableCount],
-                                        testUser1);
-                                  });
-                                } else if (!widget.tableList[tableCount].players
-                                        .contains(testUser1) &&
-                                    widget.tableList[tableCount].players
-                                            .length <
-                                        widget
-                                            .tableList[tableCount].tableSize) {
-                                  setState(() {
-                                    addPlayerToTable(
-                                        widget.tableList[tableCount],
-                                        testUser1);
-                                  });
-                                }
+                                setState(
+                                  () {
+                                    switch (table.isUserInPlayerList(
+                                        table.players, testUser1)) {
+                                      //Switch statement for checking if the test user is in the table of the current iteration
+                                      case true:
+                                      //TODO: Add ability for the active user to remove themselves from a table
+                                        table.players.remove(testUser1);
+                                      case false:
+                                        if (table.tableSize >
+                                            table.players.length) {
+                                          /*
+                                            If statement for checking if adding the current user would cause the table to go over its maximum size.
+                                            Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
+                                            no room.
+                                            */
+                                          table.players.add(testUser1);
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              duration:
+                                                  const Duration(seconds: 1),
+                                              content: Text(
+                                                  '${testUser1.username} could not be added to table #${table.tableId} because it is full.'),
+                                            ),
+                                          );
+                                        }
+                                        break;
+                                    }
+                                  },
+                                );
                               },
                               icon: Icon(
                                 Icons.table_bar_rounded,
@@ -113,14 +122,10 @@ class _TablesCardState extends State<TablesCard> {
                                 size: 32,
                               ),
                             ),
-                            Text("Table #${tableCount + 1} : "),
-                            for (int userCount = 0;
-                                userCount <
-                                    widget.tableList[userCount].players.length;
-                                userCount++)
-                              //Outputs the username of every user at the given table
-                              Text(
-                                  "${widget.tableList[userCount].players[userCount].username}, "),
+                            Text("Table #${table.tableId} : "),
+                            for (User user in table
+                                .players) //Outputs all the usernames of the players within the table
+                              Text("${user.username}, "),
                           ],
                         ),
                       ),

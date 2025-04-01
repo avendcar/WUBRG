@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide Table;
-import 'package:flutter_application_3/objects/tables.dart';
+import 'package:flutter_application_3/objects/table_object.dart';
 
 //All event information will be placed in this file from back end
 class Event {
@@ -24,16 +24,6 @@ class Event {
   String format;
 }
 
-List<TableObject> generateTableList(int numOfTables, int tableSize) {
-  List<TableObject> tableListToBeReturned = [];
-  for (int x = 0; x < numOfTables; x++) {
-    tableListToBeReturned.add(
-      TableObject(tableSize),
-    );
-  }
-  return tableListToBeReturned;
-}
-
 //Hard coded events used for testing purposes. Will be deleted after API integration.
 List<Event> eventsList = [event1, event2, event3, event4];
 
@@ -43,8 +33,8 @@ Event event1 = (Event(
     "123 Street St., El Paso, TX 79835",
     "Become the king of games!",
     Image.asset("images/kuriboh.png"),
-    100,
-    20,
+    100, //Total seats at the event
+    20, //Number of tables at the event
     generateTableList(20, 5),
     "Commander"));
 Event event2 = (Event(

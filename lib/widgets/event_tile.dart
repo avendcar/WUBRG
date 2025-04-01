@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide Table;
-import 'package:flutter_application_3/objects/tables.dart';
+import 'package:flutter_application_3/objects/table_object.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
 import 'package:intl/intl.dart';
 
