@@ -1,5 +1,5 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Table;
 import 'package:flutter_application_3/objects/tables.dart';
 
 //All event information will be placed in this file from back end
@@ -21,15 +21,15 @@ class Event {
   Image eventImage;
   int totalSeats;
   int tables;
-  List<SingularTable> tableList;
+  List<Table> tableList;
   String format;
 }
 
-List<SingularTable> generateTableList(int numOfTables, int tableSize) {
-  List<SingularTable> tableListToBeReturned = [];
+List<Table> generateTableList(int numOfTables, int tableSize) {
+  List<Table> tableListToBeReturned = [];
   for (int x = 0; x < numOfTables; x++) {
     tableListToBeReturned.add(
-      SingularTable(tableSize),
+      Table(tableSize),
     );
   }
   return tableListToBeReturned;

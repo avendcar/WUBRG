@@ -1,7 +1,7 @@
 import 'package:flutter_application_3/objects/user.dart';
 
-class SingularTable {
-  SingularTable(this.tableSize);
+class Table {
+  Table(this.tableSize);
   //Each table will have a list of players and a max size
   int tableSize;
   List<User> players = [];
@@ -10,18 +10,28 @@ class SingularTable {
 }
 
 //Contains a list of all of an event's tables
-List<SingularTable> tables = [];
+List<Table> tables = [];
 
-List<SingularTable> getListTable() {
+List<Table> getListTable() {
   return tables;
 }
 
-void addTableToTableList(int tableSize) {
-  SingularTable table = SingularTable(tableSize);
+List<Table> generateTableList(int numOfTables, int tableSize) {
+  List<Table> tableListToBeReturned = [];
+  for (int x = 0; x < numOfTables; x++) {
+    tableListToBeReturned.add(
+      Table(tableSize),
+    );
+  }
+  return tableListToBeReturned;
+}
+
+void addTablesToTableList(int tableSize) {
+  Table table = Table(tableSize);
   tables.add(table);
 }
 
-void addPlayerToTable(SingularTable table, User userToBeAdded) {
+void addPlayerToTable(Table table, User userToBeAdded) {
   if (table.players.length < table.tableSize) {
     table.players.add(userToBeAdded);
     print("Player added to table");
@@ -30,7 +40,7 @@ void addPlayerToTable(SingularTable table, User userToBeAdded) {
   }
 }
 
-void removePlayerFromTable(SingularTable table, User userToBeRemoved) {
+void removePlayerFromTable(Table table, User userToBeRemoved) {
   bool playerIsInTable = false;
   for (var player in table.players) {
     if (player == userToBeRemoved) {
