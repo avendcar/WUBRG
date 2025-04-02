@@ -36,7 +36,7 @@ class DetailedEventInfoCard extends StatefulWidget {
 class _DetailedEventInfoCardState extends State<DetailedEventInfoCard> {
   @override
   Widget build(BuildContext context) {
-    final f = DateFormat("yyyy-MM-dd hh:mm a");
+    final f = DateFormat("yyyy - MM - dd hh:mm a");
     return Container(
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 43, 42, 42),
@@ -83,7 +83,8 @@ class _DetailedEventInfoCardState extends State<DetailedEventInfoCard> {
                       SizedBox(height: 10),
                       Text("Date : ${f.format(widget.dateTime)}"),
                       SizedBox(height: 10),
-                      Text("Total Seats : ${widget.takenSeats}/${widget.totalSeats}"),
+                      Text(
+                          "Total Seats : ${widget.totalSeats}"),
                       SizedBox(height: 10),
                       Text("Number of Tables : ${widget.tables}"),
                     ],

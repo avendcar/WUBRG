@@ -179,6 +179,8 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 String username =
                                     _usernameController.text.trim();
+                                    MainPage.signedInUser.username = username;
+                                    //TODO: Remove this assignment after database integration
                                 String password =
                                     _passwordController.text.trim();
                                 if (username.isEmpty || password.isEmpty) {

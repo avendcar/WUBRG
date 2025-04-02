@@ -1,105 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/event_filters.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/event_tile.dart';
-import "package:flutter_application_3/objects/events.dart";
-
-List<Event> eventsList = getEventsList();
-
-String eventFormatFilter = "Any Format";
-String eventDateFilter = "All dates";
-String eventOpenSeatsFilter = "All";
-
-List<Event> filteredList = eventsList;
-
-/*
-Summary of filter methods:
-
-Takes in an event list and a filter as parameters.
-If the parameter specifies "all (data type)", the method returns the unchanged list
-Otherwise, the unfiltered list is iterated through and each event is
-checked for if it fits the desired data type.
-Once this process finishes, the list generated is returned.
-*/
-List<Event> filterByFormat(List<Event> unfilteredEvents, String desiredFormat) {
-  List<Event> listToBeReturned = [];
-  if (desiredFormat == "Any Format") {
-    return unfilteredEvents;
-  }
-  for (Event event in unfilteredEvents) {
-    if (event.format == desiredFormat) {
-      listToBeReturned.add(event);
-    }
-  }
-  return listToBeReturned;
-}
-
-List<Event> filterByDate(List<Event> unfilteredEvents, String desiredDate) {
-  DateTime referenceDate = DateTime.now();
-  List<Event> listToBeReturned = [];
-  bool afterAYear = false;
-/*
-Becomes true only if the filter is "Beyond a year".
-This triggers a flag later to check for dates that are further out than
-a year as opposed to the other cases where the event's date is checked
-for dates that are within a time frame.
-*/
-  switch (desiredDate) {
-    case "All dates":
-      return unfilteredEvents;
-    case "Within the week":
-      referenceDate = DateTime(
-          referenceDate.year, referenceDate.month, referenceDate.day + 7);
-    case "Within the month":
-      referenceDate = DateTime(
-          referenceDate.year, referenceDate.month + 1, referenceDate.day);
-    case "Within 3 months":
-      referenceDate = DateTime(
-          referenceDate.year, referenceDate.month + 3, referenceDate.day);
-    case "Within the year":
-      referenceDate = DateTime(
-          referenceDate.year + 1, referenceDate.month, referenceDate.day);
-    case "Beyond a year":
-      referenceDate = DateTime(
-          referenceDate.year + 1, referenceDate.month, referenceDate.day);
-      afterAYear = true;
-  }
-
-  for (Event event in unfilteredEvents) {
-    if (afterAYear) {
-      if (event.dateTime.isAfter(referenceDate)) {
-        listToBeReturned.add(event);
-      }
-      continue;
-    }
-    if (referenceDate.isAfter(event.dateTime)) {
-      listToBeReturned.add(event);
-    }
-  }
-  return listToBeReturned;
-}
-
-List<Event> filterByOpenSeats(
-    List<Event> unfilteredEvents, String desiredOpenSeats) {
-  List<Event> listToBeReturned = [];
-  if (desiredOpenSeats == "All") {
-    return unfilteredEvents;
-  }
-  for (Event event in unfilteredEvents) {
-    switch (desiredOpenSeats) {
-      case "Yes":
-        if (event.takenSeats < event.totalSeats) {
-          listToBeReturned.add(event);
-        }
-      case "No":
-        if (event.takenSeats == event.totalSeats) {
-          listToBeReturned.add(event);
-        }
-    }
-  }
-  return listToBeReturned;
-}
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -259,14 +163,13 @@ class _EventsPageState extends State<EventsPage> {
                                   ),
                                 ),
                                 Text(
-                                  "Has open seats",
+                                  "Number of tables",
                                   style: TextStyle(
                                       fontFamily: "Belwe",
                                       fontSize: 16,
                                       color: Colors.white),
                                 ),
                                 Padding(
-                                  //Filter for if the event has open seats
                                   padding: const EdgeInsets.only(bottom: 20),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -274,19 +177,34 @@ class _EventsPageState extends State<EventsPage> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: DropdownMenu(
-                                      hintText: eventOpenSeatsFilter,
+                                      //Dropdown for adding a MTG format filter
+                                      hintText: eventFormatFilter,
                                       onSelected: (value) {
                                         setState(() {
-                                          eventOpenSeatsFilter = value!;
+                                          eventNumOfTablesFilter = value!;
                                         });
                                       },
+                                      menuStyle: MenuStyle(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Colors.white),
+                                      ),
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
-                                            value: "All", label: "All"),
+                                          value: -1,
+                                          label: "Any number",
+                                        ),
                                         DropdownMenuEntry(
-                                            value: "Yes", label: "Yes"),
+                                            value: 10, label: "Less than 10"),
                                         DropdownMenuEntry(
-                                            value: "No", label: "No"),
+                                            value: 50, label: "Less than 50"),
+                                        DropdownMenuEntry(
+                                            value: 100, label: "Less than 100"),
+                                        DropdownMenuEntry(
+                                            value: 1000,
+                                            label: "Less than 1,000"),
+                                        DropdownMenuEntry(
+                                            value: 1001,
+                                            label: "More than 1,000"),
                                       ],
                                     ),
                                   ),
@@ -298,8 +216,10 @@ class _EventsPageState extends State<EventsPage> {
                                         eventsList, eventFormatFilter);
                                     filteredList = filterByDate(
                                         filteredList, eventDateFilter);
-                                    filteredList = filterByOpenSeats(
-                                        filteredList, eventOpenSeatsFilter);
+                                    /* filteredList = filterByOpenSeats(
+                                        filteredList, eventOpenSeatsFilter); */
+                                    filteredList = filterByNumOfTables(
+                                        filteredList, eventNumOfTablesFilter);
                                     setState(() {});
                                   },
                                   child: Text("Apply filters"),
@@ -342,10 +262,16 @@ class _EventsPageState extends State<EventsPage> {
                                         location: event.location,
                                         eventImage: event.eventImage,
                                         totalSeats: event.totalSeats,
-                                        takenSeats: event.totalSeats,
+                                        takenSeats: event.takenSeats,
                                         tables: event.tables,
                                         tableList: event.tableList,
                                         format: event.format,
+                                      ),
+                                    if (filteredList.isEmpty)
+                                      Text(
+                                        "No event falls within the specified search parameters",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 24),
                                       ),
                                     SizedBox(height: 10)
                                   ],

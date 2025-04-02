@@ -4,6 +4,7 @@ class TableObject {
   TableObject(this.tableSize, this.tableId);
   //Each table will have a list of players, a max size, and an ID
   int tableSize;
+  int takenSeats = 0;
   int tableId;
   List<User> players = [];
   bool isUserInPlayerList(List<User> playerList, User desiredUser) {

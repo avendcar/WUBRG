@@ -30,10 +30,9 @@ class DetailedEventPage extends StatelessWidget {
   final int takenSeats;
   final int totalSeats;
   final int tables;
-  final List<TableObject>tableList;
+  final List<TableObject> tableList;
   final String format;
 
-  //TODO: Allow for the user to assign themselves to an event's table
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {
@@ -115,7 +114,8 @@ class DetailedEventPage extends StatelessWidget {
                   TablesCard(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.5,
-                    title: "All Tables (Click the table icon to join/leave a table)",
+                    title:
+                        "All Tables (Click the table icon to join/leave a table)",
                     endIndent: 720,
                     numOfTables: tables,
                     totalSeats: totalSeats,
@@ -125,17 +125,18 @@ class DetailedEventPage extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   DetailedEventInfoCard(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      title: "Event Details",
-                      endIndent: 10,
-                      color: Colors.redAccent,
-                      takenSeats: takenSeats,
-                      format: format,
-                      totalSeats: totalSeats,
-                      location: location,
-                      dateTime: dateTime,
-                      tables: tables,),
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    title: "Event Details",
+                    endIndent: 10,
+                    color: Colors.redAccent,
+                    takenSeats: takenSeats,
+                    format: format,
+                    totalSeats: totalSeats,
+                    location: location,
+                    dateTime: dateTime,
+                    tables: tables,
+                  ),
                 ],
               ),
             ],

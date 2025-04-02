@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
 import 'package:flutter_application_3/pages/profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
@@ -13,8 +14,8 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-String _username = '';
-String _bio = '';
+String _username = MainPage.signedInUser.username;
+String _bio = MainPage.signedInUser.bio;
 PlatformFile? pickedFile;
 File? profilePicture;
 String getUsername() {

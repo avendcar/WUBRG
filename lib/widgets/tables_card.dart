@@ -90,10 +90,10 @@ class _TablesCardState extends State<TablesCard> {
                                             MainPage.signedInUser)) {
                                           //Switch statement for checking if the test user is in the table of the current iteration
                                           case true:
-                                            //TODO: Add ability for the active user to remove themselves from a table
                                             table.players.removeWhere((item) =>
                                                 item.userId ==
                                                 MainPage.signedInUser.userId);
+                                            table.takenSeats--;
                                           case false:
                                             if (table.tableSize >
                                                 table.players.length) {
@@ -104,12 +104,13 @@ class _TablesCardState extends State<TablesCard> {
                                                   */
                                               table.players
                                                   .add(MainPage.signedInUser);
+                                              table.takenSeats++;
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  duration:
-                                                      const Duration(seconds: 2),
+                                                  duration: const Duration(
+                                                      seconds: 2),
                                                   content: Text(
                                                       'Could not join table #${table.tableId} because it is full.'),
                                                 ),
@@ -126,7 +127,10 @@ class _TablesCardState extends State<TablesCard> {
                                     size: 32,
                                   ),
                                 ),
-                                Text("Table #${table.tableId} : "),
+                                Text(
+                                    "Table #${table.tableId} ${table.takenSeats}/${table.tableSize} players : "),
+                                if (table.takenSeats >= table.tableSize)
+                                  Text("(Table is full) "),
                                 for (User user in table
                                     .players) //Outputs all the usernames of the players within the table
                                   Text("${user.username}, "),
