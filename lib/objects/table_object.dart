@@ -7,14 +7,31 @@ class TableObject {
   int tableId;
   List<User> players = [];
   bool isUserInPlayerList(List<User> playerList, User desiredUser) {
-  switch (playerList.indexOf(desiredUser)) {
-    case != -1:
-      return true;
-
-    default:
-      return false;
+    for (User player in playerList) {
+      if (player.userId == desiredUser.userId) {
+        return true;
+      }
+    }
+    return false;
   }
-}
+
+  void removePlayerFromTable(TableObject table, User userToBeRemoved) {
+    int userId = userToBeRemoved.userId;
+
+    bool playerIsInTable = false;
+    for (var player in table.players) {
+      if (player.userId == userId) {
+        table.players.remove(player);
+        playerIsInTable = true;
+      }
+    }
+
+    if (playerIsInTable) {
+      print("${userToBeRemoved.username} has been removed from the table");
+    } else {
+      print("The desired player is not in this table");
+    }
+  }
   //Each table object will contain a list of players
   //Multiple table objects will be stored in an event
 }
@@ -25,8 +42,6 @@ List<TableObject> tables = [];
 List<TableObject> getListTable(List<TableObject> tableListToBeReturned) {
   return tables;
 }
-
-
 
 List<TableObject> generateTableList(int numOfTables, int tableSize) {
   List<TableObject> tableListToBeReturned = [];
@@ -49,21 +64,5 @@ void addPlayerToTable(TableObject table, User userToBeAdded) {
     table.players.add(userToBeAdded);
   } else {
     //Otherwise it runs this code
-  }
-}
-
-void removePlayerFromTable(TableObject table, User userToBeRemoved) {
-  bool playerIsInTable = false;
-  for (var player in table.players) {
-    if (player == userToBeRemoved) {
-      table.players.remove(player);
-      playerIsInTable = true;
-    }
-  }
-
-  if (playerIsInTable) {
-    print("${userToBeRemoved.username} has been removed from the table");
-  } else {
-    print("The desired player is not in this table");
   }
 }

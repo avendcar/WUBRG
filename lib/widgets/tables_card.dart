@@ -30,9 +30,15 @@ class TablesCard extends StatefulWidget {
 }
 
 class _TablesCardState extends State<TablesCard> {
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     User testUser1 = User(
+      /*
+        testUser1 is used for testing purposes. 
+        In the future, this user object will hold the data of the currently signed in user.
+        When the time comes to change the name of testUser1, click on the name and press F2 to refactor.
+      */
       "test username",
       1,
       "test bio",
@@ -79,54 +85,63 @@ class _TablesCardState extends State<TablesCard> {
                         .tableList) //Iterates through every table in an event's table list
                       DefaultTextStyle.merge(
                         style: TextStyle(color: Colors.white, fontSize: 18),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                setState(
-                                  () {
-                                    switch (table.isUserInPlayerList(
-                                        table.players, testUser1)) {
-                                      //Switch statement for checking if the test user is in the table of the current iteration
-                                      case true:
-                                      //TODO: Add ability for the active user to remove themselves from a table
-                                        table.players.remove(testUser1);
-                                      case false:
-                                        if (table.tableSize >
-                                            table.players.length) {
-                                          /*
-                                            If statement for checking if adding the current user would cause the table to go over its maximum size.
-                                            Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
-                                            no room.
-                                            */
-                                          table.players.add(testUser1);
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              duration:
-                                                  const Duration(seconds: 1),
-                                              content: Text(
-                                                  '${testUser1.username} could not be added to table #${table.tableId} because it is full.'),
-                                            ),
-                                          );
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        switch (table.isUserInPlayerList(
+                                            table.players, testUser1)) {
+                                          //Switch statement for checking if the test user is in the table of the current iteration
+                                          case true:
+                                            //TODO: Add ability for the active user to remove themselves from a table
+                                            table.players.removeWhere((item) =>
+                                                item.userId ==
+                                                testUser1.userId);
+                                          case false:
+                                            if (table.tableSize >
+                                                table.players.length) {
+                                              /*
+                                                If statement for checking if adding the current user would cause the table to go over its maximum size.
+                                                Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
+                                                no room.
+                                                */
+                                              table.players.add(testUser1);
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  duration: const Duration(
+                                                      seconds: 2),
+                                                  content: Text(
+                                                      'Could not join table #${table.tableId} because it is full.'),
+                                                ),
+                                              );
+                                            }
+                                            break;
                                         }
-                                        break;
-                                    }
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              icon: Icon(
-                                Icons.table_bar_rounded,
-                                color: Colors.white,
-                                size: 32,
+                                  icon: Icon(
+                                    Icons.table_bar_rounded,
+                                    color: Colors.white,
+                                    size: 32,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Text("Table #${table.tableId} : "),
-                            for (User user in table
-                                .players) //Outputs all the usernames of the players within the table
-                              Text("${user.username}, "),
-                          ],
+                              Text("Table #${table.tableId} : "),
+                              for (User user in table
+                                  .players) //Outputs all the usernames of the players within the table
+                                Text("${user.username}, "),
+                            ],
+                          ),
                         ),
                       ),
                   ],

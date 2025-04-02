@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
 import 'package:window_manager/window_manager.dart';
@@ -29,6 +30,12 @@ class MyApp extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.grey),
         ),
       ),
+      scrollBehavior: MaterialScrollBehavior().copyWith(dragDevices: {
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.touch,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.unknown
+      }),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
