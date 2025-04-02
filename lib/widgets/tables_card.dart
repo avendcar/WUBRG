@@ -74,14 +74,14 @@ class _TablesCardState extends State<TablesCard> {
                         .tableList) //Iterates through every table in an event's table list
                       DefaultTextStyle.merge(
                         style: TextStyle(color: Colors.white, fontSize: 18),
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: SingleChildScrollView(
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                IconButton(
                                   onPressed: () {
                                     setState(
                                       () {
@@ -98,18 +98,18 @@ class _TablesCardState extends State<TablesCard> {
                                             if (table.tableSize >
                                                 table.players.length) {
                                               /*
-                                                If statement for checking if adding the current user would cause the table to go over its maximum size.
-                                                Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
-                                                no room.
-                                                */
+                                                  If statement for checking if adding the current user would cause the table to go over its maximum size.
+                                                  Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
+                                                  no room.
+                                                  */
                                               table.players
                                                   .add(MainPage.signedInUser);
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                  duration: const Duration(
-                                                      seconds: 2),
+                                                  duration:
+                                                      const Duration(seconds: 2),
                                                   content: Text(
                                                       'Could not join table #${table.tableId} because it is full.'),
                                                 ),
@@ -126,12 +126,12 @@ class _TablesCardState extends State<TablesCard> {
                                     size: 32,
                                   ),
                                 ),
-                              ),
-                              Text("Table #${table.tableId} : "),
-                              for (User user in table
-                                  .players) //Outputs all the usernames of the players within the table
-                                Text("${user.username}, "),
-                            ],
+                                Text("Table #${table.tableId} : "),
+                                for (User user in table
+                                    .players) //Outputs all the usernames of the players within the table
+                                  Text("${user.username}, "),
+                              ],
+                            ),
                           ),
                         ),
                       ),

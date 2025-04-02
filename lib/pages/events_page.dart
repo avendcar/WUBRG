@@ -304,6 +304,7 @@ class _EventsPageState extends State<EventsPage> {
                                   },
                                   child: Text("Apply filters"),
                                 ),
+                                SizedBox(height: 20),
                               ],
                             ),
                           ),
