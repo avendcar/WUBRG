@@ -7,9 +7,99 @@ import "package:flutter_application_3/objects/events.dart";
 
 List<Event> eventsList = getEventsList();
 
-String eventFormatFilter = "Any format";
+String eventFormatFilter = "Any Format";
 String eventDateFilter = "All dates";
 String eventOpenSeatsFilter = "All";
+
+List<Event> filteredList = eventsList;
+
+/*
+Summary of filter methods:
+
+Takes in an event list and a filter as parameters.
+If the parameter specifies "all (data type)", the method returns the unchanged list
+Otherwise, the unfiltered list is iterated through and each event is
+checked for if it fits the desired data type.
+Once this process finishes, the list generated is returned.
+*/
+List<Event> filterByFormat(List<Event> unfilteredEvents, String desiredFormat) {
+  List<Event> listToBeReturned = [];
+  if (desiredFormat == "Any Format") {
+    return unfilteredEvents;
+  }
+  for (Event event in unfilteredEvents) {
+    if (event.format == desiredFormat) {
+      listToBeReturned.add(event);
+    }
+  }
+  return listToBeReturned;
+}
+
+List<Event> filterByDate(List<Event> unfilteredEvents, String desiredDate) {
+  DateTime referenceDate = DateTime.now();
+  List<Event> listToBeReturned = [];
+  bool afterAYear = false;
+/*
+Becomes true only if the filter is "Beyond a year".
+This triggers a flag later to check for dates that are further out than
+a year as opposed to the other cases where the event's date is checked
+for dates that are within a time frame.
+*/
+  switch (desiredDate) {
+    case "All dates":
+      return unfilteredEvents;
+    case "Within the week":
+      referenceDate = DateTime(
+          referenceDate.year, referenceDate.month, referenceDate.day + 7);
+    case "Within the month":
+      referenceDate = DateTime(
+          referenceDate.year, referenceDate.month + 1, referenceDate.day);
+    case "Within 3 months":
+      referenceDate = DateTime(
+          referenceDate.year, referenceDate.month + 3, referenceDate.day);
+    case "Within the year":
+      referenceDate = DateTime(
+          referenceDate.year + 1, referenceDate.month, referenceDate.day);
+    case "Beyond a year":
+      referenceDate = DateTime(
+          referenceDate.year + 1, referenceDate.month, referenceDate.day);
+      afterAYear = true;
+  }
+
+  for (Event event in unfilteredEvents) {
+    if (afterAYear) {
+      if (event.dateTime.isAfter(referenceDate)) {
+        listToBeReturned.add(event);
+      }
+      continue;
+    }
+    if (referenceDate.isAfter(event.dateTime)) {
+      listToBeReturned.add(event);
+    }
+  }
+  return listToBeReturned;
+}
+
+List<Event> filterByOpenSeats(
+    List<Event> unfilteredEvents, String desiredOpenSeats) {
+  List<Event> listToBeReturned = [];
+  if (desiredOpenSeats == "All") {
+    return unfilteredEvents;
+  }
+  for (Event event in unfilteredEvents) {
+    switch (desiredOpenSeats) {
+      case "Yes":
+        if (event.takenSeats < event.totalSeats) {
+          listToBeReturned.add(event);
+        }
+      case "No":
+        if (event.takenSeats == event.totalSeats) {
+          listToBeReturned.add(event);
+        }
+    }
+  }
+  return listToBeReturned;
+}
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -19,6 +109,7 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  @override
   @override
   Widget build(BuildContext context) {
     //Displays many events with less detail, as opposed to the detailed event page which displays a single event with more detail.
@@ -97,7 +188,7 @@ class _EventsPageState extends State<EventsPage> {
                                       hintText: eventFormatFilter,
                                       onSelected: (value) {
                                         setState(() {
-                                          eventFormatFilter = value.toString();
+                                          eventFormatFilter = value!;
                                         });
                                       },
                                       menuStyle: MenuStyle(
@@ -109,14 +200,14 @@ class _EventsPageState extends State<EventsPage> {
                                       ),
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
-                                          value: Text("Any Format"),
+                                          value: "Any Format",
                                           label: "Any Format",
                                         ),
                                         DropdownMenuEntry(
-                                            value: Text("Commander"),
+                                            value: "Commander",
                                             label: "Commander"),
                                         DropdownMenuEntry(
-                                            value: Text("Standard"),
+                                            value: "Standard",
                                             label: "Standard"),
                                       ],
                                     ),
@@ -141,27 +232,27 @@ class _EventsPageState extends State<EventsPage> {
                                       hintText: eventDateFilter,
                                       onSelected: (value) {
                                         setState(() {
-                                          eventDateFilter = value.toString();
+                                          eventDateFilter = value!;
                                         });
                                       },
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
-                                            value: Text("All dates"),
+                                            value: "All dates",
                                             label: "All dates"),
                                         DropdownMenuEntry(
-                                            value: Text("Within the week"),
+                                            value: "Within the week",
                                             label: "Within the week"),
                                         DropdownMenuEntry(
-                                            value: Text("Within the month"),
+                                            value: "Within the month",
                                             label: "Within the month"),
                                         DropdownMenuEntry(
-                                            value: Text("Within 3 months"),
+                                            value: "Within 3 months",
                                             label: "Within 3 months"),
                                         DropdownMenuEntry(
-                                            value: Text("Within the year"),
+                                            value: "Within the year",
                                             label: "Within the year"),
                                         DropdownMenuEntry(
-                                            value: Text("Beyond the year"),
+                                            value: "Beyond the year",
                                             label: "Beyond the year"),
                                       ],
                                     ),
@@ -186,20 +277,32 @@ class _EventsPageState extends State<EventsPage> {
                                       hintText: eventOpenSeatsFilter,
                                       onSelected: (value) {
                                         setState(() {
-                                          eventOpenSeatsFilter =
-                                              value.toString();
+                                          eventOpenSeatsFilter = value!;
                                         });
                                       },
                                       dropdownMenuEntries: [
                                         DropdownMenuEntry(
-                                            value: Text("Yes"), label: "Yes"),
+                                            value: "All", label: "All"),
                                         DropdownMenuEntry(
-                                            value: Text("No"), label: "No"),
+                                            value: "Yes", label: "Yes"),
                                         DropdownMenuEntry(
-                                            value: Text("All"), label: "All"),
+                                            value: "No", label: "No"),
                                       ],
                                     ),
                                   ),
+                                ),
+                                SizedBox(height: 20),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    filteredList = filterByFormat(
+                                        eventsList, eventFormatFilter);
+                                    filteredList = filterByDate(
+                                        filteredList, eventDateFilter);
+                                    filteredList = filterByOpenSeats(
+                                        filteredList, eventOpenSeatsFilter);
+                                    setState(() {});
+                                  },
+                                  child: Text("Apply filters"),
                                 ),
                               ],
                             ),
@@ -230,7 +333,7 @@ class _EventsPageState extends State<EventsPage> {
                                 padding: const EdgeInsets.all(20.0),
                                 child: Column(
                                   children: [
-                                    for (var event in eventsList)
+                                    for (var event in filteredList)
                                       EventTile(
                                         title: event.title,
                                         dateTime: event.dateTime,
@@ -238,7 +341,7 @@ class _EventsPageState extends State<EventsPage> {
                                         location: event.location,
                                         eventImage: event.eventImage,
                                         totalSeats: event.totalSeats,
-                                        openSeats: event.totalSeats,
+                                        takenSeats: event.totalSeats,
                                         tables: event.tables,
                                         tableList: event.tableList,
                                         format: event.format,

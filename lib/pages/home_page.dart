@@ -193,7 +193,8 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const MainPage()),
+                                    builder: (context) => const MainPage(),
+                                  ),
                                 );
                               },
                               child: Text("Enter"),

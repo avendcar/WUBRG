@@ -11,7 +11,7 @@ class DetailedEventInfoCard extends StatefulWidget {
       required this.title,
       required this.endIndent,
       required this.color,
-      required this.openSeats,
+      required this.takenSeats,
       required this.totalSeats,
       required this.location,
       required this.dateTime,
@@ -24,7 +24,7 @@ class DetailedEventInfoCard extends StatefulWidget {
   final double endIndent;
   final String location;
   final String format;
-  final int openSeats;
+  final int takenSeats;
   final int totalSeats;
   final int tables;
   final Color color;
@@ -83,7 +83,7 @@ class _DetailedEventInfoCardState extends State<DetailedEventInfoCard> {
                       SizedBox(height: 10),
                       Text("Date : ${f.format(widget.dateTime)}"),
                       SizedBox(height: 10),
-                      Text("Open Seats : ${widget.openSeats}/${widget.totalSeats}"),
+                      Text("Total Seats : ${widget.takenSeats}/${widget.totalSeats}"),
                       SizedBox(height: 10),
                       Text("Number of Tables : ${widget.tables}"),
                     ],

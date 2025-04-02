@@ -12,7 +12,7 @@ class EventTile extends StatefulWidget {
     required this.description,
     required this.location,
     required this.eventImage,
-    required this.openSeats,
+    required this.takenSeats,
     required this.totalSeats,
     required this.format,
     required this.tables,
@@ -23,7 +23,7 @@ class EventTile extends StatefulWidget {
   final String description;
   final String location;
   final Image eventImage;
-  final int openSeats;
+  final int takenSeats;
   final int totalSeats;
   final int tables;
   final List<TableObject> tableList;
@@ -56,7 +56,7 @@ class _EventTileState extends State<EventTile> {
                   location: widget.location,
                   eventImage: widget.eventImage,
                   totalSeats: widget.totalSeats,
-                  openSeats: widget.totalSeats,
+                  takenSeats: widget.takenSeats,
                   tables: widget.tables,
                   tableList: widget.tableList,
                   format: widget.format,

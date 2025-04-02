@@ -8,8 +8,19 @@ import 'package:flutter_application_3/widgets/main_menu_events_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_friends_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_messages_card.dart';
 
+import '../objects/user.dart';
+
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
+
+  static User signedInUser = User(
+    //Test data for the currently signed in user.
+    //Hard coded for now, but will be integrated with the database later.
+    "Signed in username",
+    1,
+    "Signed in bio",
+    Image.asset("images/sloth.png"),
+  );
 
   @override
   Widget build(BuildContext context) {

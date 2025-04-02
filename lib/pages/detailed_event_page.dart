@@ -17,7 +17,7 @@ class DetailedEventPage extends StatelessWidget {
     required this.description,
     required this.eventImage,
     required this.totalSeats,
-    required this.openSeats,
+    required this.takenSeats,
     required this.format,
     required this.tables,
     required this.tableList,
@@ -27,7 +27,7 @@ class DetailedEventPage extends StatelessWidget {
   final String location;
   final String description;
   final Image eventImage;
-  final int openSeats;
+  final int takenSeats;
   final int totalSeats;
   final int tables;
   final List<TableObject>tableList;
@@ -115,10 +115,10 @@ class DetailedEventPage extends StatelessWidget {
                   TablesCard(
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.5,
-                    title: "All Tables",
+                    title: "All Tables (Click the table icon to join/leave a table)",
                     endIndent: 720,
                     numOfTables: tables,
-                    totalSeats: openSeats,
+                    totalSeats: totalSeats,
                     tableList: tableList,
                     format: format,
                     color: Colors.redAccent,
@@ -130,7 +130,7 @@ class DetailedEventPage extends StatelessWidget {
                       title: "Event Details",
                       endIndent: 10,
                       color: Colors.redAccent,
-                      openSeats: openSeats,
+                      takenSeats: takenSeats,
                       format: format,
                       totalSeats: totalSeats,
                       location: location,

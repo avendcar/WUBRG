@@ -19,6 +19,7 @@ class Event {
   String description;
   Image eventImage;
   int totalSeats;
+  int takenSeats = 0;
   int tables;
   List<TableObject> tableList;
   String format;

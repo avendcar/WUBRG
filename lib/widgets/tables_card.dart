@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/table_object.dart';
 import 'package:flutter_application_3/objects/user.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
 
 class TablesCard extends StatefulWidget {
   const TablesCard({
@@ -33,18 +34,6 @@ class _TablesCardState extends State<TablesCard> {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    User testUser1 = User(
-      /*
-        testUser1 is used for testing purposes. 
-        In the future, this user object will hold the data of the currently signed in user.
-        When the time comes to change the name of testUser1, click on the name and press F2 to refactor.
-      */
-      "test username",
-      1,
-      "test bio",
-      Image.asset("images/kuriboh.png"),
-    );
-
     return Container(
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 43, 42, 42),
@@ -97,13 +86,14 @@ class _TablesCardState extends State<TablesCard> {
                                     setState(
                                       () {
                                         switch (table.isUserInPlayerList(
-                                            table.players, testUser1)) {
+                                            table.players,
+                                            MainPage.signedInUser)) {
                                           //Switch statement for checking if the test user is in the table of the current iteration
                                           case true:
                                             //TODO: Add ability for the active user to remove themselves from a table
                                             table.players.removeWhere((item) =>
                                                 item.userId ==
-                                                testUser1.userId);
+                                                MainPage.signedInUser.userId);
                                           case false:
                                             if (table.tableSize >
                                                 table.players.length) {
@@ -112,7 +102,8 @@ class _TablesCardState extends State<TablesCard> {
                                                 Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
                                                 no room.
                                                 */
-                                              table.players.add(testUser1);
+                                              table.players
+                                                  .add(MainPage.signedInUser);
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
