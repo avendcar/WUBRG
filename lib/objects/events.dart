@@ -49,7 +49,7 @@ Event event2 = (Event(
     generateTableList(5, 2),
     "Standard"));
 Event event3 = (Event(
-    DateTime.utc(2025, 3, 25, 13, 13),
+    DateTime.utc(2025, 4, 25, 13, 13),
     "Event Title 3",
     "Event Location 3",
     "Event Description 3",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/objects/table_object.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
@@ -102,6 +103,7 @@ class _TablesCardState extends State<TablesCard> {
                                                   Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
                                                   no room.
                                                   */
+                                                  
                                               table.players
                                                   .add(MainPage.signedInUser);
                                               table.takenSeats++;

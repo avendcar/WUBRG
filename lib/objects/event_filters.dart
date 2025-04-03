@@ -10,7 +10,6 @@ that do not filter out any events.
 */
 String eventFormatFilter = "Any Format";
 String eventDateFilter = "All dates";
-String eventOpenSeatsFilter = "All";
 int eventNumOfTablesFilter = -1;
 
 List<Event> filteredList = eventsList;

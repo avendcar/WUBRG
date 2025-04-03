@@ -178,7 +178,7 @@ class _EventsPageState extends State<EventsPage> {
                                     ),
                                     child: DropdownMenu(
                                       //Dropdown for adding a MTG format filter
-                                      hintText: eventFormatFilter,
+                                      hintText: "Any number",
                                       onSelected: (value) {
                                         setState(() {
                                           eventNumOfTablesFilter = value!;
@@ -269,7 +269,7 @@ class _EventsPageState extends State<EventsPage> {
                                       ),
                                     if (filteredList.isEmpty)
                                       Text(
-                                        "No event falls within the specified search parameters",
+                                        "No event falls within the specified event filters.",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 24),
                                       ),
