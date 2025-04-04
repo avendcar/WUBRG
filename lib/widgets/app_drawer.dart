@@ -5,7 +5,7 @@ import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/pages/home_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
 
-import '../pages/profile_page.dart';
+import '../pages/personal_profile_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -68,7 +68,7 @@ class AppDrawer extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfilePage()),
+                              builder: (context) => const PersonalProfilePage()),
                         );
                       }),
                   SizedBox(height: 16),

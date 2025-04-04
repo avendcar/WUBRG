@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 
-import 'profile_page.dart';
+import 'personal_profile_page.dart';
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});

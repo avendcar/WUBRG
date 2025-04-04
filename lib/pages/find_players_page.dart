@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/profile_page.dart';
+import 'package:flutter_application_3/pages/personal_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
+import 'package:flutter_application_3/widgets/player_tile.dart';
+import '../objects/user.dart';
+
+List<User> userList = getUserList();
 
 class FindPlayersPage extends StatelessWidget {
   const FindPlayersPage({super.key});
@@ -37,15 +41,65 @@ class FindPlayersPage extends StatelessWidget {
             padding: const EdgeInsets.all(28.0),
             child: Row(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      "This is the find players page.",
-                      style: TextStyle(color: Colors.white),
+                Expanded(
+                  flex: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                          color: Colors.orangeAccent,
+                          width: 10,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Player Filters",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Belwe",
+                                fontSize: 24),
+                          ),
+                          Divider(
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(width: 120),
+                VerticalDivider(),
+                Expanded(
+                  flex: 4,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                          color: Colors.orangeAccent,
+                          width: 10,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            for (User user in userList)
+                              PlayerTile(
+                                  userId: user.userId,
+                                  username: user.username,
+                                  profilePicture: user.profilePicture,
+                                  bio: user.bio),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

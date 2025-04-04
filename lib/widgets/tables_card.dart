@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/objects/table_object.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/main_page.dart';

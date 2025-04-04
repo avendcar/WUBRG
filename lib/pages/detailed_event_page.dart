@@ -6,7 +6,7 @@ import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/detailed_event_info_card.dart';
 import 'package:flutter_application_3/widgets/tables_card.dart';
 import 'package:flutter_application_3/widgets/text_card.dart';
-import 'profile_page.dart';
+import 'personal_profile_page.dart';
 
 class DetailedEventPage extends StatelessWidget {
   const DetailedEventPage({

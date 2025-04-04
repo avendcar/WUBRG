@@ -1,30 +1,43 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/edit_profile_page.dart';
-import 'package:flutter_application_3/widgets/app_bar.dart';
-import 'package:flutter_application_3/widgets/app_drawer.dart';
-import 'package:flutter_application_3/widgets/edit_profile_button.dart';
-import 'package:flutter_application_3/widgets/text_card.dart';
+import 'package:flutter_application_3/pages/find_players_page.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+import '../widgets/app_bar.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/text_card.dart';
+import 'personal_profile_page.dart';
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-double deviceHeight(BuildContext context) => MediaQuery.of(context).size.height;
-double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePage extends StatelessWidget {
+  const ProfilePage(
+      {super.key,
+      required this.username,
+      required this.profilePicture,
+      required this.bio});
+  final String username;
+  final Image profilePicture;
+  final String bio;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: EditProfileButton(),
+        padding: const EdgeInsets.only(top: 150, left: 150),
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FindPlayersPage(),
+              ),
+            );
+          },
+          child: Text(
+            "Go back to the find players page",
+            style: TextStyle(
+                color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+          ),
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+      
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(
@@ -59,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Center(
                       child: Text(
-                        getUsername(), //Displays username set in edit_profile_page.dart
+                        username, //Displays username set in edit_profile_page.dart
                         style: TextStyle(
                             fontFamily: "Belwe",
                             fontSize: 24,
@@ -77,13 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Center(
                             child: CircleAvatar(
                               radius: 175,
-                              backgroundImage: pickedFile == null
-                                  ? AssetImage(
-                                      "images/mtg-background.png") //Default profile icon if picked file is null
-                                  : FileImage(
-                                      //Custom profile icon if picked file is not null
-                                      File(pickedFile!.path!),
-                                    ),
+                              backgroundImage: profilePicture.image,
                             ),
                           ),
                         ),
@@ -113,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextCard(
                       title: "User Info",
                       textBox: Text(
-                        getBio(),
+                        bio,
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: "Belwe",
@@ -143,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         endIndent: 820,
                         color: const Color.fromARGB(255, 23, 100, 163),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

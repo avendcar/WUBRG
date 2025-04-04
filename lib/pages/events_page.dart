@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/event_filters.dart';
-import 'package:flutter_application_3/pages/profile_page.dart';
+import 'package:flutter_application_3/pages/personal_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/event_tile.dart';
@@ -13,7 +13,7 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  @override
+ 
   @override
   Widget build(BuildContext context) {
     //Displays many events with less detail, as opposed to the detailed event page which displays a single event with more detail.
