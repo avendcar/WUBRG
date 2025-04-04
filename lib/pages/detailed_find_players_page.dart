@@ -6,6 +6,11 @@ import '../widgets/app_drawer.dart';
 import '../widgets/text_card.dart';
 import 'personal_profile_page.dart';
 
+/*
+TODO: In the future, the code for the detailed find players page and the personal
+profile page can be merged into one page. The files are temporarily structured
+like this for testing purposes.
+*/
 class ProfilePage extends StatelessWidget {
   const ProfilePage(
       {super.key,
