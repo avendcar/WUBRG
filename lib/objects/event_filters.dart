@@ -8,6 +8,7 @@ the types of events that are displayed.
 In other words, these are the default filters 
 that do not filter out any events.
 */
+String eventSearchFilter = "";
 String eventFormatFilter = "Any Format";
 String eventDateFilter = "All dates";
 int eventNumOfTablesFilter = -1;
@@ -23,6 +24,20 @@ Otherwise, the unfiltered list is iterated through and each event is
 checked for if it fits the desired data type.
 Once this process finishes, the list generated is returned.
 */
+List<Event> filterBySearch(
+    List<Event> unfilteredEvents, String desiredEventName) {
+  List<Event> listToBeReturned = [];
+  if (desiredEventName.isEmpty) {
+    return unfilteredEvents;
+  }
+  for (Event event in unfilteredEvents) {
+    if (event.title.toLowerCase().contains(desiredEventName)) {
+      listToBeReturned.add(event);
+    }
+  }
+  return listToBeReturned;
+}
+
 List<Event> filterByFormat(List<Event> unfilteredEvents, String desiredFormat) {
   List<Event> listToBeReturned = [];
   if (desiredFormat == "Any Format") {

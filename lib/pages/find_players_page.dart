@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/player_filters.dart';
 import 'package:flutter_application_3/pages/personal_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
@@ -7,9 +8,14 @@ import '../objects/user.dart';
 
 List<User> userList = getUserList();
 
-class FindPlayersPage extends StatelessWidget {
+class FindPlayersPage extends StatefulWidget {
   const FindPlayersPage({super.key});
 
+  @override
+  State<FindPlayersPage> createState() => _FindPlayersPageState();
+}
+
+class _FindPlayersPageState extends State<FindPlayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +72,40 @@ class FindPlayersPage extends StatelessWidget {
                             indent: 10,
                             endIndent: 10,
                           ),
+                          Text(
+                            "Event name",
+                            style: TextStyle(
+                                fontFamily: "Belwe",
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.search),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(),
+                                  hintText: "Search by user name",
+                                ),
+                                onChanged: (value) =>
+                                    playerSearchFilter = value,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              filteredList = filterBySearch(
+                                  userList, playerSearchFilter.toLowerCase());
+
+                              setState(() {});
+                            },
+                            child: Text("Search"),
+                          ),
                         ],
                       ),
                     ),
@@ -88,12 +128,18 @@ class FindPlayersPage extends StatelessWidget {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            for (User user in userList)
+                            for (User user in filteredList)
                               PlayerTile(
                                   userId: user.userId,
                                   username: user.username,
                                   profilePicture: user.profilePicture,
                                   bio: user.bio),
+                            if (filteredList.isEmpty)
+                              Text(
+                                "No player exists under the searched name.",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 24),
+                              ),
                           ],
                         ),
                       ),

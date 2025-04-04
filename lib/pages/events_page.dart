@@ -13,7 +13,6 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
- 
   @override
   Widget build(BuildContext context) {
     //Displays many events with less detail, as opposed to the detailed event page which displays a single event with more detail.
@@ -72,6 +71,30 @@ class _EventsPageState extends State<EventsPage> {
                                 Divider(
                                   indent: 10,
                                   endIndent: 10,
+                                ),
+                                Text(
+                                  "Event name",
+                                  style: TextStyle(
+                                      fontFamily: "Belwe",
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(Icons.search),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(),
+                                        hintText: "Search by event name",
+                                      ),
+                                      onChanged: (value) =>
+                                          eventSearchFilter = value,
+                                    ),
+                                  ),
                                 ),
                                 Text(
                                   "Format",
@@ -212,12 +235,12 @@ class _EventsPageState extends State<EventsPage> {
                                 SizedBox(height: 20),
                                 ElevatedButton(
                                   onPressed: () {
+                                    filteredList = filterBySearch(
+                                        eventsList, eventSearchFilter.toLowerCase());
                                     filteredList = filterByFormat(
-                                        eventsList, eventFormatFilter);
+                                        filteredList, eventFormatFilter);
                                     filteredList = filterByDate(
                                         filteredList, eventDateFilter);
-                                    /* filteredList = filterByOpenSeats(
-                                        filteredList, eventOpenSeatsFilter); */
                                     filteredList = filterByNumOfTables(
                                         filteredList, eventNumOfTablesFilter);
                                     setState(() {});
