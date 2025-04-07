@@ -101,7 +101,6 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                             onPressed: () {
                               filteredList = filterBySearch(
                                   userList, playerSearchFilter.toLowerCase());
-
                               setState(() {});
                             },
                             child: Text("Search"),
@@ -130,10 +129,8 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                           children: [
                             for (User user in filteredList)
                               PlayerTile(
-                                  userId: user.userId,
-                                  username: user.username,
-                                  profilePicture: user.profilePicture,
-                                  bio: user.bio),
+                                userId: user.userId,
+                              ),
                             if (filteredList.isEmpty)
                               Text(
                                 "No player exists under the searched name.",

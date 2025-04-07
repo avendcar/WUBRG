@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart' hide Table;
-import 'package:flutter_application_3/objects/table_object.dart';
+import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
 import 'package:intl/intl.dart';
+
+List<Event> eventList = getEventsList();
 
 class EventTile extends StatefulWidget {
   //Tiles that will be displayed in the main menu representing events. Will soon replace the existing generic buttons(tiles).
   const EventTile({
     super.key,
-    required this.title,
-    required this.dateTime,
-    required this.description,
-    required this.location,
-    required this.eventImage,
-    required this.takenSeats,
-    required this.totalSeats,
-    required this.format,
-    required this.tables,
-    required this.tableList,
+    required this.eventId,
   });
-  final String title;
-  final DateTime dateTime;
-  final String description;
-  final String location;
-  final Image eventImage;
-  final int takenSeats;
-  final int totalSeats;
-  final int tables;
-  final List<TableObject> tableList;
-  final String format;
+ final int eventId;
 
   @override
   State<EventTile> createState() => _EventTileState();
 }
 
 class _EventTileState extends State<EventTile> {
+  
   @override
   Widget build(BuildContext context) {
+    Event currentEvent = eventList.firstWhere((event) => event.eventId == widget.eventId);
     final f = DateFormat("yyyy-MM-dd hh:mm a");
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -49,18 +35,7 @@ class _EventTileState extends State<EventTile> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailedEventPage(
-                  title: widget.title,
-                  description: widget.description,
-                  dateTime: widget.dateTime,
-                  location: widget.location,
-                  eventImage: widget.eventImage,
-                  totalSeats: widget.totalSeats,
-                  takenSeats: widget.takenSeats,
-                  tables: widget.tables,
-                  tableList: widget.tableList,
-                  format: widget.format,
-                ),
+                builder: (context) => DetailedEventPage(eventId: currentEvent.eventId),
               ),
             );
           },
@@ -71,7 +46,7 @@ class _EventTileState extends State<EventTile> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: ClipOval(
-                    child: widget.eventImage,
+                    child: currentEvent.eventImage,
                   ),
                 ),
               ),
@@ -80,7 +55,7 @@ class _EventTileState extends State<EventTile> {
                 child: SizedBox(
                   width: 250,
                   child: Text(
-                    widget.title,
+                    currentEvent.title,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 24, color: Colors.white),
                   ),
@@ -91,7 +66,7 @@ class _EventTileState extends State<EventTile> {
                 child: SizedBox(
                   width: 300,
                   child: Text(
-                    widget.location,
+                    currentEvent.location,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 20, color: Colors.white),
                   ),
@@ -102,7 +77,7 @@ class _EventTileState extends State<EventTile> {
                 child: SizedBox(
                   width: 300,
                   child: Text(
-                    "Date : ${f.format(widget.dateTime)}",
+                    "Date : ${f.format(currentEvent.dateTime)}",
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 20, color: Colors.white),
                   ),

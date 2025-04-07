@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_3/widgets/app_bar_search_bar.dart';
 import '../pages/main_page.dart';
+
 
 class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PersistentAppBar({super.key});
@@ -51,25 +52,7 @@ class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Spacer(),
           // Search bar widget.
-          SizedBox(
-            width: 300,
-            height: 35,
-            child: TextField(
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: "Search for users and events...",
-                hintStyle: TextStyle(color: Colors.white70),
-                filled: true,
-                fillColor: Colors.grey[800],
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
+          AppBarSearchBar(),
           Spacer(),
         ],
       ),

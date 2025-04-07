@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/objects/table_object.dart';
+import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
@@ -8,34 +8,19 @@ import 'package:flutter_application_3/widgets/tables_card.dart';
 import 'package:flutter_application_3/widgets/text_card.dart';
 import 'personal_profile_page.dart';
 
+List<Event> eventList = getEventsList();
+
 class DetailedEventPage extends StatelessWidget {
   const DetailedEventPage({
     super.key,
-    required this.dateTime,
-    required this.title,
-    required this.location,
-    required this.description,
-    required this.eventImage,
-    required this.totalSeats,
-    required this.takenSeats,
-    required this.format,
-    required this.tables,
-    required this.tableList,
+    required this.eventId
   });
-  final DateTime dateTime;
-  final String title;
-  final String location;
-  final String description;
-  final Image eventImage;
-  final int takenSeats;
-  final int totalSeats;
-  final int tables;
-  final List<TableObject> tableList;
-  final String format;
+  final int eventId;
 
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {
+    Event currentEvent = eventList.firstWhere((event)=>event.eventId == eventId);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: Padding(
@@ -88,7 +73,7 @@ class DetailedEventPage extends StatelessWidget {
                   SizedBox(height: 20),
                   CircleAvatar(
                     //.image converts the event Image into the required ImageProvider
-                    backgroundImage: eventImage.image,
+                    backgroundImage: currentEvent.eventImage.image,
                     radius: 150,
                   ),
                   SizedBox(height: 40),
@@ -97,10 +82,10 @@ class DetailedEventPage extends StatelessWidget {
                     child: TextCard(
                         height: MediaQuery.of(context).size.height * .3,
                         width: MediaQuery.of(context).size.height * .4,
-                        title: title,
+                        title: currentEvent.title,
                         endIndent: 150,
                         textBox: Text(
-                          description,
+                          currentEvent.description,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         color: Colors.redAccent),
@@ -117,10 +102,10 @@ class DetailedEventPage extends StatelessWidget {
                     title:
                         "All Tables (Click the table icon to join/leave a table)",
                     endIndent: 720,
-                    numOfTables: tables,
-                    totalSeats: totalSeats,
-                    tableList: tableList,
-                    format: format,
+                    numOfTables: currentEvent.tables,
+                    totalSeats: currentEvent.totalSeats,
+                    tableList: currentEvent.tableList,
+                    format: currentEvent.format,
                     color: Colors.redAccent,
                   ),
                   SizedBox(height: 30),
@@ -130,12 +115,12 @@ class DetailedEventPage extends StatelessWidget {
                     title: "Event Details",
                     endIndent: 10,
                     color: Colors.redAccent,
-                    takenSeats: takenSeats,
-                    format: format,
-                    totalSeats: totalSeats,
-                    location: location,
-                    dateTime: dateTime,
-                    tables: tables,
+                    takenSeats: currentEvent.takenSeats,
+                    format: currentEvent.format,
+                    totalSeats: currentEvent.totalSeats,
+                    location: currentEvent.location,
+                    dateTime: currentEvent.dateTime,
+                    tables: currentEvent.tables,
                   ),
                 ],
               ),

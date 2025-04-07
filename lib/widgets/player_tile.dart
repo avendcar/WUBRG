@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/detailed_find_players_page.dart';
 
+List<User> userList = getUserList();
+
+   
 class PlayerTile extends StatelessWidget {
-  const PlayerTile(
-      {super.key,
-      required this.userId,
-      required this.username,
-      required this.profilePicture,
-      required this.bio});
+  const PlayerTile({
+    super.key,
+    required this.userId,
+  });
   final int userId;
-  final String username;
-  final String bio;
-  final Image profilePicture;
 
   @override
   Widget build(BuildContext context) {
+   User currentUser = userList.firstWhere((user) => user.userId == userId);
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 143,
@@ -27,10 +27,8 @@ class PlayerTile extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => ProfilePage(
-                  username: username,
-                  profilePicture: profilePicture,
-                  bio: bio,
+                builder: (context) => DetailedFindPlayersPage(
+                  userId: userId,
                 ),
               ),
             );
@@ -42,7 +40,7 @@ class PlayerTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: ClipOval(
-                    child: profilePicture,
+                    child: currentUser.profilePicture,
                   ),
                 ),
               ),
@@ -51,7 +49,7 @@ class PlayerTile extends StatelessWidget {
                 child: SizedBox(
                   width: 250,
                   child: Text(
-                    username,
+                    currentUser.username,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 24, color: Colors.white),
                   ),
@@ -62,7 +60,7 @@ class PlayerTile extends StatelessWidget {
                 child: SizedBox(
                   width: 300,
                   child: Text(
-                    bio,
+                    currentUser.bio,
                     style: TextStyle(
                         fontFamily: "Belwe", fontSize: 20, color: Colors.white),
                     maxLines: 4,

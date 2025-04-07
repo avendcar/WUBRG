@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/find_players_page.dart';
 
 import '../widgets/app_bar.dart';
@@ -6,22 +7,23 @@ import '../widgets/app_drawer.dart';
 import '../widgets/text_card.dart';
 import 'personal_profile_page.dart';
 
+List<User> userList = getUserList();
+
 /*
 TODO: In the future, the code for the detailed find players page and the personal
 profile page can be merged into one page. The files are temporarily structured
 like this for testing purposes.
 */
-class ProfilePage extends StatelessWidget {
-  const ProfilePage(
-      {super.key,
-      required this.username,
-      required this.profilePicture,
-      required this.bio});
-  final String username;
-  final Image profilePicture;
-  final String bio;
+class DetailedFindPlayersPage extends StatelessWidget {
+  const DetailedFindPlayersPage({
+    super.key,
+    required this.userId,
+  });
+  final int userId;
+
   @override
   Widget build(BuildContext context) {
+    User currentUser = userList.firstWhere((user) => user.userId == userId);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: Padding(
@@ -42,7 +44,6 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-      
       endDrawer: AppDrawer(),
       appBar: PersistentAppBar(),
       body: Container(
@@ -77,7 +78,7 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        username, //Displays username set in edit_profile_page.dart
+                        currentUser.username, //Displays username set in edit_profile_page.dart
                         style: TextStyle(
                             fontFamily: "Belwe",
                             fontSize: 24,
@@ -95,7 +96,7 @@ class ProfilePage extends StatelessWidget {
                           child: Center(
                             child: CircleAvatar(
                               radius: 175,
-                              backgroundImage: profilePicture.image,
+                              backgroundImage: currentUser.profilePicture.image,
                             ),
                           ),
                         ),
@@ -125,7 +126,7 @@ class ProfilePage extends StatelessWidget {
                     TextCard(
                       title: "User Info",
                       textBox: Text(
-                        bio,
+                        currentUser.bio,
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: "Belwe",

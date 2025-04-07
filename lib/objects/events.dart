@@ -6,6 +6,7 @@ class Event {
   Event(
       this.dateTime,
       this.title,
+      this.eventId,
       this.location,
       this.description,
       this.eventImage,
@@ -15,6 +16,7 @@ class Event {
       this.format);
   DateTime dateTime;
   String title;
+  int eventId;
   String location;
   String description;
   Image eventImage;
@@ -31,6 +33,7 @@ List<Event> eventsList = [event1, event2, event3, event4];
 Event event1 = (Event(
     DateTime.utc(2025, 11, 11, 11, 11),
     "Battle City",
+    1,
     "123 Street St., El Paso, TX 79835",
     "Become the king of games!",
     Image.asset("images/kuriboh.png"),
@@ -41,6 +44,7 @@ Event event1 = (Event(
 Event event2 = (Event(
     DateTime.utc(2025, 12, 12, 12, 12),
     "Clash of Cards",
+    2,
     "456 Avenue, El Paso, TX 79835",
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     Image.asset("images/sloth.png"),
@@ -51,6 +55,7 @@ Event event2 = (Event(
 Event event3 = (Event(
     DateTime.utc(2025, 4, 25, 13, 13),
     "Event Title 3",
+    3,
     "Event Location 3",
     "Event Description 3",
     Image.asset("images/kuriboh.png"),
@@ -61,6 +66,7 @@ Event event3 = (Event(
 Event event4 = (Event(
     DateTime.utc(2025, 6, 14, 14, 14),
     "Event Title 4",
+    4,
     "Event Location 4",
     "Event Description 4",
     Image.asset("images/sloth.png"),

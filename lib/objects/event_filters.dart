@@ -8,11 +8,11 @@ the types of events that are displayed.
 In other words, these are the default filters 
 that do not filter out any events.
 */
+
 String eventSearchFilter = "";
 String eventFormatFilter = "Any Format";
 String eventDateFilter = "All dates";
 int eventNumOfTablesFilter = -1;
-
 List<Event> filteredList = eventsList;
 
 /*

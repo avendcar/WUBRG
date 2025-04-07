@@ -279,16 +279,7 @@ class _EventsPageState extends State<EventsPage> {
                                   children: [
                                     for (var event in filteredList)
                                       EventTile(
-                                        title: event.title,
-                                        dateTime: event.dateTime,
-                                        description: event.description,
-                                        location: event.location,
-                                        eventImage: event.eventImage,
-                                        totalSeats: event.totalSeats,
-                                        takenSeats: event.takenSeats,
-                                        tables: event.tables,
-                                        tableList: event.tableList,
-                                        format: event.format,
+                                       eventId: event.eventId,
                                       ),
                                     if (filteredList.isEmpty)
                                       Text(
