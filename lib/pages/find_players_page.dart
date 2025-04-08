@@ -3,10 +3,8 @@ import 'package:flutter_application_3/objects/player_filters.dart';
 import 'package:flutter_application_3/pages/personal_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
-import 'package:flutter_application_3/widgets/player_tile.dart';
-import '../objects/user.dart';
-
-List<User> userList = getUserList();
+import 'package:flutter_application_3/widgets/player_tile.dart' hide userList;
+import '../objects/user.dart' hide userList;
 
 class FindPlayersPage extends StatefulWidget {
   const FindPlayersPage({super.key});
@@ -73,7 +71,7 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                             endIndent: 10,
                           ),
                           Text(
-                            "Event name",
+                            "User name",
                             style: TextStyle(
                                 fontFamily: "Belwe",
                                 fontSize: 16,
@@ -96,14 +94,52 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
                               filteredList = filterBySearch(
                                   userList, playerSearchFilter.toLowerCase());
                               setState(() {});
                             },
-                            child: Text("Search"),
+                            child: Text("Apply filters"),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "Filter by user tags",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Belwe",
+                                fontSize: 16),
+                          ),
+                          Divider(
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: SingleChildScrollView(
+                              child: ToggleButtons(
+                                //TODO: Make toggle buttons scrollable, currently overflows page.
+                                direction: Axis.vertical,
+                                verticalDirection: VerticalDirection.up,
+                                isSelected: selections,
+                                onPressed: (int index) {
+                                  setState(() {
+                                    selections[index] = !selections[index];
+                                  });
+                                },
+                                children: [
+                                  for (String tag in tagCollection)
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Text(
+                                        tag,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

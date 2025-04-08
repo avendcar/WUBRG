@@ -4,7 +4,6 @@ import 'package:flutter_application_3/pages/detailed_find_players_page.dart';
 
 List<User> userList = getUserList();
 
-   
 class PlayerTile extends StatelessWidget {
   const PlayerTile({
     super.key,
@@ -14,7 +13,7 @@ class PlayerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   User currentUser = userList.firstWhere((user) => user.userId == userId);
+    User currentUser = userList.firstWhere((user) => user.userId == userId);
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 143,
