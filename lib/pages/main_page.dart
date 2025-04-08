@@ -7,7 +7,6 @@ import 'package:flutter_application_3/widgets/main_menu_find_players_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_events_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_friends_card.dart';
 import 'package:flutter_application_3/widgets/main_menu_messages_card.dart';
-
 import '../objects/user.dart';
 
 class MainPage extends StatelessWidget {
@@ -99,7 +98,6 @@ class MainPage extends StatelessWidget {
                       SizedBox(width: 10),
                       MainMenuFriendsCard(
                         title: "Friends",
-                        //TODO: Make this a button
                         numOfFriends: 5,
                         subtitle: "This is a description in the Friends card",
                       ),

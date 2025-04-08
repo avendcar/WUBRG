@@ -18,20 +18,7 @@ class TableObject {
 
   void removePlayerFromTable(TableObject table, User userToBeRemoved) {
     int userId = userToBeRemoved.userId;
-
-    bool playerIsInTable = false;
-    for (var player in table.players) {
-      if (player.userId == userId) {
-        table.players.remove(player);
-        playerIsInTable = true;
-      }
-    }
-
-    if (playerIsInTable) {
-      print("${userToBeRemoved.username} has been removed from the table");
-    } else {
-      print("The desired player is not in this table");
-    }
+    table.players.removeWhere((id)=> id == userId);
   }
   //Each table object will contain a list of players
   //Multiple table objects will be stored in an event
