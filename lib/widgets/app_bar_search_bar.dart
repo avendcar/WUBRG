@@ -74,6 +74,8 @@ class CustomSearchDelegate extends SearchDelegate {
         return Container(
           color: Colors.white, //Color of each element in suggestions
           child: ListTile(
+            leading: ClipRRect(
+                borderRadius: BorderRadius.circular(10), child: result.image),
             title: Text(result.name),
             onTap: () {
               query = matchQuery[index].name;
@@ -100,10 +102,14 @@ class CustomSearchDelegate extends SearchDelegate {
               }
             },
           ),
+          
+          
         );
       },
     );
+    
   }
+  
 }
 
 class _AppBarSearchBarState extends State<AppBarSearchBar> {
