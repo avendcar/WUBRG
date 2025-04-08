@@ -15,6 +15,7 @@ class MainPage extends StatelessWidget {
   static User signedInUser = User(
     //Test data for the currently signed in user.
     //Hard coded for now, but will be integrated with the database later.
+    //TODO: Implement way to store the data of the signed in user according to who signed in
     "Signed in username",
     1,
     "Signed in bio",
