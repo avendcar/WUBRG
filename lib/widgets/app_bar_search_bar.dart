@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/app_bar_search_results.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
-
 import 'package:flutter_application_3/pages/detailed_find_players_page.dart';
 
 class AppBarSearchBar extends StatefulWidget {
   const AppBarSearchBar({super.key});
-
   @override
   State<AppBarSearchBar> createState() => _AppBarSearchBarState();
 }
@@ -102,14 +100,10 @@ class CustomSearchDelegate extends SearchDelegate {
               }
             },
           ),
-          
-          
         );
       },
     );
-    
   }
-  
 }
 
 class _AppBarSearchBarState extends State<AppBarSearchBar> {
@@ -141,22 +135,7 @@ class _AppBarSearchBarState extends State<AppBarSearchBar> {
             ),
           ],
         ),
-      ), /* TextField(
-        onTap: () {},
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: "Search for users and events...",
-          hintStyle: TextStyle(color: Colors.white70),
-          filled: true,
-          fillColor: Colors.grey[800],
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
-        ),
-      ), */
-      //Code for the old search bar. Uncomment if necessary.
+      ), 
     );
   }
 }
