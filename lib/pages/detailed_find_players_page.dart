@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/find_players_page.dart';
@@ -80,7 +79,8 @@ class DetailedFindPlayersPage extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        currentUser.username, //Displays username set in edit_profile_page.dart
+                        currentUser
+                            .username, //Displays username set in edit_profile_page.dart
                         style: TextStyle(
                             fontFamily: "Belwe",
                             fontSize: 24,
@@ -130,13 +130,9 @@ class DetailedFindPlayersPage extends StatelessWidget {
                       height: MediaQuery.of(context).size.width * 0.175,
                       width: MediaQuery.of(context).size.width * 0.5,
                       endIndent: 770,
-                      color: const Color.fromARGB(255, 23, 100, 163), bioTextBox: Text(
-                        currentUser.bio,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Belwe",
-                            fontSize: 24),
-                      ), tags: currentUser.tags,
+                      color: const Color.fromARGB(255, 23, 100, 163),
+                      bio: currentUser.bio,
+                      tags: currentUser.tags,
                     ),
                     SizedBox(
                       height: 60,

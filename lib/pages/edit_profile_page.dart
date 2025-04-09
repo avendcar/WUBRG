@@ -1,4 +1,6 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
 import 'package:flutter_application_3/pages/personal_profile_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
@@ -14,19 +16,11 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
+int currentUserId = MainPage.signedInUser.userId;
 String _username = MainPage.signedInUser.username;
 String _bio = MainPage.signedInUser.bio;
 PlatformFile? pickedFile;
-File? profilePicture;
 List<String> updatedTagList = MainPage.signedInUser.tags;
-
-String getUsername() {
-  return _username;
-}
-
-String getBio() {
-  return _bio;
-}
 
 //TODO: Link up username, bio, and profile picture to database
 //TODO: Restrict access to only allow access to this page for admins and the profile owner
@@ -52,6 +46,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
     } else {
       updatedTagList.add(tag);
     }
+  }
+
+  Future<Image> convertFileToImage(File picture) async {
+    Uint8List uint8list = await picture.readAsBytes();
+    Image image = Image.memory(uint8list);
+    return image;
+  }
+
+  Future<void> updateDataOnSubmit() async {
+    User currentUser =
+        userList.firstWhere((user) => user.userId == currentUserId);
+    userList.remove(currentUser);
+    userList.add(
+      User(
+          _username,
+          currentUser.userId,
+          _bio,
+          await convertFileToImage(
+              File(pickedFile?.path ?? "images/kuriboh.png")),
+          updatedTagList,
+          currentUser.joinedEvents),
+    );
+
+    MainPage.signedInUser.username = _username;
+    MainPage.signedInUser.bio = _bio;
+    MainPage.signedInUser.tags = updatedTagList;
+    MainPage.signedInUser.profilePicture = await convertFileToImage(
+        File(pickedFile?.path ?? "images/kuriboh.png"));
   }
 
   @override
@@ -126,9 +148,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 ),
                               ),
                               validator: (value) {
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    value.length < 3) {
+                                if (value == null || value.isEmpty) {
                                   return 'Invalid Username';
                                 }
                                 return null;
@@ -183,7 +203,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             child: Text("Change profile picture"),
                           ),
                         ),
-
                         if (pickedFile != null)
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -217,9 +236,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               TextButton(
                                 onPressed: () {
                                   updateTag("Prefers any format");
-                                  setState(() {
-                                    
-                                  });
+                                  setState(() {});
                                 },
                                 child: Text("Prefers any format"),
                               ),
@@ -273,11 +290,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             if (_formGlobalKey.currentState!.validate()) {
                               _formGlobalKey.currentState!.save();
                               setState(() {
-                                MainPage.signedInUser.username = _username;
-                                MainPage.signedInUser.bio = _bio;
-                                MainPage.signedInUser.tags = updatedTagList;
-                                MainPage.signedInUser.profilePicture ==
-                                    profilePicture;
+                                updateDataOnSubmit();
                                 //Refreshes page after submission
                               });
                               ScaffoldMessenger.of(context).showSnackBar(

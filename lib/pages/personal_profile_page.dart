@@ -61,7 +61,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   children: [
                     Center(
                       child: Text(
-                        getUsername(), //Displays username set in edit_profile_page.dart
+                        MainPage.signedInUser
+                            .username, //Displays username set in edit_profile_page.dart
                         style: TextStyle(
                             fontFamily: "Belwe",
                             fontSize: 24,
@@ -80,8 +81,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             child: CircleAvatar(
                               radius: 175,
                               backgroundImage: pickedFile == null
-                                  ? AssetImage(
-                                      "images/mtg-background.png") //Default profile icon if picked file is null
+                                  ? MainPage.signedInUser.profilePicture
+                                      .image //Default profile icon if picked file is null
                                   : FileImage(
                                       //Custom profile icon if picked file is not null
                                       File(pickedFile!.path!),
@@ -114,18 +115,12 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   children: [
                     UserInfoCard(
                       title: "User Info",
-                      bioTextBox: Text(
-                        getBio(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Belwe",
-                            fontSize: 24),
-                      ),
                       height: MediaQuery.of(context).size.width * 0.175,
                       width: MediaQuery.of(context).size.width * 0.5,
                       endIndent: 770,
                       color: const Color.fromARGB(255, 23, 100, 163),
                       tags: MainPage.signedInUser.tags,
+                      bio: MainPage.signedInUser.bio,
                     ),
                     SizedBox(
                       height: 60,

@@ -7,7 +7,7 @@ class UserInfoCard extends StatelessWidget {
       required this.width,
       required this.title,
       required this.endIndent,
-      required this.bioTextBox,
+      required this.bio,
       required this.color,
       required this.tags});
   final double height;
@@ -15,7 +15,7 @@ class UserInfoCard extends StatelessWidget {
   final String title;
   final double endIndent;
   final List<String> tags;
-  final Text bioTextBox;
+  final String bio;
   final Color color;
 
   String generateTagOutput(List<String> tags) {
@@ -30,6 +30,16 @@ class UserInfoCard extends StatelessWidget {
       tagOutput += ".";
       return tagOutput;
     }
+  }
+
+  String generateBioOutput(String bio) {
+    String bioOutput = "";
+    if (bio.isEmpty) {
+      bioOutput = "This user has not set a bio";
+    } else {
+      bioOutput = "Bio : $bio";
+    }
+    return bioOutput;
   }
 
   @override
@@ -86,7 +96,11 @@ class UserInfoCard extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: bioTextBox,
+                child: Text(
+                  generateBioOutput(bio),
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+                ),
               ),
             ),
           ),
