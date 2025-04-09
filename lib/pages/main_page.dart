@@ -20,7 +20,7 @@ class MainPage extends StatelessWidget {
     4,
     "Signed in bio",
     Image.asset("images/sloth.png"),
-    [], //User tags
+    ["Casual"], //User tags
     [], //Events the user has joined
   );
 
