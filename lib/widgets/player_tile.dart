@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/detailed_find_players_page.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/pages/personal_profile_page.dart';
 
 List<User> userList = getUserList();
 
@@ -23,14 +25,23 @@ class PlayerTile extends StatelessWidget {
             side: BorderSide(width: 5, color: Colors.grey),
           ),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailedFindPlayersPage(
-                  userId: userId,
+            if (userId == MainPage.signedInUser.userId) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PersonalProfilePage(),
                 ),
-              ),
-            );
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailedFindPlayersPage(
+                    userId: userId,
+                  ),
+                ),
+              );
+            }
           },
           label: Row(
             children: [

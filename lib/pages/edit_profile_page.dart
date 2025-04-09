@@ -18,6 +18,8 @@ String _username = MainPage.signedInUser.username;
 String _bio = MainPage.signedInUser.bio;
 PlatformFile? pickedFile;
 File? profilePicture;
+List<String> updatedTagList = MainPage.signedInUser.tags;
+
 String getUsername() {
   return _username;
 }
@@ -42,6 +44,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         pickedFile = result.files.first;
       },
     );
+  }
+
+  void updateTag(String tag) {
+    if (updatedTagList.contains(tag)) {
+      updatedTagList.remove(tag);
+    } else {
+      updatedTagList.add(tag);
+    }
   }
 
   @override
@@ -98,128 +108,196 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 padding: const EdgeInsets.only(top: 50),
                 child: Form(
                   key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      //TODO: Allow image submissions for profile picture on Linux(Works for windows)
-                      Center(
-                        child: SizedBox(
-                          width: 400,
-                          child: TextFormField(
-                            maxLength: 20,
-                            controller: _usernameController..text = _username,
-                            decoration: InputDecoration(
-                              labelStyle: TextStyle(fontFamily: "Belwe"),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(),
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.length < 3) {
-                                return 'Invalid Username';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _username = value!;
-                              //Sets username to the value in the username text field when the submit button is pressed
-                            },
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //TODO: Allow image submissions for profile picture on Linux(Works for windows)
+                        Center(
                           child: SizedBox(
-                            //Bio field measurements
-                            width: 500,
+                            width: 400,
                             child: TextFormField(
-                              maxLength: 500,
-                              controller: _bioController
-                                ..text =
-                                    _bio, //Sets the initial value as the current bio,
-
-                              maxLines: null, //Increases height as user types
+                              maxLength: 20,
+                              controller: _usernameController..text = _username,
                               decoration: InputDecoration(
                                 labelStyle: TextStyle(fontFamily: "Belwe"),
-                                contentPadding: EdgeInsets.all(8.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide(),
                                 ),
                               ),
                               validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.length < 3) {
+                                  return 'Invalid Username';
+                                }
                                 return null;
                               },
                               onSaved: (value) {
-                                _bio = value!;
-                                //Sets bio to the value in the bio text field when the submit button is pressed
+                                _username = value!;
+                                //Sets username to the value in the username text field when the submit button is pressed
                               },
                             ),
                           ),
                         ),
-                      ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              //Bio field measurements
+                              width: 500,
+                              child: TextFormField(
+                                maxLength: 500,
+                                controller: _bioController
+                                  ..text =
+                                      _bio, //Sets the initial value as the current bio,
 
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          style: ButtonStyle(
-                            overlayColor: WidgetStateProperty.all(Colors.grey),
-                          ),
-                          onPressed: selectFile,
-                          child: Text("Change profile picture"),
-                        ),
-                      ),
-
-                      if (pickedFile != null)
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipOval(
-                            child: Container(
-                              width: 175,
-                              height: 175,
-                              color: Colors.blue,
-                              child: Image.file(
-                                File(pickedFile!.path!),
-                                height: 200,
-                                width: 200,
-                                fit: BoxFit.cover,
+                                maxLines: null, //Increases height as user types
+                                decoration: InputDecoration(
+                                  labelStyle: TextStyle(fontFamily: "Belwe"),
+                                  contentPadding: EdgeInsets.all(8.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _bio = value!;
+                                  //Sets bio to the value in the bio text field when the submit button is pressed
+                                },
                               ),
                             ),
                           ),
                         ),
-                      TextButton(
-                        style: ButtonStyle(
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: BorderSide()),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              overlayColor:
+                                  WidgetStateProperty.all(Colors.grey),
+                            ),
+                            onPressed: selectFile,
+                            child: Text("Change profile picture"),
                           ),
                         ),
-                        onPressed: () {
-                          if (_formGlobalKey.currentState!.validate()) {
-                            _formGlobalKey.currentState!.save();
-                            setState(() {
-                              //Refreshes page after submission
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                    'Information saved! You may exit this page.'),
-                                duration: Duration(seconds: 2),
+
+                        if (pickedFile != null)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ClipOval(
+                              child: Container(
+                                width: 175,
+                                height: 175,
+                                color: Colors.blue,
+                                child: Image.file(
+                                  File(pickedFile!.path!),
+                                  height: 200,
+                                  width: 200,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            );
-                          }
-                        },
-                        child: Text(
-                          "Submit",
-                          style: TextStyle(
-                              fontFamily: "Belwe", color: Colors.black),
+                            ),
+                          ),
+                        Text(
+                          "Current Tags : ",
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    ],
+                        for (String tag in updatedTagList) Text(tag),
+                        if (updatedTagList.isEmpty)
+                          Text(
+                              "You currently have no tags associated with your profile."),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("Prefers any format");
+                                  setState(() {
+                                    
+                                  });
+                                },
+                                child: Text("Prefers any format"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("Prefers commander format");
+                                  setState(() {});
+                                },
+                                child: Text("Prefers commander format"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("Prefers standard format");
+                                  setState(() {});
+                                },
+                                child: Text("Prefers standard format"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("Casual");
+                                  setState(() {});
+                                },
+                                child: Text("Casual"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("Competitive");
+                                  setState(() {});
+                                },
+                                child: Text("Competitive"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  updateTag("18+");
+                                  setState(() {});
+                                },
+                                child: Text("18+"),
+                              ),
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide()),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (_formGlobalKey.currentState!.validate()) {
+                              _formGlobalKey.currentState!.save();
+                              setState(() {
+                                MainPage.signedInUser.username = _username;
+                                MainPage.signedInUser.bio = _bio;
+                                MainPage.signedInUser.tags = updatedTagList;
+                                MainPage.signedInUser.profilePicture ==
+                                    profilePicture;
+                                //Refreshes page after submission
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Information saved! You may exit this page.'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                          },
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(
+                                fontFamily: "Belwe", color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ),
               ),

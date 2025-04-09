@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/app_bar_search_results.dart';
 import 'package:flutter_application_3/pages/detailed_event_page.dart';
 import 'package:flutter_application_3/pages/detailed_find_players_page.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/pages/personal_profile_page.dart';
 
 class AppBarSearchBar extends StatefulWidget {
   const AppBarSearchBar({super.key});
@@ -80,14 +82,23 @@ class CustomSearchDelegate extends SearchDelegate {
               close(context, query);
               switch (matchQuery[index].objectType) {
                 case "User":
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailedFindPlayersPage(
-                        userId: matchQuery[index].id,
+                  if (matchQuery[index].id == MainPage.signedInUser.userId) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersonalProfilePage(),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailedFindPlayersPage(
+                          userId: matchQuery[index].id,
+                        ),
+                      ),
+                    );
+                  }
                 case "Event":
                   Navigator.pushReplacement(
                     context,
@@ -135,7 +146,7 @@ class _AppBarSearchBarState extends State<AppBarSearchBar> {
             ),
           ],
         ),
-      ), 
+      ),
     );
   }
 }

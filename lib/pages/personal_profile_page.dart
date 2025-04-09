@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/edit_profile_page.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
 import 'package:flutter_application_3/widgets/edit_profile_button.dart';
 import 'package:flutter_application_3/widgets/text_card.dart';
+import 'package:flutter_application_3/widgets/user_info_card.dart';
 
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
@@ -110,9 +112,9 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                 SizedBox(width: 120),
                 Column(
                   children: [
-                    TextCard(
+                    UserInfoCard(
                       title: "User Info",
-                      textBox: Text(
+                      bioTextBox: Text(
                         getBio(),
                         style: TextStyle(
                             color: Colors.white,
@@ -123,10 +125,11 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                       width: MediaQuery.of(context).size.width * 0.5,
                       endIndent: 770,
                       color: const Color.fromARGB(255, 23, 100, 163),
+                      tags: MainPage.signedInUser.tags,
                     ),
                     SizedBox(
                       height: 60,
-                      //Space between the User Details and Activity profile cards
+                      //Space between the user info and friends profile cards
                     ),
                     Expanded(
                       child: TextCard(

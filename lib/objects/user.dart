@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/events.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
 
 class User {
   //TODO: Implement empty deck list by default to each user
@@ -19,7 +20,7 @@ List<String> compileUserTags() {
   List<String> tagListOutput = [];
   for (User user in userList) {
     for (String tag in user.tags) {
-      if(!tagListOutput.contains(tag)){
+      if (!tagListOutput.contains(tag)) {
         tagListOutput.add(tag);
       }
     }
@@ -31,7 +32,7 @@ List<User> getUserList() {
   return userList;
 }
 
-List<User> userList = [user1, user2, user3];
+List<User> userList = [user1, user2, user3, user4, user5];
 
 User user1 = (User(
     "User 1",
@@ -40,7 +41,7 @@ User user1 = (User(
     Image.asset(
       "images/kuriboh.png",
     ),
-    ["Prefers any format", "Casual", "18+", "tag 1", "tag 2", "tag 3", "tag 4"],
+    ["Prefers any format", "Casual", "18+"],
     []));
 User user2 = (User(
     "User 2",
@@ -55,4 +56,21 @@ User user3 = (User(
     "User 3's bio will be roughly this long. This series of sentences was typed for testing purposes. By this sentence, the sentence should overflow.",
     Image.asset("images/sloth.png"),
     ["Prefers standard format", "Competitive", "18+"],
+    []));
+User user4 = (User(
+  MainPage.signedInUser.username,
+  MainPage.signedInUser.userId,
+  MainPage.signedInUser.bio,
+  MainPage.signedInUser.profilePicture,
+  MainPage.signedInUser.tags,
+  MainPage.signedInUser.joinedEvents
+));
+User user5 = (User(
+    "User 5",
+    5,
+    "User 5's bio will be roughly this long. This series of sentences was typed for testing purposes.",
+    Image.asset(
+      "images/kuriboh.png",
+    ),
+    ["Prefers any format", "Casual", "18+"],
     []));

@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/find_players_page.dart';
+import 'package:flutter_application_3/widgets/user_info_card.dart';
 
 import '../widgets/app_bar.dart';
 import '../widgets/app_drawer.dart';
@@ -123,19 +125,18 @@ class DetailedFindPlayersPage extends StatelessWidget {
                 SizedBox(width: 120),
                 Column(
                   children: [
-                    TextCard(
+                    UserInfoCard(
                       title: "User Info",
-                      textBox: Text(
+                      height: MediaQuery.of(context).size.width * 0.175,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      endIndent: 770,
+                      color: const Color.fromARGB(255, 23, 100, 163), bioTextBox: Text(
                         currentUser.bio,
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: "Belwe",
                             fontSize: 24),
-                      ),
-                      height: MediaQuery.of(context).size.width * 0.175,
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      endIndent: 770,
-                      color: const Color.fromARGB(255, 23, 100, 163),
+                      ), tags: currentUser.tags,
                     ),
                     SizedBox(
                       height: 60,

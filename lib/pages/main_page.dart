@@ -17,12 +17,21 @@ class MainPage extends StatelessWidget {
     //Hard coded for now, but will be integrated with the database later.
     //TODO: Implement way to store the data of the signed in user according to who signed in
     "Signed in username",
-    1,
+    4,
     "Signed in bio",
     Image.asset("images/sloth.png"),
-    [],//User tags
-    [],//Events the user has joined
+    [], //User tags
+    [], //Events the user has joined
   );
+
+  static List<String> allTags = [
+    "Prefers any format",
+    "Prefers commander format",
+    "Prefers standard format",
+    "Casual",
+    "Competitive",
+    "18+"
+  ];
 
   @override
   Widget build(BuildContext context) {

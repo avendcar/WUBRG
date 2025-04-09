@@ -99,6 +99,8 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                             onPressed: () {
                               filteredList = filterBySearch(
                                   userList, playerSearchFilter.toLowerCase());
+                              filteredList =
+                                  filterByTags(filteredList, selectedTagFilter);
                               setState(() {});
                             },
                             child: Text("Apply filters"),
@@ -118,25 +120,74 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: SingleChildScrollView(
-                              child: ToggleButtons(
-                                //TODO: Make toggle buttons scrollable, currently overflows page.
-                                direction: Axis.vertical,
-                                verticalDirection: VerticalDirection.up,
-                                isSelected: selections,
-                                onPressed: (int index) {
-                                  setState(() {
-                                    selections[index] = !selections[index];
-                                  });
-                                },
+                              child: Column(
                                 children: [
-                                  for (String tag in tagCollection)
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Text(
-                                        tag,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
+                                  Text(
+                                    "Currently Selected Tags : ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Belwe"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      generateTagOutput(selectedTagFilter),
+                                      style: TextStyle(color: Colors.white),
                                     ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter("18+");
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      "18+",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter("Competitive");
+                                      setState(() {});
+                                    },
+                                    child: Text("Competitive",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter("Casual");
+                                      setState(() {});
+                                    },
+                                    child: Text("Casual",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter(
+                                          "Prefers standard format");
+                                      setState(() {});
+                                    },
+                                    child: Text("Prefers standard format",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter(
+                                          "Prefers commander format");
+                                      setState(() {});
+                                    },
+                                    child: Text("Prefers commander format",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      updateTagFilter("Prefers any format");
+                                      setState(() {});
+                                    },
+                                    child: Text("Prefers any format",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
                                 ],
                               ),
                             ),
@@ -161,19 +212,21 @@ class _FindPlayersPageState extends State<FindPlayersPage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            for (User user in filteredList)
-                              PlayerTile(
-                                userId: user.userId,
-                              ),
-                            if (filteredList.isEmpty)
-                              Text(
-                                "No player exists under the searched name.",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 24),
-                              ),
-                          ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              for (User user in filteredList)
+                                PlayerTile(
+                                  userId: user.userId,
+                                ),
+                              if (filteredList.isEmpty)
+                                Text(
+                                  "No player exists under the searched name.",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 24),
+                                ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
