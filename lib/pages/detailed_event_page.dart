@@ -11,16 +11,14 @@ import 'personal_profile_page.dart';
 List<Event> eventList = getEventsList();
 
 class DetailedEventPage extends StatelessWidget {
-  const DetailedEventPage({
-    super.key,
-    required this.eventId
-  });
+  const DetailedEventPage({super.key, required this.eventId});
   final int eventId;
 
   //Displays a single event with more detail, as opposed to the events page which displays multiple events with less detail.
   @override
   Widget build(BuildContext context) {
-    Event currentEvent = eventList.firstWhere((event)=>event.eventId == eventId);
+    Event currentEvent =
+        eventsList.firstWhere((event) => event.eventId == eventId);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: Padding(
@@ -107,6 +105,7 @@ class DetailedEventPage extends StatelessWidget {
                     tableList: currentEvent.tableList,
                     format: currentEvent.format,
                     color: Colors.redAccent,
+                    eventId: eventId,
                   ),
                   SizedBox(height: 30),
                   DetailedEventInfoCard(

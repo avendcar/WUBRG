@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/objects/app_bar_search_results.dart';
+import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/objects/table_object.dart';
 import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
@@ -15,6 +17,7 @@ class TablesCard extends StatefulWidget {
     required this.format,
     required this.totalSeats,
     required this.tableList,
+    required this.eventId,
   });
   final double height;
   final double width;
@@ -24,6 +27,7 @@ class TablesCard extends StatefulWidget {
   final int totalSeats;
   final int numOfTables;
   final List<TableObject> tableList;
+  final int eventId;
   final Color color;
 
   @override
@@ -32,6 +36,7 @@ class TablesCard extends StatefulWidget {
 
 class _TablesCardState extends State<TablesCard> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,7 +83,8 @@ class _TablesCardState extends State<TablesCard> {
                           alignment: Alignment.centerLeft,
                           child: SingleChildScrollView(
                             controller: _scrollController,
-                            scrollDirection: Axis.horizontal,
+                            scrollDirection: Axis
+                                .horizontal, //Allows for horizontal scrolling/dragging if the user list at a table overflows
                             child: Row(
                               children: [
                                 IconButton(
@@ -92,7 +98,16 @@ class _TablesCardState extends State<TablesCard> {
                                           case true:
                                             table.players.removeWhere((item) =>
                                                 item.userId ==
-                                                MainPage.signedInUser.userId);
+                                                MainPage.signedInUser
+                                                    .userId); //Removes player from the table
+
+                                            MainPage.signedInUser.joinedEvents
+                                                .remove(eventsList.firstWhere(
+                                                    (event) =>
+                                                        event.eventId ==
+                                                        widget
+                                                            .eventId)); //Removes event from the user's joined events list
+
                                             table.takenSeats--;
                                           case false:
                                             if (table.tableSize >
@@ -102,9 +117,24 @@ class _TablesCardState extends State<TablesCard> {
                                                   Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
                                                   no room.
                                                   */
-                                                  
-                                              table.players
-                                                  .add(MainPage.signedInUser);
+                                              table.players.add(MainPage
+                                                  .signedInUser); //Adds player to the table
+                                              if (!MainPage //Only adds the event to the user's joined events list if that event is not already in the joined events list
+                                                  .signedInUser
+                                                  .joinedEvents
+                                                  .contains(eventList
+                                                      .firstWhere((event) =>
+                                                          event.eventId ==
+                                                          widget.eventId))) {
+                                                MainPage
+                                                    .signedInUser.joinedEvents
+                                                    .add(eventsList.firstWhere(
+                                                        (event) =>
+                                                            event.eventId ==
+                                                            widget.eventId));
+                                              }
+                                              //Adds event to the user's joined events list
+
                                               table.takenSeats++;
                                             } else {
                                               ScaffoldMessenger.of(context)
