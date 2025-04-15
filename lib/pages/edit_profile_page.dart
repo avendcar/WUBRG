@@ -230,52 +230,55 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               "You currently have no tags associated with your profile."),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("Prefers any format");
-                                  setState(() {});
-                                },
-                                child: Text("Prefers any format"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("Prefers commander format");
-                                  setState(() {});
-                                },
-                                child: Text("Prefers commander format"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("Prefers standard format");
-                                  setState(() {});
-                                },
-                                child: Text("Prefers standard format"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("Casual");
-                                  setState(() {});
-                                },
-                                child: Text("Casual"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("Competitive");
-                                  setState(() {});
-                                },
-                                child: Text("Competitive"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  updateTag("18+");
-                                  setState(() {});
-                                },
-                                child: Text("18+"),
-                              ),
-                            ],
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("Prefers any format");
+                                    setState(() {});
+                                  },
+                                  child: Text("Prefers any format"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("Prefers commander format");
+                                    setState(() {});
+                                  },
+                                  child: Text("Prefers commander format"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("Prefers standard format");
+                                    setState(() {});
+                                  },
+                                  child: Text("Prefers standard format"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("Casual");
+                                    setState(() {});
+                                  },
+                                  child: Text("Casual"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("Competitive");
+                                    setState(() {});
+                                  },
+                                  child: Text("Competitive"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    updateTag("18+");
+                                    setState(() {});
+                                  },
+                                  child: Text("18+"),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         TextButton(
