@@ -21,10 +21,10 @@ class _EventsPageState extends State<EventsPage> {
       appBar: PersistentAppBar(),
       body: Container(
         padding: EdgeInsets.only(
-            top: deviceHeight(context) * 0.095,
-            bottom: deviceHeight(context) * 0.095,
-            left: deviceWidth(context) * .095,
-            right: deviceWidth(context) * .095),
+            top: deviceHeight(context) * 0.060,
+            bottom: deviceHeight(context) * 0.060,
+            left: deviceWidth(context) * .060,
+            right: deviceWidth(context) * .060),
         //Distance of events box from the edges of the body
         decoration: BoxDecoration(
           gradient: LinearGradient(

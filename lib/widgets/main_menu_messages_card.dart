@@ -77,7 +77,7 @@ class MainMenuMessagesCard extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.asset(
-                                            "images/kuriboh.png"), //Image representing the event/user
+                                            "images/message.png"), //Image representing the event/user
                                       ),
                                     ),
                                     label: Text(
@@ -92,7 +92,6 @@ class MainMenuMessagesCard extends StatelessWidget {
                                     iconAlignment: IconAlignment.start,
                                     onPressed: () {
                                       //Individual message buttons do not lead anywhere by default
-                                      //TODO: Have each button lead to the proper messaging window
                                     },
                                   ),
                                 ),

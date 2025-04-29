@@ -1,10 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/pages/calendar_page.dart';
-import 'package:flutter_application_3/pages/decks_page.dart';
+import 'package:flutter_application_3/pages/deck_builder_page.dart';
 import 'package:flutter_application_3/pages/events_page.dart';
 import 'package:flutter_application_3/pages/home_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import '../pages/personal_profile_page.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -91,7 +93,7 @@ class AppDrawer extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const DecksPage(),
+                          builder: (context) => const DeckBuilderPage(),
                         ),
                       );
                     },
@@ -148,26 +150,27 @@ class AppDrawer extends StatelessWidget {
                   SizedBox(height: 16),
                   // Box for signing out
                   ListTile(
-                      title: Center(
-                        heightFactor: 1,
-                        child: const Text(
-                          "Sign out",
-                          style: TextStyle(
-                              color: Colors.black, fontFamily: "Belwe"),
-                        ),
-                      ),
-                      tileColor: const Color.fromRGBO(224, 224, 224, 1),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.green, width: 2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                      }),
+  title: Center(
+    heightFactor: 1,
+    child: const Text(
+      "Sign out",
+      style: TextStyle(color: Colors.black, fontFamily: "Belwe"),
+    ),
+  ),
+  tileColor: const Color.fromRGBO(224, 224, 224, 1),
+  shape: RoundedRectangleBorder(
+    side: BorderSide(color: Colors.green, width: 2),
+    borderRadius: BorderRadius.circular(10),
+  ),
+  onTap: () async {
+    await auth.FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
+    );
+  },
+),
+
                 ],
               ),
             ),

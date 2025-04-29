@@ -1,27 +1,21 @@
-import 'package:flutter_application_3/objects/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/models/user.dart' as model;
 
-List<User> filteredList = getUserList();
-List<User> userList = getUserList();
-List<String> tagCollection = MainPage.allTags;
-
+//  Player search input (e.g., from a search bar)
 String playerSearchFilter = "";
+
+//  Default: All tags are selected
 List<String> selectedTagFilter = MainPage.allTags;
 
+///  Converts tags to displayable string
 String generateTagOutput(List<String> tags) {
-  String tagOutput = "";
-  for (String tag in tags) {
-    tagOutput += " $tag,";
-  }
-  if (tagOutput == "") {
-    return "None";
-  } else {
-    tagOutput = tagOutput.substring(0, tagOutput.length - 1);
-    tagOutput += ".";
-    return tagOutput;
-  }
+  if (tags.isEmpty) return "None";
+  return '${tags.join(', ')}.';
 }
 
+///  Adds or removes a tag from the selected filters
 void updateTagFilter(String inputTag) {
   if (!selectedTagFilter.contains(inputTag)) {
     selectedTagFilter.add(inputTag);
@@ -30,30 +24,40 @@ void updateTagFilter(String inputTag) {
   }
 }
 
-List<User> filterBySearch(
-    List<User> unfilteredPlayers, String desiredPlayerName) {
-  List<User> listToBeReturned = [];
-  if (desiredPlayerName.isEmpty) {
-    return userList;
-  }
-  for (User player in unfilteredPlayers) {
-    if (player.username.toLowerCase().contains(desiredPlayerName)) {
-      listToBeReturned.add(player);
-    }
-  }
-  return listToBeReturned;
+///  Client-side filter by partial username match
+List<model.User> filterBySearch(List<model.User> unfilteredPlayers, String desiredPlayerName) {
+  if (desiredPlayerName.isEmpty) return unfilteredPlayers;
+
+  return unfilteredPlayers
+      .where((player) => player.username.toLowerCase().contains(desiredPlayerName.toLowerCase()))
+      .toList();
 }
 
-List<User> filterByTags(
-    List<User> unfilteredPlayers, List<String> desiredTags) {
-  List<User> listToBeReturned = [];
-  for (User player in unfilteredPlayers) {
-    for (String tag in player.tags) {
-      if (desiredTags.contains(tag)) {
-        listToBeReturned.add(player);
-        break;
-      }
-    }
-  }
-  return listToBeReturned;
+///  Client-side filter: user has any matching tag
+List<model.User> filterByTags(List<model.User> unfilteredPlayers, List<String> desiredTags) {
+  if (desiredTags.isEmpty) return unfilteredPlayers;
+
+  return unfilteredPlayers.where((player) {
+    return player.tags.any((tag) => desiredTags.contains(tag));
+  }).toList();
+}
+
+///  Main fetch function: loads all users, filters out self, applies tag + name filters
+Future<List<model.User>> fetchFilteredUsers() async {
+  final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+
+  // Fetch all users
+  final snapshot = await FirebaseFirestore.instance.collection('users').get();
+
+  // Convert Firestore docs to model.User list, excluding current user
+  final allUsers = snapshot.docs
+      .map((doc) => model.User.fromFirestore(doc.data(), doc.id))
+      .where((user) => user.uid != currentUserId)
+      .toList();
+
+  // Apply filters
+  final filteredByName = filterBySearch(allUsers, playerSearchFilter);
+  final filteredByTags = filterByTags(filteredByName, selectedTagFilter);
+
+  return filteredByTags;
 }

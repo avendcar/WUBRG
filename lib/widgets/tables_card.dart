@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/objects/app_bar_search_results.dart';
-import 'package:flutter_application_3/objects/events.dart';
 import 'package:flutter_application_3/objects/table_object.dart';
-import 'package:flutter_application_3/objects/user.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/models/user.dart' as model;
 
 class TablesCard extends StatefulWidget {
   const TablesCard({
@@ -19,6 +17,7 @@ class TablesCard extends StatefulWidget {
     required this.tableList,
     required this.eventId,
   });
+
   final double height;
   final double width;
   final String title;
@@ -36,6 +35,38 @@ class TablesCard extends StatefulWidget {
 
 class _TablesCardState extends State<TablesCard> {
   final ScrollController _scrollController = ScrollController();
+
+  void _toggleUserAtTable(TableObject table) {
+    final model.User signedInUser = MainPage.signedInUser!;
+    final isAtTable = table.players.any((p) => p.uid == signedInUser.uid);
+
+    setState(() {
+      if (isAtTable) {
+        table.players.removeWhere((p) => p.uid == signedInUser.uid);
+        table.takenSeats--;
+
+        signedInUser.joinedEvents.removeWhere(
+          (eventId) => eventId == widget.eventId.toString(),
+        );
+      } else {
+        if (table.players.length < table.tableSize) {
+          table.players.add(signedInUser);
+          table.takenSeats++;
+
+          if (!signedInUser.joinedEvents.contains(widget.eventId.toString())) {
+            signedInUser.joinedEvents.add(widget.eventId.toString());
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 2),
+              content: Text('Table #${table.tableId} is full.'),
+            ),
+          );
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,123 +86,60 @@ class _TablesCardState extends State<TablesCard> {
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.title,
-                style: TextStyle(
-                    color: Colors.white, fontFamily: "Belwe", fontSize: 24),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Belwe",
+                  fontSize: 24,
+                ),
               ),
             ),
           ),
-          Divider(
-            indent: 10,
-            endIndent: widget.endIndent,
-            /*
-            Distance from the right edge of the card
-            to the right end of the divider
-            */
-          ),
+          Divider(indent: 10, endIndent: widget.endIndent),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    for (TableObject table in widget
-                        .tableList) //Iterates through every table in an event's table list
-                      DefaultTextStyle.merge(
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: SingleChildScrollView(
-                            controller: _scrollController,
-                            scrollDirection: Axis
-                                .horizontal, //Allows for horizontal scrolling/dragging if the user list at a table overflows
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        switch (table.isUserInPlayerList(
-                                            table.players,
-                                            MainPage.signedInUser)) {
-                                          //Switch statement for checking if the test user is in the table of the current iteration
-                                          case true:
-                                            table.players.removeWhere((item) =>
-                                                item.userId ==
-                                                MainPage.signedInUser
-                                                    .userId); //Removes player from the table
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: widget.tableList.map((table) {
+                  final isFull = table.takenSeats >= table.tableSize;
 
-                                            MainPage.signedInUser.joinedEvents
-                                                .remove(eventsList.firstWhere(
-                                                    (event) =>
-                                                        event.eventId ==
-                                                        widget
-                                                            .eventId)); //Removes event from the user's joined events list
-
-                                            table.takenSeats--;
-                                          case false:
-                                            if (table.tableSize >
-                                                table.players.length) {
-                                              /*
-                                                  If statement for checking if adding the current user would cause the table to go over its maximum size.
-                                                  Successfully adds the player if there is room, displays a snackbar and does not add the player if there is
-                                                  no room.
-                                                  */
-                                              table.players.add(MainPage
-                                                  .signedInUser); //Adds player to the table
-                                              if (!MainPage //Only adds the event to the user's joined events list if that event is not already in the joined events list
-                                                  .signedInUser
-                                                  .joinedEvents
-                                                  .contains(eventList
-                                                      .firstWhere((event) =>
-                                                          event.eventId ==
-                                                          widget.eventId))) {
-                                                MainPage
-                                                    .signedInUser.joinedEvents
-                                                    .add(eventsList.firstWhere(
-                                                        (event) =>
-                                                            event.eventId ==
-                                                            widget.eventId));
-                                              }
-                                              //Adds event to the user's joined events list
-
-                                              table.takenSeats++;
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  duration: const Duration(
-                                                      seconds: 2),
-                                                  content: Text(
-                                                      'Could not join table #${table.tableId} because it is full.'),
-                                                ),
-                                              );
-                                            }
-                                            break;
-                                        }
-                                      },
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.table_bar_rounded,
-                                    color: Colors.white,
-                                    size: 32,
-                                  ),
+                  return DefaultTextStyle.merge(
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () => _toggleUserAtTable(table),
+                                icon: const Icon(
+                                  Icons.table_bar_rounded,
+                                  color: Colors.white,
+                                  size: 32,
                                 ),
-                                Text(
-                                    "Table #${table.tableId} ${table.takenSeats}/${table.tableSize} players : "),
-                                if (table.takenSeats >= table.tableSize)
-                                  Text("(Table is full) "),
-                                for (User user in table
-                                    .players) //Outputs all the usernames of the players within the table
-                                  Text("${user.username}, "),
-                              ],
-                            ),
+                              ),
+                              Text(
+                                "Table #${table.tableId} ${table.takenSeats}/${table.tableSize} players: ",
+                              ),
+                              if (isFull)
+                                const Text(
+                                  "(Table is full) ",
+                                  style: TextStyle(color: Colors.redAccent),
+                                ),
+                              ...table.players.map(
+                                (model.User user) => Text("${user.username}, "),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                  ],
-                ),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ),

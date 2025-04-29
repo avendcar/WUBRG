@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_application_3/pages/find_players_page.dart';
 
 class MainMenuFindPlayersCard extends StatelessWidget {
@@ -78,7 +77,7 @@ class MainMenuFindPlayersCard extends StatelessWidget {
                                       child: SizedBox(
                                         width: 125,
                                         height: 125,
-                                        child: Image.asset("images/sloth.png"),
+                                        child: Image.asset("images/player.png"),
                                       ), //Image representing the event/user
                                     ),
                                   ),

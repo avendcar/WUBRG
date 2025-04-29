@@ -119,7 +119,7 @@ class DetailedEventPage extends StatelessWidget {
                     totalSeats: currentEvent.totalSeats,
                     location: currentEvent.location,
                     dateTime: currentEvent.dateTime,
-                    tables: currentEvent.tables,
+                    tables: currentEvent.tables, openSeats: 1,
                   ),
                 ],
               ),

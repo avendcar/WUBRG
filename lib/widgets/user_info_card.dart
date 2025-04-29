@@ -56,7 +56,7 @@ class UserInfoCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+            padding: const EdgeInsets.only(left: 2.0, top: 8.0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -74,36 +74,39 @@ class UserInfoCard extends StatelessWidget {
             to the right end of the divider
             */
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Tags : ",
-                style: TextStyle(
-                    color: Colors.white, fontSize: 24, fontFamily: "Belwe"),
-              ),
-              Flexible(
-                child: Text(
-                  tagOutput,
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 24, fontFamily: "Belwe"),
-                ),
-              ),
-            ],
-          ),
+          Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+  child: Align(
+    alignment: Alignment.centerLeft,
+    child: Text(
+      "Tags : $tagOutput",
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 24,
+        fontFamily: "Belwe",
+      ),
+      softWrap: true,
+      overflow: TextOverflow.visible,
+    ),
+  ),
+),
+
           Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  generateBioOutput(bio),
-                  style: TextStyle(
-                      color: Colors.white, fontFamily: "Belwe", fontSize: 24),
-                ),
-              ),
-            ),
-          ),
+  child: Padding(
+    padding: const EdgeInsets.all(2.0),
+    child: SingleChildScrollView(
+      child: Text(
+        generateBioOutput(bio),
+        style: const TextStyle(
+          color: Colors.white,
+          fontFamily: "Belwe",
+          fontSize: 24,
+        ),
+      ),
+    ),
+  ),
+),
+
         ],
       ),
     );

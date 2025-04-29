@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/widgets/app_bar_search_bar.dart';
+import 'package:flutter_application_3/widgets/search_bar_widget.dart';
 import '../pages/main_page.dart';
 
-
 class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PersistentAppBar({super.key});
+  final PreferredSizeWidget? bottom;
+
+  const PersistentAppBar({super.key, this.bottom});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.black,
+      bottom: bottom,
       actions: [
         Builder(
           builder: (context) => IconButton(
-            icon: Icon(Icons.person_2_rounded),
+            icon: const Icon(Icons.person_2_rounded),
             color: Colors.white,
             onPressed: () => Scaffold.of(context).openEndDrawer(),
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           ),
         ),
       ],
-      backgroundColor: Colors.black,
       title: Row(
         children: [
-          // Wrap the logo in a GestureDetector to open the drawer.
           Builder(
             builder: (context) {
               return GestureDetector(
@@ -33,11 +34,10 @@ class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
                   );
                 },
                 child: Tooltip(
-                  //Universal home page button
                   message: "Click to go to Home",
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
-                    child: Text(
+                    child: const Text(
                       "WUBRG",
                       style: TextStyle(
                         fontFamily: "Belwe",
@@ -50,15 +50,15 @@ class PersistentAppBar extends StatelessWidget implements PreferredSizeWidget {
               );
             },
           ),
-          Spacer(),
-          // Search bar widget.
-          AppBarSearchBar(),
-          Spacer(),
+          const Spacer(),
+          const SearchBarWidget(),
+          const Spacer(),
         ],
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0));
 }

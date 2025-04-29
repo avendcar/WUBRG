@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/pages/edit_profile_page.dart';
 import 'package:flutter_application_3/pages/main_page.dart';
 import 'package:flutter_application_3/widgets/app_bar.dart';
 import 'package:flutter_application_3/widgets/app_drawer.dart';
@@ -21,22 +19,25 @@ double deviceWidth(BuildContext context) => MediaQuery.of(context).size.width;
 class _PersonalProfilePageState extends State<PersonalProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final user = MainPage.signedInUser;
+
     return Scaffold(
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: EditProfileButton(),
-      ),
+  padding: const EdgeInsets.only(bottom: 20),
+  child: EditProfileButton(setStateCallback: () => setState(() {})),
+),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
-      endDrawer: AppDrawer(),
-      appBar: PersistentAppBar(),
+      endDrawer: const AppDrawer(),
+      appBar: const PersistentAppBar(),
       body: Container(
         padding: EdgeInsets.only(
-            top: deviceHeight(context) * 0.095,
-            bottom: deviceHeight(context) * 0.095,
-            left: deviceWidth(context) * .095,
-            right: deviceWidth(context) * .095),
-        //Distance of profile box from the edges of the body
-        decoration: BoxDecoration(
+          top: deviceHeight(context) * 0.080,
+          bottom: deviceHeight(context) * 0.080,
+          left: deviceWidth(context) * 0.080,
+          right: deviceWidth(context) * 0.080,
+        ),
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.bottomLeft,
@@ -44,12 +45,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
           ),
         ),
         child: Container(
-          //Grey box
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 43, 42, 42),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-                color: const Color.fromARGB(255, 23, 100, 163), width: 10),
+              color: const Color.fromARGB(255, 23, 100, 163),
+              width: 10,
+            ),
           ),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width,
@@ -61,33 +63,27 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   children: [
                     Center(
                       child: Text(
-                        MainPage.signedInUser
-                            .username, //Displays username set in edit_profile_page.dart
-                        style: TextStyle(
-                            fontFamily: "Belwe",
-                            fontSize: 24,
-                            color: Colors.white),
+                        user?.username ?? "Unknown User",
+                        style: const TextStyle(
+                          fontFamily: "Belwe",
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.2,
                       width: MediaQuery.of(context).size.width * 0.2,
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 20, bottom: 20),
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 45),
-                          child: Center(
-                            child: CircleAvatar(
-                              radius: 175,
-                              backgroundImage: pickedFile == null
-                                  ? MainPage.signedInUser.profilePicture
-                                      .image //Default profile icon if picked file is null
-                                  : FileImage(
-                                      //Custom profile icon if picked file is not null
-                                      File(pickedFile!.path!),
-                                    ),
-                            ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 20,
+                        ),
+                        child: CircleAvatar(
+                          radius: 175,
+                          backgroundImage: NetworkImage(
+                            user?.profileImageUrl ??
+                                'https://example.com/default-avatar.png',
                           ),
                         ),
                       ),
@@ -95,12 +91,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                     Expanded(
                       child: TextCard(
                         title: "Decks",
-                        textBox: Text(
+                        textBox: const Text(
                           "This is filler text",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Belwe",
-                              fontSize: 18),
+                            color: Colors.white,
+                            fontFamily: "Belwe",
+                            fontSize: 18,
+                          ),
                         ),
                         height: MediaQuery.of(context).size.width * 0.165,
                         width: MediaQuery.of(context).size.width * 0.2,
@@ -110,7 +107,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                     ),
                   ],
                 ),
-                SizedBox(width: 120),
+                const SizedBox(width: 120),
                 Column(
                   children: [
                     UserInfoCard(
@@ -119,29 +116,27 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                       width: MediaQuery.of(context).size.width * 0.5,
                       endIndent: 770,
                       color: const Color.fromARGB(255, 23, 100, 163),
-                      tags: MainPage.signedInUser.tags,
-                      bio: MainPage.signedInUser.bio,
+                      tags: user?.tags ?? [],
+                      bio: user?.bio ?? "No bio provided",
                     ),
-                    SizedBox(
-                      height: 60,
-                      //Space between the user info and friends profile cards
-                    ),
+                    const SizedBox(height: 60),
                     Expanded(
                       child: TextCard(
                         title: "Friends",
-                        textBox: Text(
+                        textBox: const Text(
                           "This is filler text",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Belwe",
-                              fontSize: 18),
+                            color: Colors.white,
+                            fontFamily: "Belwe",
+                            fontSize: 18,
+                          ),
                         ),
                         height: MediaQuery.of(context).size.width * 0.18,
                         width: MediaQuery.of(context).size.width * 0.5,
                         endIndent: 820,
                         color: const Color.fromARGB(255, 23, 100, 163),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

@@ -44,14 +44,14 @@ class _EventTileState extends State<EventTile> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(top: 5, bottom: 5),
                   child: ClipOval(
                     child: currentEvent.eventImage,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 10),
                 child: SizedBox(
                   width: 250,
                   child: Text(
@@ -73,7 +73,7 @@ class _EventTileState extends State<EventTile> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 30),
+                padding: const EdgeInsets.only(left: 10),
                 child: SizedBox(
                   width: 300,
                   child: Text(

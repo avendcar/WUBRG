@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'main_page.dart'; // Import your MainPage widget
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'main_page.dart';
+import 'sign_up_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,43 +14,73 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _showAuthFields = false;
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  /// Sends a POST request to your backend to create a new user.
-  Future<void> createAccount(String username, String password) async {
-    // Replace with your actual server URL/IP.
-    final url = Uri.parse('http://192.168.1.131:3000/create-user');
+  @override
+  void initState() {
+    super.initState();
+    _autoLogin();
+  }
 
+  Future<void> _autoLogin() async {
+    final user = auth.FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 500),
+            pageBuilder: (_, __, ___) => const MainPage(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+          ),
+        );
+      });
+    }
+  }
+
+  Future<void> signIn(String email, String password) async {
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'username': username, 'password': password}),
+      await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'])),
-        );
-      } else {
-        final responseData = json.decode(response.body);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${responseData['error']}')),
-        );
-      }
-    } catch (error) {
+      Navigator.pushReplacement(
+        context,
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (_, __, ___) => const MainPage(),
+          transitionsBuilder: (_, animation, __, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
+      );
+    } on auth.FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $error')),
+        SnackBar(content: Text("Login failed: ${e.message}")),
+      );
+    }
+  }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Password reset email sent")),
+      );
+    } on auth.FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: ${e.message}")),
       );
     }
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -58,9 +88,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Use a background image
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/mtg-background.png"),
             fit: BoxFit.cover,
@@ -81,9 +110,8 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Welcome text
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 10),
                       child: Text(
                         "Welcome to WUBRG!",
                         textAlign: TextAlign.center,
@@ -95,7 +123,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    // Show "Sign Up/Sign In" button if auth fields are hidden.
                     if (!_showAuthFields)
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
@@ -105,8 +132,8 @@ class _HomePageState extends State<HomePage> {
                               _showAuthFields = true;
                             });
                           },
-                          child: Text(
-                            "Sign Up/Sign In",
+                          child: const Text(
+                            "Sign Up / Sign In",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -115,56 +142,42 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    // Display authentication fields when the button is pressed.
                     if (_showAuthFields)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Column(
                           children: [
-                            // Username/Email text field.
                             TextField(
-                              controller: _usernameController,
-                              decoration: InputDecoration(
-                                hintText: "Username/Email",
+                              controller: _emailController,
+                              decoration: const InputDecoration(
+                                hintText: "Email",
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            // Password text field.
+                            const SizedBox(height: 20),
                             TextField(
                               controller: _passwordController,
                               obscureText: true,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "Password",
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(),
                               ),
                             ),
-                            SizedBox(height: 10),
-                            // Hyperlink for new users to create an account.
+                            const SizedBox(height: 10),
                             Align(
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
-                                onTap: () async {
-                                  String username =
-                                      _usernameController.text.trim();
-                                  String password =
-                                      _passwordController.text.trim();
-                                  if (username.isEmpty || password.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Please enter a username and password'),
-                                      ),
-                                    );
-                                    return;
-                                  }
-                                  await createAccount(username, password);
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const SignUpPage()),
+                                  );
                                 },
-                                child: Text(
+                                child: const Text(
                                   "New user? Create an account",
                                   style: TextStyle(
                                     color: Colors.blue,
@@ -173,33 +186,49 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            // "Enter" button for sign in.
+                            const SizedBox(height: 10),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  final email = _emailController.text.trim();
+                                  if (email.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Please enter your email to reset password'),
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                  await resetPassword(email);
+                                },
+                                child: const Text(
+                                  "Forgot password?",
+                                  style: TextStyle(
+                                    color: Colors.orangeAccent,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () {
-                                String username =
-                                    _usernameController.text.trim();
-                                    MainPage.signedInUser.username = username;
-                                    //TODO: Remove this assignment after database integration
-                                String password =
-                                    _passwordController.text.trim();
-                                if (username.isEmpty || password.isEmpty) {
+                              onPressed: () async {
+                                final email = _emailController.text.trim();
+                                final password = _passwordController.text.trim();
+
+                                if (email.isEmpty || password.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Please enter a username and password'),
+                                    const SnackBar(
+                                      content: Text('Please enter an email and password'),
                                     ),
                                   );
                                   return;
                                 }
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const MainPage(),
-                                  ),
-                                );
+
+                                await signIn(email, password);
                               },
-                              child: Text("Enter"),
+                              child: const Text("Enter"),
                             ),
                           ],
                         ),

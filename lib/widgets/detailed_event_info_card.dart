@@ -16,7 +16,7 @@ class DetailedEventInfoCard extends StatefulWidget {
       required this.location,
       required this.dateTime,
       required this.format,
-      required this.tables});
+      required this.tables, required int openSeats});
   final double height;
   final double width;
   final String title;

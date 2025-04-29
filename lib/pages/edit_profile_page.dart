@@ -1,13 +1,16 @@
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_3/objects/user.dart';
-import 'package:flutter_application_3/pages/main_page.dart';
-import 'package:flutter_application_3/pages/personal_profile_page.dart';
-import 'package:flutter_application_3/widgets/app_bar.dart';
-import 'package:flutter_application_3/widgets/app_drawer.dart';
-import 'dart:async';
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
+
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import '../widgets/app_bar.dart';
+import '../widgets/app_drawer.dart';
+import 'package:flutter_application_3/pages/main_page.dart';
+import 'package:flutter_application_3/models/user.dart' as model;
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -16,308 +19,231 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-int currentUserId = MainPage.signedInUser.userId;
-String _username = MainPage.signedInUser.username;
-String _bio = MainPage.signedInUser.bio;
-PlatformFile? pickedFile;
-List<String> updatedTagList = MainPage.signedInUser.tags;
-
-//TODO: Link up username, bio, and profile picture to database
-//TODO: Restrict access to only allow access to this page for admins and the profile owner
-
 class _EditProfilePageState extends State<EditProfilePage> {
-  final GlobalKey<FormState> _formGlobalKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _bioController = TextEditingController();
+  PlatformFile? _pickedFile;
+  String? _currentImageUrl;
+  List<String> _tags = [];
+  bool _loading = false;
 
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    setState(
-      () {
-        pickedFile = result.files.first;
-      },
-    );
+  final List<String> _availableTags = [
+    "Casual",
+    "Competitive",
+    "18+",
+    "Prefers any format",
+    "Prefers commander format",
+    "Prefers standard format",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
   }
 
-  void updateTag(String tag) {
-    if (updatedTagList.contains(tag)) {
-      updatedTagList.remove(tag);
-    } else {
-      updatedTagList.add(tag);
+  Future<void> _loadUserData() async {
+    setState(() => _loading = true);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      final data = doc.data();
+      if (data != null) {
+        _usernameController.text = data['username'] ?? '';
+        _bioController.text = data['bio'] ?? '';
+        _tags = List<String>.from(data['tags'] ?? []);
+        _currentImageUrl = data['profileImageURL']; // ✅ updated to match Firestore rules
+      }
+    }
+    setState(() => _loading = false);
+  }
+
+  Future<void> _pickFile() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null && result.files.isNotEmpty) {
+      setState(() => _pickedFile = result.files.first);
     }
   }
 
-  Future<Image> convertFileToImage(File picture) async {
-    Uint8List uint8list = await picture.readAsBytes();
-    Image image = Image.memory(uint8list);
-    return image;
+  void _toggleTag(String tag) {
+    setState(() {
+      _tags.contains(tag) ? _tags.remove(tag) : _tags.add(tag);
+    });
   }
 
-  Future<void> updateDataOnSubmit() async {
-    User currentUser =
-        userList.firstWhere((user) => user.userId == currentUserId);
-    userList.remove(currentUser);
-    userList.add(
-      User(
-          _username,
-          currentUser.userId,
-          _bio,
-          await convertFileToImage(
-              File(pickedFile?.path ?? "images/kuriboh.png")),
-          updatedTagList,
-          currentUser.joinedEvents),
-    );
+  Future<void> _saveProfile() async {
+    if (!_formKey.currentState!.validate()) return;
 
-    MainPage.signedInUser.username = _username;
-    MainPage.signedInUser.bio = _bio;
-    MainPage.signedInUser.tags = updatedTagList;
-    MainPage.signedInUser.profilePicture = await convertFileToImage(
-        File(pickedFile?.path ?? "images/kuriboh.png"));
+    setState(() => _loading = true);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      setState(() => _loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not authenticated.')),
+      );
+      return;
+    }
+
+    String? imageUrl = _currentImageUrl;
+
+    if (_pickedFile != null) {
+      try {
+        final file = File(_pickedFile!.path!);
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('profile_images/${user.uid}/profile.jpg');
+
+        await ref.putFile(file);
+        imageUrl = await ref.getDownloadURL();
+      } catch (e) {
+        setState(() => _loading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Image upload failed: $e')),
+        );
+        return;
+      }
+    }
+
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'username': _usernameController.text.trim(),
+        'bio': _bioController.text.trim(),
+        'tags': _tags,
+        'profileImageURL': imageUrl, // ✅ updated here
+      });
+
+      MainPage.signedInUser = model.User(
+        uid: user.uid,
+        username: _usernameController.text.trim(),
+        bio: _bioController.text.trim(),
+        profileImageUrl: imageUrl,
+        tags: _tags,
+        joinedEvents: MainPage.signedInUser?.joinedEvents ?? [],
+      );
+
+      setState(() => _loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile updated successfully')),
+      );
+
+      Navigator.pop(context, true);
+    } catch (e) {
+      setState(() => _loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update profile: $e')),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _bioController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PersistentAppBar(),
-      endDrawer: AppDrawer(),
+      appBar: const PersistentAppBar(),
+      endDrawer: const AppDrawer(),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/mtg-background.png"),
-              fit: BoxFit.cover),
+            image: AssetImage("images/mtg-background.png"),
+            fit: BoxFit.cover,
+          ),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.2,
-              bottom: MediaQuery.of(context).size.height * 0.2,
-              right: MediaQuery.of(context).size.width * 0.3,
-              left: MediaQuery.of(context).size.width * 0.3),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Scaffold(
-              backgroundColor: Colors.white, //Color of form
-              appBar: AppBar(
-                leadingWidth: 220,
-                leading: SizedBox(
-                  child: OutlinedButton(
-                    style: ButtonStyle(
-                      shape: WidgetStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PersonalProfilePage()),
-                      );
-                    },
-                    child: Text("Go back to profile page",
-                        style: TextStyle(
-                            fontFamily: "Belwe", color: Colors.black)),
-                  ),
-                ),
-                title: Text("Edit Profile"),
-                centerTitle: true,
-                backgroundColor: Colors.grey, //Color of app bar
-              ),
-              body: Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Form(
-                  key: _formGlobalKey,
-                  child: SingleChildScrollView(
-                    child: Column(
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.95),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: _loading
+                ? const Center(child: CircularProgressIndicator())
+                : Form(
+                    key: _formKey,
+                    child: ListView(
+                      shrinkWrap: true,
                       children: [
-                        //TODO: Allow image submissions for profile picture on Linux(Works for windows)
+                        const Text(
+                          "Edit Profile",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 24, fontFamily: "Belwe"),
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: _usernameController,
+                          decoration: const InputDecoration(
+                            labelText: "Username",
+                            labelStyle: TextStyle(color: Colors.black87),
+                          ),
+                          validator: (value) =>
+                              value == null || value.isEmpty ? 'Enter a username' : null,
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _bioController,
+                          decoration: const InputDecoration(
+                            labelText: "Bio",
+                            labelStyle: TextStyle(color: Colors.black87),
+                          ),
+                          maxLines: 3,
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton.icon(
+                          onPressed: _loading ? null : _pickFile,
+                          icon: const Icon(Icons.upload),
+                          label: const Text("Upload Profile Image"),
+                        ),
+                        const SizedBox(height: 10),
                         Center(
-                          child: SizedBox(
-                            width: 400,
-                            child: TextFormField(
-                              maxLength: 20,
-                              controller: _usernameController..text = _username,
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(fontFamily: "Belwe"),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Invalid Username';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _username = value!;
-                                //Sets username to the value in the username text field when the submit button is pressed
-                              },
-                            ),
-                          ),
+                          child: _pickedFile != null
+                              ? CircleAvatar(
+                                  radius: 60,
+                                  backgroundImage: FileImage(File(_pickedFile!.path!)),
+                                )
+                              : (_currentImageUrl != null
+                                  ? CircleAvatar(
+                                      radius: 60,
+                                      backgroundImage: NetworkImage(_currentImageUrl!),
+                                    )
+                                  : const CircleAvatar(
+                                      radius: 60,
+                                      child: Icon(Icons.person),
+                                    )),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              //Bio field measurements
-                              width: 500,
-                              child: TextFormField(
-                                maxLength: 500,
-                                controller: _bioController
-                                  ..text =
-                                      _bio, //Sets the initial value as the current bio,
-
-                                maxLines: null, //Increases height as user types
-                                decoration: InputDecoration(
-                                  labelStyle: TextStyle(fontFamily: "Belwe"),
-                                  contentPadding: EdgeInsets.all(8.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  return null;
-                                },
-                                onSaved: (value) {
-                                  _bio = value!;
-                                  //Sets bio to the value in the bio text field when the submit button is pressed
-                                },
-                              ),
-                            ),
-                          ),
+                        const SizedBox(height: 16),
+                        const Text("Select Tags:", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: _availableTags.map((tag) {
+                            return FilterChip(
+                              label: Text(tag),
+                              selected: _tags.contains(tag),
+                              onSelected: (_) => _toggleTag(tag),
+                            );
+                          }).toList(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextButton(
-                            style: ButtonStyle(
-                              overlayColor:
-                                  WidgetStateProperty.all(Colors.grey),
-                            ),
-                            onPressed: selectFile,
-                            child: Text("Change profile picture"),
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: _loading ? null : _saveProfile,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
+                          child: const Text("Save", style: TextStyle(color: Colors.white)),
                         ),
-                        if (pickedFile != null)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ClipOval(
-                              child: Container(
-                                width: 175,
-                                height: 175,
-                                color: Colors.blue,
-                                child: Image.file(
-                                  File(pickedFile!.path!),
-                                  height: 200,
-                                  width: 200,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                        Text(
-                          "Current Tags : ",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        for (String tag in updatedTagList) Text(tag),
-                        if (updatedTagList.isEmpty)
-                          Text(
-                              "You currently have no tags associated with your profile."),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("Prefers any format");
-                                    setState(() {});
-                                  },
-                                  child: Text("Prefers any format"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("Prefers commander format");
-                                    setState(() {});
-                                  },
-                                  child: Text("Prefers commander format"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("Prefers standard format");
-                                    setState(() {});
-                                  },
-                                  child: Text("Prefers standard format"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("Casual");
-                                    setState(() {});
-                                  },
-                                  child: Text("Casual"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("Competitive");
-                                    setState(() {});
-                                  },
-                                  child: Text("Competitive"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    updateTag("18+");
-                                    setState(() {});
-                                  },
-                                  child: Text("18+"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          style: ButtonStyle(
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: BorderSide()),
-                            ),
-                          ),
-                          onPressed: () {
-                            if (_formGlobalKey.currentState!.validate()) {
-                              _formGlobalKey.currentState!.save();
-                              setState(() {
-                                updateDataOnSubmit();
-                                //Refreshes page after submission
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                      'Information saved! You may exit this page.'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(
-                                fontFamily: "Belwe", color: Colors.black),
-                          ),
-                        ),
-                        SizedBox(height: 20),
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
           ),
         ),
       ),
