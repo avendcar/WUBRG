@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users can read all profiles, write only to their own
+    match /users/{userId} {
+      // ✅ Anyone authenticated can read any user's profile
+      allow read: if request.auth != null;
+
+      // ✅ Users can write to their own profile
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // ✅ Users can only update specific fields in their profile
+      allow update: if request.auth != null &&
+        request.auth.uid == userId &&
+        request.resource.data.keys().hasOnly([
+          "username", "email", "profileImageURL",
+          "friends", "friendRequests", "sentRequests",
+          "tags", "createdAt"
+        ]);
+
+      // ✅ Authenticated user can access their decks
+      match /decks/{deckId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // ✅ Authenticated user can access their messages
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // ✅ Anyone can read card data
+    match /cards/{cardId} {
+      allow read: if true;
+    }
+  }
+}
